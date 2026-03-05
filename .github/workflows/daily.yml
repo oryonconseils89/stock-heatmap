@@ -1,0 +1,59 @@
+# ── daily.yml — Exécution automatique quotidienne ──
+#
+# Ce fichier dit à GitHub :
+#   1. Quand se réveiller (chaque jour à 14h30 UTC = 9h30 Montréal)
+#   2. Quoi faire (installer Python, lancer le script, sauvegarder le résultat)
+#
+# Tu n'as jamais besoin de toucher à ce fichier sauf pour changer l'heure.
+
+name: Mise à jour quotidienne
+
+# ── Quand exécuter ──
+on:
+  schedule:
+    # Cron expression : minute heure * * *
+    # 14h30 UTC = 9h30 AM heure de Montréal (EST)
+    # Pour changer l'heure, modifie les deux premiers chiffres.
+    # Exemples : "0 15 * * 1-5" = 10h00 Montréal, jours de semaine seulement
+    - cron: "30 14 * * 1-5"
+
+  # Permet aussi de lancer manuellement depuis GitHub (bouton "Run workflow")
+  workflow_dispatch:
+
+# ── Quoi faire ──
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+
+    # Donne la permission au script de sauvegarder le fichier dans le repo
+    permissions:
+      contents: write
+
+    steps:
+      # 1. Récupérer le contenu du repo
+      - name: Checkout du repo
+        uses: actions/checkout@v4
+
+      # 2. Installer Python
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Installer les librairies nécessaires
+      - name: Installer les dépendances
+        run: pip install yfinance pyyaml
+
+      # 4. Lancer le script
+      - name: Exécuter fetch_data.py
+        run: python fetch_data.py
+
+      # 5. Sauvegarder le data.json dans le repo
+      #    (git add + commit + push = mettre à jour le fichier en ligne)
+      - name: Commit du data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "📊 Données mises à jour — $(date -u +'%Y-%m-%d %H:%M UTC')" || echo "Pas de changement"
+          git push
