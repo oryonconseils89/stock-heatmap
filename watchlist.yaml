@@ -1,0 +1,94 @@
+# ── Ma Watchlist ──
+# Pour ajouter un titre : copie une ligne existante et change le ticker et le secteur.
+# Pour en retirer : supprime la ligne.
+# Le ticker doit correspondre exactement au symbole Yahoo Finance.
+
+- ticker: SCCO
+  sector: Mining
+
+- ticker: AU
+  sector: Gold
+
+- ticker: CCJ
+  sector: Uranium
+
+- ticker: COHR
+  sector: Photonics
+
+- ticker: FIX
+  sector: Construction
+
+- ticker: GLW
+  sector: Materials
+
+- ticker: LITE
+  sector: Photonics
+
+- ticker: MT
+  sector: Steel
+
+- ticker: BE
+  sector: Energy
+
+- ticker: CIEN
+  sector: Networking
+
+- ticker: CRWV
+  sector: Cybersecurity
+
+- ticker: AEM
+  sector: Gold
+
+- ticker: MRNA
+  sector: Biotech
+
+- ticker: ASTS
+  sector: Space
+
+- ticker: NVDA
+  sector: Semicon
+
+- ticker: AAPL
+  sector: Tech
+
+- ticker: MSFT
+  sector: Tech
+
+- ticker: AMZN
+  sector: E-Commerce
+
+- ticker: GOOGL
+  sector: Tech
+
+- ticker: META
+  sector: Tech
+
+- ticker: TSLA
+  sector: Auto
+
+- ticker: AMD
+  sector: Semicon
+
+- ticker: PLTR
+  sector: Software
+
+- ticker: COIN
+  sector: Crypto
+
+- ticker: OKLO
+  sector: Nuclear
+
+- ticker: MARA
+  sector: Bitcoin Mining
+
+- ticker: NET
+  sector: Cybersecurity
+
+- ticker: SNOW
+  sector: Data
+
+- ticker: GLXY
+  sector: Crypto
+
+- ticker: AGI
+  sector: Gold
