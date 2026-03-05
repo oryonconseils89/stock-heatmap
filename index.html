@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watchlist Heatmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0f1a;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header { margin-bottom: 16px; }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      display: inline;
+    }
+    .header .badge {
+      font-size: 11px;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      margin-left: 12px;
+    }
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .stats span { color: #64748b; }
+    .stats strong { font-weight: 600; }
+    .stats .val { color: #cbd5e1; }
+    .stats .positive { color: #4ade80; }
+    .stats .negative { color: #f87171; }
+    .generated { font-size: 10px; color: #334155; margin-top: 4px; }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .controls button {
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: inherit;
+      font-weight: 400;
+      background: transparent;
+      color: #64748b;
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .15s;
+      letter-spacing: 0.02em;
+    }
+    .controls button.active {
+      font-weight: 700;
+      background: #1e293b;
+      color: #fff;
+      border-color: #334155;
+    }
+    .controls button:hover { border-color: #334155; color: #94a3b8; }
+    .separator { color: #334155; margin: 0 4px; }
+    .controls label { font-size: 11px; color: #64748b; }
+    .controls input[type="number"] {
+      width: 72px;
+      padding: 6px 24px 6px 10px;
+      font-size: 11px;
+      font-family: inherit;
+      background: #1a1a2e;
+      color: #fff;
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      outline: none;
+    }
+    .controls input[type="number"]:focus { border-color: #475569; }
+    .input-wrap { position: relative; display: inline-block; }
+    .input-wrap .suffix {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: #475569;
+    }
+    .reset-btn {
+      padding: 5px 10px !important;
+      font-size: 10px !important;
+      background: #1e293b !important;
+      color: #94a3b8 !important;
+      border: 1px solid #334155 !important;
+    }
+
+    /* ── Treemap ── */
+    .treemap-container {
+      position: relative;
+      background: #0a0a14;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #1a1a2e;
+    }
+    .tile {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 4px 6px;
+      cursor: pointer;
+      transition: filter .12s, transform .12s;
+      overflow: hidden;
+      border-radius: 1px;
+    }
+    .tile:hover {
+      filter: brightness(1.3) !important;
+      transform: scale(1.01);
+      z-index: 10 !important;
+    }
+    .tile .ticker {
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+    .tile .change {
+      font-weight: 500;
+      color: #fff;
+      opacity: 0.85;
+      line-height: 1.3;
+    }
+    .tile .cap {
+      font-size: 9px;
+      color: #fff;
+      opacity: 0.55;
+      margin-top: 2px;
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed #1e293b;
+      border-radius: 4px;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    /* ── Tooltip ── */
+    .tooltip {
+      position: fixed;
+      z-index: 999;
+      background: #1a1a2e;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 10px 14px;
+      pointer-events: none;
+      min-width: 210px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      display: none;
+    }
+    .tooltip.visible { display: block; }
+    .tooltip .tt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .tooltip .tt-ticker { color: #fff; font-weight: 700; font-size: 15px; }
+    .tooltip .tt-change { font-weight: 700; font-size: 15px; }
+    .tooltip .tt-name { color: #94a3b8; font-size: 12px; margin-bottom: 6px; }
+    .tooltip .tt-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .tooltip .tt-label { color: #64748b; }
+    .tooltip .tt-value { color: #cbd5e1; }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .legend .legend-title {
+      font-size: 10px;
+      color: #475569;
+      letter-spacing: 0.05em;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-item .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    .legend-item span {
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    /* ── Loading ── */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 400px;
+      color: #475569;
+      font-size: 14px;
+    }
+    .loading .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #1e293b;
+      border-top-color: #64748b;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>WATCHLIST HEATMAP</h1>
+    <span class="badge" id="total-badge"></span>
+    <div class="stats" id="stats-bar"></div>
+    <div class="generated" id="generated-at"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls" id="controls"></div>
+
+  <!-- Treemap -->
+  <div id="treemap-area">
+    <div class="loading">
+      <div class="spinner"></div>
+      Chargement des données...
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip" id="tooltip">
+    <div class="tt-header">
+      <span class="tt-ticker" id="tt-ticker"></span>
+      <span class="tt-change" id="tt-change"></span>
+    </div>
+    <div class="tt-name" id="tt-name"></div>
+    <div class="tt-row">
+      <span class="tt-label">Secteur</span>
+      <span class="tt-value" id="tt-sector"></span>
+    </div>
+    <div class="tt-row">
+      <span class="tt-label">Prix</span>
+      <span class="tt-value" id="tt-price"></span>
+    </div>
+    <div class="tt-row">
+      <span class="tt-label">Market Cap</span>
+      <span class="tt-value" id="tt-cap"></span>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend" id="legend"></div>
+
+  <!-- D3.js pour le calcul du treemap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════
+    // Configuration
+    // ═══════════════════════════════════════════════════════════
+
+    const FILTERS = [
+      { label: "Tout afficher", id: "all", fn: () => true },
+      { label: "En baisse", id: "down", fn: s => s.change < 0 },
+      { label: "En hausse", id: "up", fn: s => s.change >= 0 },
+      { label: "Baisse > 3%", id: "d3", fn: s => s.change <= -3 },
+      { label: "Baisse > 5%", id: "d5", fn: s => s.change <= -5 },
+      { label: "Baisse > 8%", id: "d8", fn: s => s.change <= -8 },
+    ];
+
+    const LEGEND_ITEMS = [
+      { label: "> +3%", color: "#16a34a" },
+      { label: "+1 à 3%", color: "#22c55e" },
+      { label: "~ 0%", color: "#6b7a6e" },
+      { label: "-3 à -5%", color: "#a63548" },
+      { label: "-5 à -8%", color: "#8b1a2b" },
+      { label: "-8 à -12%", color: "#6e1423" },
+      { label: "< -12%", color: "#4a0d1a" },
+    ];
+
+    // ═══════════════════════════════════════════════════════════
+    // State
+    // ═══════════════════════════════════════════════════════════
+
+    let allStocks = [];
+    let activeFilter = "all";
+    let customThreshold = "";
+    let sortBy = "cap"; // "cap" ou "change"
+
+    // ═══════════════════════════════════════════════════════════
+    // Color mapping
+    // ═══════════════════════════════════════════════════════════
+
+    function getColor(change) {
+      if (change >= 3) return "#16a34a";
+      if (change >= 1.5) return "#22c55e";
+      if (change >= 0.5) return "#4ade80";
+      if (change >= 0) return "#6b7a6e";
+      if (change >= -3) return "#9e4a5a";
+      if (change >= -5) return "#a63548";
+      if (change >= -8) return "#8b1a2b";
+      if (change >= -12) return "#6e1423";
+      return "#4a0d1a";
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Treemap layout (D3)
+    // ═══════════════════════════════════════════════════════════
+
+    function computeTreemap(data, width, height) {
+      if (!data.length || width <= 0 || height <= 0) return [];
+
+      const root = d3.hierarchy({ children: data })
+        .sum(d => d.marketCap || 0)
+        .sort((a, b) => b.value - a.value);
+
+      d3.treemap()
+        .size([width, height])
+        .padding(2)
+        .round(true)(root);
+
+      return root.leaves().map(leaf => ({
+        ...leaf.data,
+        x: leaf.x0,
+        y: leaf.y0,
+        w: leaf.x1 - leaf.x0,
+        h: leaf.y1 - leaf.y0,
+      }));
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Filtering
+    // ═══════════════════════════════════════════════════════════
+
+    function getFiltered() {
+      let filterFn;
+      if (customThreshold !== "" && !isNaN(parseFloat(customThreshold))) {
+        const t = parseFloat(customThreshold);
+        filterFn = s => s.change <= -Math.abs(t);
+      } else {
+        filterFn = FILTERS.find(f => f.id === activeFilter)?.fn || (() => true);
+      }
+
+      let result = allStocks.filter(filterFn);
+      if (sortBy === "change") {
+        result.sort((a, b) => a.change - b.change);
+      }
+      return result;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Rendering
+    // ═══════════════════════════════════════════════════════════
+
+    function render() {
+      const filtered = getFiltered();
+      const area = document.getElementById("treemap-area");
+      const width = Math.min(window.innerWidth - 40, 1200);
+      const height = Math.min(window.innerHeight - 220, 640);
+
+      // Stats
+      const totalCap = filtered.reduce((s, x) => s + x.marketCap, 0);
+      const avgChange = filtered.length
+        ? filtered.reduce((s, x) => s + x.change * x.marketCap, 0) / totalCap
+        : 0;
+
+      document.getElementById("stats-bar").innerHTML = `
+        <span>Affiché : <strong class="val">${filtered.length}</strong> titres</span>
+        <span>Cap cumulée : <strong class="val">$${totalCap.toFixed(1)}B</strong></span>
+        <span>Δ moy. pondéré :
+          <strong class="${avgChange >= 0 ? 'positive' : 'negative'}">
+            ${avgChange >= 0 ? '+' : ''}${avgChange.toFixed(2)}%
+          </strong>
+        </span>
+      `;
+
+      // Empty state
+      if (filtered.length === 0) {
+        area.innerHTML = `<div class="empty" style="width:${width}px;height:${height}px;">
+          Aucun titre ne correspond au filtre actif.
+        </div>`;
+        return;
+      }
+
+      // Compute tiles
+      const tiles = computeTreemap(filtered, width, height);
+
+      // Build HTML
+      let html = `<div class="treemap-container" style="width:${width}px;height:${height}px;">`;
+
+      for (const t of tiles) {
+        const fontSize = (t.w > 120 && t.h > 80) ? 14 : (t.w > 70 ? 12 : 10);
+        const showTicker = t.w > 48 && t.h > 28;
+        const showChange = t.w > 48 && t.h > 28;
+        const showCap = t.w > 80 && t.h > 58;
+
+        html += `<div class="tile"
+          data-ticker="${t.ticker}"
+          style="
+            left:${t.x}px; top:${t.y}px;
+            width:${t.w}px; height:${t.h}px;
+            background:${getColor(t.change)};
+            z-index:1;
+          ">`;
+
+        if (showTicker) {
+          html += `<span class="ticker" style="font-size:${Math.max(fontSize, 11)}px">${t.ticker}</span>`;
+        }
+        if (showChange) {
+          html += `<span class="change" style="font-size:${Math.max(fontSize - 2, 10)}px">
+            ${t.change >= 0 ? '+' : ''}${t.change.toFixed(2)}%
+          </span>`;
+        }
+        if (showCap) {
+          html += `<span class="cap">$${t.marketCap.toFixed(0)}B</span>`;
+        }
+
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+      area.innerHTML = html;
+
+      // Attach hover events
+      document.querySelectorAll(".tile").forEach(el => {
+        el.addEventListener("mouseenter", onTileEnter);
+        el.addEventListener("mouseleave", onTileLeave);
+        el.addEventListener("mousemove", onTileMove);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Tooltip
+    // ═══════════════════════════════════════════════════════════
+
+    const tooltip = document.getElementById("tooltip");
+
+    function onTileEnter(e) {
+      const ticker = e.currentTarget.dataset.ticker;
+      const stock = allStocks.find(s => s.ticker === ticker);
+      if (!stock) return;
+
+      document.getElementById("tt-ticker").textContent = stock.ticker;
+      const changeEl = document.getElementById("tt-change");
+      changeEl.textContent = `${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}%`;
+      changeEl.style.color = stock.change >= 0 ? "#4ade80" : "#f87171";
+      document.getElementById("tt-name").textContent = stock.name;
+      document.getElementById("tt-sector").textContent = stock.sector;
+      document.getElementById("tt-price").textContent = `$${stock.price.toFixed(2)}`;
+      document.getElementById("tt-cap").textContent = `$${stock.marketCap.toFixed(1)}B`;
+
+      tooltip.classList.add("visible");
+    }
+
+    function onTileLeave() {
+      tooltip.classList.remove("visible");
+    }
+
+    function onTileMove(e) {
+      const left = Math.min(e.clientX + 14, window.innerWidth - 240);
+      const top = e.clientY + 14;
+      tooltip.style.left = left + "px";
+      tooltip.style.top = top + "px";
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Controls
+    // ═══════════════════════════════════════════════════════════
+
+    function buildControls() {
+      const container = document.getElementById("controls");
+      let html = "";
+
+      // Filter buttons
+      for (const f of FILTERS) {
+        html += `<button data-filter="${f.id}" class="${activeFilter === f.id && customThreshold === '' ? 'active' : ''}">${f.label}</button>`;
+      }
+
+      // Separator + custom threshold
+      html += `<span class="separator">│</span>`;
+      html += `<label>Seuil custom :</label>`;
+      html += `<span class="input-wrap">
+        <input type="number" id="custom-input" placeholder="ex: 6" value="${customThreshold}" />
+        <span class="suffix">%</span>
+      </span>`;
+
+      if (customThreshold) {
+        html += `<button class="reset-btn" id="reset-btn">✕ Reset</button>`;
+      }
+
+      // Separator + sort
+      html += `<span class="separator">│</span>`;
+      html += `<label>Trier :</label>`;
+      html += `<button data-sort="cap" class="${sortBy === 'cap' ? 'active' : ''}">Market Cap</button>`;
+      html += `<button data-sort="change" class="${sortBy === 'change' ? 'active' : ''}">% Change</button>`;
+
+      container.innerHTML = html;
+
+      // Event listeners — filters
+      container.querySelectorAll("[data-filter]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeFilter = btn.dataset.filter;
+          customThreshold = "";
+          buildControls();
+          render();
+        });
+      });
+
+      // Event listeners — sort
+      container.querySelectorAll("[data-sort]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          sortBy = btn.dataset.sort;
+          buildControls();
+          render();
+        });
+      });
+
+      // Event listener — custom input
+      const input = document.getElementById("custom-input");
+      if (input) {
+        input.addEventListener("input", () => {
+          customThreshold = input.value;
+          activeFilter = "all";
+          buildControls();
+          render();
+          // Re-focus input after rebuild
+          const newInput = document.getElementById("custom-input");
+          if (newInput) {
+            newInput.focus();
+            newInput.setSelectionRange(newInput.value.length, newInput.value.length);
+          }
+        });
+      }
+
+      // Event listener — reset
+      const resetBtn = document.getElementById("reset-btn");
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          customThreshold = "";
+          buildControls();
+          render();
+        });
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Legend
+    // ═══════════════════════════════════════════════════════════
+
+    function buildLegend() {
+      const container = document.getElementById("legend");
+      let html = `<span class="legend-title">LÉGENDE</span>`;
+      for (const item of LEGEND_ITEMS) {
+        html += `<div class="legend-item">
+          <div class="swatch" style="background:${item.color}"></div>
+          <span>${item.label}</span>
+        </div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Load data & init
+    // ═══════════════════════════════════════════════════════════
+
+    async function init() {
+      try {
+        const resp = await fetch("data.json");
+        if (!resp.ok) throw new Error("data.json introuvable");
+        const data = await resp.json();
+
+        allStocks = data.stocks || [];
+        document.getElementById("total-badge").textContent =
+          `${allStocks.length} TITRES SUIVIS`;
+        document.getElementById("generated-at").textContent =
+          `Dernière mise à jour : ${data.generated_at || 'inconnue'}`;
+
+        buildControls();
+        buildLegend();
+        render();
+
+        // Re-render on resize
+        window.addEventListener("resize", render);
+
+      } catch (err) {
+        document.getElementById("treemap-area").innerHTML = `
+          <div class="empty" style="width:100%;height:400px;flex-direction:column;gap:12px;">
+            <div style="font-size:24px;">⏳</div>
+            <div>data.json pas encore généré.</div>
+            <div style="font-size:11px;color:#334155;">
+              Lance le workflow manuellement dans GitHub Actions<br/>
+              (onglet Actions → "Mise à jour quotidienne" → Run workflow)
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
