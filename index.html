@@ -169,6 +169,7 @@
       padding: 10px 14px;
       pointer-events: none;
       min-width: 210px;
+      max-width: 380px;
       box-shadow: 0 8px 32px rgba(0,0,0,.5);
       display: none;
     }
@@ -190,6 +191,35 @@
     }
     .tooltip .tt-label { color: #64748b; }
     .tooltip .tt-value { color: #cbd5e1; }
+
+    /* ── Smart News Summary (dans le tooltip) ── */
+    .tt-digest {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #2a2a3e;
+    }
+    .tt-digest-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .tt-digest-bullet {
+      font-size: 11px;
+      color: #c0c8d8;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      padding-left: 10px;
+      position: relative;
+    }
+    .tt-digest-bullet::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #475569;
+    }
 
     /* ── Legend ── */
     .legend {
@@ -279,6 +309,11 @@
     <div class="tt-row">
       <span class="tt-label">Market Cap</span>
       <span class="tt-value" id="tt-cap"></span>
+    </div>
+    <!-- Smart News Summary — affiché seulement quand des bullets existent -->
+    <div class="tt-digest" id="tt-digest" style="display:none;">
+      <div class="tt-digest-title">Smart Summary</div>
+      <div id="tt-digest-bullets"></div>
     </div>
   </div>
 
@@ -483,6 +518,19 @@
       document.getElementById("tt-price").textContent = `$${stock.price.toFixed(2)}`;
       document.getElementById("tt-cap").textContent = `$${stock.marketCap.toFixed(1)}B`;
 
+      // ── Smart News Summary ──
+      const digestContainer = document.getElementById("tt-digest");
+      const digestBullets = document.getElementById("tt-digest-bullets");
+
+      if (stock.newsDigest && stock.newsDigest.length > 0) {
+        digestBullets.innerHTML = stock.newsDigest
+          .map(b => `<div class="tt-digest-bullet">${b}</div>`)
+          .join("");
+        digestContainer.style.display = "block";
+      } else {
+        digestContainer.style.display = "none";
+      }
+
       tooltip.classList.add("visible");
     }
 
@@ -491,8 +539,9 @@
     }
 
     function onTileMove(e) {
-      const left = Math.min(e.clientX + 14, window.innerWidth - 240);
-      const top = e.clientY + 14;
+      const ttRect = tooltip.getBoundingClientRect();
+      const left = Math.min(e.clientX + 14, window.innerWidth - ttRect.width - 20);
+      const top = Math.min(e.clientY + 14, window.innerHeight - ttRect.height - 20);
       tooltip.style.left = left + "px";
       tooltip.style.top = top + "px";
     }
