@@ -20,6 +20,7 @@ import requests
 import time
 import os
 from datetime import datetime, timezone
+from urllib.parse import quote
 
 # ── Configuration ───────────────────────────────────────────────
 
@@ -79,7 +80,8 @@ def fetch_headlines(ticker, company_name):
     """Récupère les headlines récentes depuis Google News RSS."""
     try:
         query = f"{ticker} {company_name} stock"
-        url = f"https://news.google.com/rss/search?q={query}&hl=en&gl=US&ceid=US:en"
+        encoded_query = quote(query)
+        url = f"https://news.google.com/rss/search?q={encoded_query}&hl=en&gl=US&ceid=US:en"
         feed = feedparser.parse(url)
 
         headlines = []
