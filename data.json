@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-06 01:58 UTC",
+  "generated_at": "2026-03-06 05:42 UTC",
   "count": 30,
   "stocks": [
     {
@@ -8,7 +8,8 @@
       "sector": "Mining",
       "marketCap": 158.5,
       "price": 191.87,
-      "change": -7.16
+      "change": -7.16,
+      "newsDigest": []
     },
     {
       "ticker": "AU",
@@ -16,7 +17,8 @@
       "sector": "Gold",
       "marketCap": 54.49,
       "price": 107.89,
-      "change": -4.64
+      "change": -4.64,
+      "newsDigest": []
     },
     {
       "ticker": "CCJ",
@@ -24,7 +26,8 @@
       "sector": "Uranium",
       "marketCap": 49.79,
       "price": 114.24,
-      "change": -4.99
+      "change": -4.99,
+      "newsDigest": []
     },
     {
       "ticker": "COHR",
@@ -32,7 +35,8 @@
       "sector": "Photonics",
       "marketCap": 47.6,
       "price": 253.87,
-      "change": -7.64
+      "change": -7.64,
+      "newsDigest": []
     },
     {
       "ticker": "FIX",
@@ -40,7 +44,8 @@
       "sector": "Construction",
       "marketCap": 47.55,
       "price": 1348.22,
-      "change": -5.74
+      "change": -5.74,
+      "newsDigest": []
     },
     {
       "ticker": "GLW",
@@ -48,7 +53,8 @@
       "sector": "Materials",
       "marketCap": 115.6,
       "price": 134.74,
-      "change": -6.97
+      "change": -6.97,
+      "newsDigest": []
     },
     {
       "ticker": "LITE",
@@ -56,7 +62,8 @@
       "sector": "Photonics",
       "marketCap": 46.47,
       "price": 650.82,
-      "change": -4.4
+      "change": -4.4,
+      "newsDigest": []
     },
     {
       "ticker": "MT",
@@ -64,7 +71,8 @@
       "sector": "Steel",
       "marketCap": 44.02,
       "price": 57.44,
-      "change": -6.08
+      "change": -6.08,
+      "newsDigest": []
     },
     {
       "ticker": "BE",
@@ -72,7 +80,8 @@
       "sector": "Energy",
       "marketCap": 44.88,
       "price": 159.99,
-      "change": -2.91
+      "change": -2.91,
+      "newsDigest": []
     },
     {
       "ticker": "CIEN",
@@ -80,7 +89,8 @@
       "sector": "Networking",
       "marketCap": 42.34,
       "price": 299.3,
-      "change": -12.88
+      "change": -12.88,
+      "newsDigest": []
     },
     {
       "ticker": "CRWV",
@@ -88,7 +98,8 @@
       "sector": "Cybersecurity",
       "marketCap": 39.33,
       "price": 74.82,
-      "change": -5.89
+      "change": -5.89,
+      "newsDigest": []
     },
     {
       "ticker": "AEM",
@@ -96,7 +107,8 @@
       "sector": "Gold",
       "marketCap": 110.81,
       "price": 221.49,
-      "change": -4.83
+      "change": -4.83,
+      "newsDigest": []
     },
     {
       "ticker": "MRNA",
@@ -104,7 +116,8 @@
       "sector": "Biotech",
       "marketCap": 21.26,
       "price": 53.83,
-      "change": -6.87
+      "change": -6.87,
+      "newsDigest": []
     },
     {
       "ticker": "ASTS",
@@ -112,7 +125,8 @@
       "sector": "Space",
       "marketCap": 35.68,
       "price": 93.86,
-      "change": -10.52
+      "change": -10.52,
+      "newsDigest": []
     },
     {
       "ticker": "NVDA",
@@ -120,7 +134,8 @@
       "sector": "Semicon",
       "marketCap": 4456.08,
       "price": 183.34,
-      "change": 0.16
+      "change": 0.16,
+      "newsDigest": []
     },
     {
       "ticker": "AAPL",
@@ -128,7 +143,8 @@
       "sector": "Tech",
       "marketCap": 3825.72,
       "price": 260.29,
-      "change": -0.85
+      "change": -0.85,
+      "newsDigest": []
     },
     {
       "ticker": "MSFT",
@@ -136,7 +152,8 @@
       "sector": "Tech",
       "marketCap": 3052.33,
       "price": 410.68,
-      "change": 1.35
+      "change": 1.35,
+      "newsDigest": []
     },
     {
       "ticker": "AMZN",
@@ -144,7 +161,8 @@
       "sector": "E-Commerce",
       "marketCap": 2350.3,
       "price": 218.94,
-      "change": 0.98
+      "change": 0.98,
+      "newsDigest": []
     },
     {
       "ticker": "GOOGL",
@@ -152,7 +170,8 @@
       "sector": "Tech",
       "marketCap": 3639.75,
       "price": 300.88,
-      "change": -0.74
+      "change": -0.74,
+      "newsDigest": []
     },
     {
       "ticker": "META",
@@ -160,7 +179,8 @@
       "sector": "Tech",
       "marketCap": 1670.95,
       "price": 660.57,
-      "change": -1.07
+      "change": -1.07,
+      "newsDigest": []
     },
     {
       "ticker": "TSLA",
@@ -168,7 +188,8 @@
       "sector": "Auto",
       "marketCap": 1521.8,
       "price": 405.55,
-      "change": -0.1
+      "change": -0.1,
+      "newsDigest": []
     },
     {
       "ticker": "AMD",
@@ -176,7 +197,8 @@
       "sector": "Semicon",
       "marketCap": 325.19,
       "price": 199.45,
-      "change": -1.3
+      "change": -1.3,
+      "newsDigest": []
     },
     {
       "ticker": "PLTR",
@@ -184,7 +206,8 @@
       "sector": "Software",
       "marketCap": 365.14,
       "price": 152.67,
-      "change": -0.29
+      "change": -0.29,
+      "newsDigest": []
     },
     {
       "ticker": "COIN",
@@ -192,7 +215,8 @@
       "sector": "Crypto",
       "marketCap": 55.47,
       "price": 205.71,
-      "change": -1.54
+      "change": -1.54,
+      "newsDigest": []
     },
     {
       "ticker": "OKLO",
@@ -200,7 +224,8 @@
       "sector": "Nuclear",
       "marketCap": 9.69,
       "price": 62.03,
-      "change": -5.51
+      "change": -5.51,
+      "newsDigest": []
     },
     {
       "ticker": "MARA",
@@ -208,7 +233,8 @@
       "sector": "Bitcoin Mining",
       "marketCap": 3.33,
       "price": 8.77,
-      "change": -5.6
+      "change": -5.6,
+      "newsDigest": []
     },
     {
       "ticker": "NET",
@@ -216,7 +242,8 @@
       "sector": "Cybersecurity",
       "marketCap": 67.69,
       "price": 192.31,
-      "change": 3.45
+      "change": 3.45,
+      "newsDigest": []
     },
     {
       "ticker": "SNOW",
@@ -224,7 +251,8 @@
       "sector": "Data",
       "marketCap": 60.72,
       "price": 177.45,
-      "change": 5.46
+      "change": 5.46,
+      "newsDigest": []
     },
     {
       "ticker": "GLXY",
@@ -232,7 +260,8 @@
       "sector": "Crypto",
       "marketCap": 8.88,
       "price": 22.73,
-      "change": -6.61
+      "change": -6.61,
+      "newsDigest": []
     },
     {
       "ticker": "AGI",
@@ -240,7 +269,8 @@
       "sector": "Gold",
       "marketCap": 20.81,
       "price": 49.38,
-      "change": -4.97
+      "change": -4.97,
+      "newsDigest": []
     }
   ]
 }
