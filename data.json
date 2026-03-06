@@ -1,0 +1,246 @@
+{
+  "generated_at": "2026-03-06 01:58 UTC",
+  "count": 30,
+  "stocks": [
+    {
+      "ticker": "SCCO",
+      "name": "Southern Copper Corporation",
+      "sector": "Mining",
+      "marketCap": 158.5,
+      "price": 191.87,
+      "change": -7.16
+    },
+    {
+      "ticker": "AU",
+      "name": "AngloGold Ashanti PLC",
+      "sector": "Gold",
+      "marketCap": 54.49,
+      "price": 107.89,
+      "change": -4.64
+    },
+    {
+      "ticker": "CCJ",
+      "name": "Cameco Corporation",
+      "sector": "Uranium",
+      "marketCap": 49.79,
+      "price": 114.24,
+      "change": -4.99
+    },
+    {
+      "ticker": "COHR",
+      "name": "Coherent Corp.",
+      "sector": "Photonics",
+      "marketCap": 47.6,
+      "price": 253.87,
+      "change": -7.64
+    },
+    {
+      "ticker": "FIX",
+      "name": "Comfort Systems USA, Inc.",
+      "sector": "Construction",
+      "marketCap": 47.55,
+      "price": 1348.22,
+      "change": -5.74
+    },
+    {
+      "ticker": "GLW",
+      "name": "Corning Incorporated",
+      "sector": "Materials",
+      "marketCap": 115.6,
+      "price": 134.74,
+      "change": -6.97
+    },
+    {
+      "ticker": "LITE",
+      "name": "Lumentum Holdings Inc.",
+      "sector": "Photonics",
+      "marketCap": 46.47,
+      "price": 650.82,
+      "change": -4.4
+    },
+    {
+      "ticker": "MT",
+      "name": "Arcelor Mittal NY Registry Shar",
+      "sector": "Steel",
+      "marketCap": 44.02,
+      "price": 57.44,
+      "change": -6.08
+    },
+    {
+      "ticker": "BE",
+      "name": "Bloom Energy Corporation",
+      "sector": "Energy",
+      "marketCap": 44.88,
+      "price": 159.99,
+      "change": -2.91
+    },
+    {
+      "ticker": "CIEN",
+      "name": "Ciena Corporation",
+      "sector": "Networking",
+      "marketCap": 42.34,
+      "price": 299.3,
+      "change": -12.88
+    },
+    {
+      "ticker": "CRWV",
+      "name": "CoreWeave, Inc.",
+      "sector": "Cybersecurity",
+      "marketCap": 39.33,
+      "price": 74.82,
+      "change": -5.89
+    },
+    {
+      "ticker": "AEM",
+      "name": "Agnico Eagle Mines Limited",
+      "sector": "Gold",
+      "marketCap": 110.81,
+      "price": 221.49,
+      "change": -4.83
+    },
+    {
+      "ticker": "MRNA",
+      "name": "Moderna, Inc.",
+      "sector": "Biotech",
+      "marketCap": 21.26,
+      "price": 53.83,
+      "change": -6.87
+    },
+    {
+      "ticker": "ASTS",
+      "name": "AST SpaceMobile, Inc.",
+      "sector": "Space",
+      "marketCap": 35.68,
+      "price": 93.86,
+      "change": -10.52
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "sector": "Semicon",
+      "marketCap": 4456.08,
+      "price": 183.34,
+      "change": 0.16
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "sector": "Tech",
+      "marketCap": 3825.72,
+      "price": 260.29,
+      "change": -0.85
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "sector": "Tech",
+      "marketCap": 3052.33,
+      "price": 410.68,
+      "change": 1.35
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "sector": "E-Commerce",
+      "marketCap": 2350.3,
+      "price": 218.94,
+      "change": 0.98
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "sector": "Tech",
+      "marketCap": 3639.75,
+      "price": 300.88,
+      "change": -0.74
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "sector": "Tech",
+      "marketCap": 1670.95,
+      "price": 660.57,
+      "change": -1.07
+    },
+    {
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "sector": "Auto",
+      "marketCap": 1521.8,
+      "price": 405.55,
+      "change": -0.1
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices, Inc.",
+      "sector": "Semicon",
+      "marketCap": 325.19,
+      "price": 199.45,
+      "change": -1.3
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "sector": "Software",
+      "marketCap": 365.14,
+      "price": 152.67,
+      "change": -0.29
+    },
+    {
+      "ticker": "COIN",
+      "name": "Coinbase Global, Inc. - 3",
+      "sector": "Crypto",
+      "marketCap": 55.47,
+      "price": 205.71,
+      "change": -1.54
+    },
+    {
+      "ticker": "OKLO",
+      "name": "Oklo Inc.",
+      "sector": "Nuclear",
+      "marketCap": 9.69,
+      "price": 62.03,
+      "change": -5.51
+    },
+    {
+      "ticker": "MARA",
+      "name": "MARA Holdings, Inc.",
+      "sector": "Bitcoin Mining",
+      "marketCap": 3.33,
+      "price": 8.77,
+      "change": -5.6
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare, Inc.",
+      "sector": "Cybersecurity",
+      "marketCap": 67.69,
+      "price": 192.31,
+      "change": 3.45
+    },
+    {
+      "ticker": "SNOW",
+      "name": "Snowflake Inc.",
+      "sector": "Data",
+      "marketCap": 60.72,
+      "price": 177.45,
+      "change": 5.46
+    },
+    {
+      "ticker": "GLXY",
+      "name": "Galaxy Digital Inc.",
+      "sector": "Crypto",
+      "marketCap": 8.88,
+      "price": 22.73,
+      "change": -6.61
+    },
+    {
+      "ticker": "AGI",
+      "name": "Alamos Gold Inc.",
+      "sector": "Gold",
+      "marketCap": 20.81,
+      "price": 49.38,
+      "change": -4.97
+    }
+  ]
+}
