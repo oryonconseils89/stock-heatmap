@@ -41,11 +41,18 @@ jobs:
           python-version: "3.11"
 
       # 3. Installer les librairies nécessaires
+      #    - yfinance : données de marché
+      #    - pyyaml   : lecture du fichier watchlist.yaml
+      #    - feedparser: lecture des flux RSS Google News (Phase 2)
       - name: Installer les dépendances
-        run: pip install yfinance pyyaml
+        run: pip install yfinance pyyaml feedparser
 
       # 4. Lancer le script
+      #    Le secret GROQ_API_KEY est injecté ici comme variable d'environnement.
+      #    Le script le lit avec os.environ.get("GROQ_API_KEY").
       - name: Exécuter fetch_data.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python fetch_data.py
 
       # 5. Sauvegarder le data.json dans le repo
