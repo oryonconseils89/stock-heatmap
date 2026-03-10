@@ -1,329 +1,331 @@
 {
-  "generated_at": "2026-03-09 17:32 UTC",
+  "generated_at": "2026-03-10 17:15 UTC",
   "count": 30,
   "stocks": [
     {
       "ticker": "SCCO",
       "name": "Southern Copper Corporation",
       "sector": "Mining",
-      "marketCap": 152.9,
-      "price": 185.1,
-      "change": 0.07,
+      "marketCap": 163.78,
+      "price": 198.26,
+      "change": 4.0,
       "newsDigest": [
-        "Institutional investors are actively adjusting their positions in the stock, with some buyers, such as Pinpoint Asset Management and Regal Partners, increasing their stakes, while others, like DNB Asset Management, are reducing theirs. Despite the mixed sentiment from investors, the stock's movement today is relatively muted, suggesting a lack of significant news driving the price. Recent earnings reports appear to have had a positive impact on the stock, with a 3.7% increase since the last report, although this momentum has not carried over to today's trading. Analysts, such as BofA, are adopting a cautious stance on the stock, which may be contributing to the limited upside."
+        "Investor sentiment is improving due to recent stake increases by Regal Partners Ltd and Vanguard Group Inc, indicating confidence in the company's prospects. The stock's 4% move today may be a rebound from the 7.16% drop on March 5, suggesting that investors are buying the dip. Despite BofA's cautious stance, the overall trend of institutional investment and higher price targets is supporting the stock's upward movement."
       ]
     },
     {
       "ticker": "AU",
       "name": "AngloGold Ashanti PLC",
       "sector": "Gold",
-      "marketCap": 53.29,
-      "price": 105.52,
-      "change": -0.96,
+      "marketCap": 55.79,
+      "price": 110.48,
+      "change": 1.45,
       "newsDigest": [
-        "Insider selling activity, driven by executives covering taxes on recently vested incentives, may be contributing to the stock's decline, as it could be perceived as a negative signal by investors. Recent investment decisions by institutional investors, including Russell Investments Group Ltd. trimming its position and Gamco Investors INC. ET AL boosting its stake, may be influencing the stock's price, but their impact appears limited given the modest move. The stock's overall trend remains positive, with a significant surge over the past year, which could be supporting its current price despite today's slight decline."
+        "Recent insider sales are likely being offset by increased institutional buying, as evidenced by Van ECK Associates Corp's acquisition of 1,804,620 shares, contributing to the stock's positive move. The upgrade to 'Buy' by Bank of America is also likely driving the stock's upward momentum, as it indicates a positive shift in analyst sentiment. Positive commentary from Seeking Alpha and ChartMill, highlighting the company's free cash flow and value investment case, may be further supporting the stock's price. Institutional trading activity, including Causeway Capital Management LLC's reduction in stock position, is being overshadowed by more significant buying activity and bullish analyst sentiment."
       ]
     },
     {
       "ticker": "CCJ",
       "name": "Cameco Corporation",
       "sector": "Uranium",
-      "marketCap": 49.37,
-      "price": 113.27,
-      "change": 3.27,
+      "marketCap": 53.2,
+      "price": 122.06,
+      "change": 5.09,
       "newsDigest": [
-        "Positive sentiment from a major uranium contract with India is likely driving today's stock price increase, as it signals a significant revenue opportunity for the company. Despite recent analyst concerns over valuation and sector risk, institutional investors such as Korea Investment CORP and Rathbones Group PLC continue to accumulate shares, indicating confidence in the stock's long-term prospects. The overall bullish tone from these developments is outweighing bearish views, leading to the stock's 3.27% gain today."
+        "A major uranium contract with India has likely driven today's significant stock price increase, as it signals a substantial expansion of Cameco's committed sales and revenue potential.",
+        "Institutional investment activity, including purchases by Van ECK Associates Corp and BW Gestao de Investimentos Ltda, may also be contributing to the stock's upward momentum, indicating growing investor confidence in the company's prospects.",
+        "Despite some valuation concerns and recent sector risk-off pressure, the positive news from the Indian contract appears to be outweighing these factors and fueling the stock's rally."
       ]
     },
     {
       "ticker": "COHR",
       "name": "Coherent Corp.",
       "sector": "Photonics",
-      "marketCap": 45.11,
-      "price": 240.6,
-      "change": 2.07,
+      "marketCap": 50.47,
+      "price": 269.2,
+      "change": 6.69,
       "newsDigest": [
-        "The stock's 2.07% move today is likely a continuation of its recent surge, driven by the announcement of its inclusion in the S&P 500 Index, which is expected to increase investor visibility and demand. Recent investment from Nvidia and the company's growing relevance in the AI-era network space are also contributing to its upward momentum. The overall positive sentiment and strong performance over the past year, with a 325% gain, are further supporting the stock's current price movement."
+        "The stock's significant gain today is primarily driven by its inclusion in the S&P 500 Index, effective March 23, 2026, which typically leads to increased buying from index funds and ETFs. Strategic partnerships, such as the one with Nvidia, are also contributing to the positive sentiment surrounding the company's growth prospects in the photonics sector. The recent surge in stock price, up over 325% in the past year, suggests investors are optimistic about Coherent's potential to capitalize on the growing demand for optical supplies and denser, more efficient AI-era networks."
       ]
     },
     {
       "ticker": "FIX",
       "name": "Comfort Systems USA, Inc.",
       "sector": "Construction",
-      "marketCap": 46.42,
-      "price": 1316.01,
-      "change": 2.89,
+      "marketCap": 49.13,
+      "price": 1392.81,
+      "change": 1.49,
       "newsDigest": [
-        "Insider sales by key executives, including Terrence Reed and Darcy Anderson, may be contributing to a slight increase in the stock price as investors weigh the impact of these transactions on the company's outlook. The stock's 2.89% move today may be a response to the company's record backlog, which is expected to support a strong demand pipeline, despite some insider selling activity. Recent strong results and valuation may be supporting the stock's momentum, with the stock up 42% in 2026, although some investors are questioning whether this growth can be sustained."
+        "Recent insider sales, including a $6.1m sale by Darcy Anderson, may be contributing to a modest increase in the stock price as investors weigh strong results against potential valuation concerns. Strong momentum in 2026, with the stock up 42%, is likely driven by the company's record backlog and its exposure to the AI infrastructure theme, which is fueling a rebound in the stock. Institutional investment, such as the $87.42 million stock holdings by Russell Investments Group Ltd., is also a positive signal for the stock's outlook. The stock's 1.49% move today may be a result of investors continuing to buy into the company's compelling investment opportunity, despite some insiders selling their shares."
       ]
     },
     {
       "ticker": "GLW",
       "name": "Corning Incorporated",
       "sector": "Materials",
-      "marketCap": 107.24,
-      "price": 124.99,
-      "change": 1.38,
-      "newsDigest": [
-        "Today's modest gain of 1.38% may be a continuation of the stock's strong upward trend over the past year, driven by its growing role in the AI revolution and increasing demand for its glass products. Recent sell-offs by institutional investors, such as LGT Group Foundation and Blair William & Co. IL, have not significantly impacted the stock's overall momentum. The stock's ability to bounce back from recent declines, including a 4.15% drop on March 6, suggests that investors remain bullish on the company's long-term prospects. Overall, the lack of significant negative news and the stock's strong fundamentals are likely supporting its current price movement."
-      ]
+      "marketCap": 118.66,
+      "price": 138.3,
+      "change": 7.17,
+      "newsDigest": []
     },
     {
       "ticker": "LITE",
       "name": "Lumentum Holdings Inc.",
       "sector": "Photonics",
-      "marketCap": 44.17,
-      "price": 618.61,
-      "change": 10.77,
-      "newsDigest": [
-        "A significant partnership with Nvidia, worth $2 billion, is driving the stock's surge, as it validates Lumentum's photonics technology and boosts growth prospects. The company's inclusion in the S&P 500 index, as announced by Reuters, is also contributing to the upward momentum, as it attracts passive investment flows. The Nvidia partnership is particularly impactful, as it leverages Lumentum's capabilities in AI-driven applications, sparking enthusiasm among investors about the company's future growth potential. Recent analyst upgrades, such as the one from Seeking Alpha, further reinforce the bullish sentiment surrounding the stock."
-      ]
+      "marketCap": 49.29,
+      "price": 690.39,
+      "change": 7.76,
+      "newsDigest": []
     },
     {
       "ticker": "MT",
       "name": "Arcelor Mittal NY Registry Shar",
       "sector": "Steel",
-      "marketCap": 40.83,
-      "price": 53.28,
-      "change": -3.83,
+      "marketCap": 44.27,
+      "price": 57.76,
+      "change": 3.46,
       "newsDigest": [
-        "Private companies' significant control of 44% of the company may be contributing to the stock's decline as individual investors, who own 31%, potentially lose confidence in the company's direction. The lack of specific details on why individual investors are selling suggests a broader market or sector-driven downturn may be at play, rather than a company-specific issue. Today's 3.83% decline may be an overreaction, as no fundamentally disruptive news has been reported, indicating potential buying opportunities for long-term investors."
+        "Individual investors holding 31% of shares may be influencing the stock's movement, but the significant control of private companies at 44% suggests institutional actions are driving today's 3.46% increase.",
+        "The recent stock crash, as reported by The Motley Fool, may have created a buying opportunity, attracting investors and contributing to the current uptrend.",
+        "Despite the availability of stock price and chart data on platforms like TradingView, there is no clear indication that technical analysis is the primary driver of today's move."
       ]
     },
     {
       "ticker": "BE",
       "name": "Bloom Energy Corporation",
       "sector": "Energy",
-      "marketCap": 41.27,
-      "price": 147.1,
-      "change": 8.81,
+      "marketCap": 43.95,
+      "price": 156.65,
+      "change": 3.52,
       "newsDigest": [
-        "Positive earnings forecast and recent partnership with Brookfield are likely driving today's stock price increase, as investors anticipate improved financial performance and growth opportunities. Mizuho's raised price target also suggests growing confidence in the company's prospects, contributing to the upward momentum. Recent buying activity from investors such as SPX Gestao de Recursos Ltda may be adding to the bullish sentiment, although the stock's volatility is also evident from recent plunges and slips in response to various news items."
+        "Positive earnings forecast and a recent $5B partnership with Brookfield are likely driving today's 3.52% stock increase, as investors gain confidence in the company's growth prospects. Recent investments by Inceptionr LLC and SPX Gestao de Recursos Ltda also suggest growing institutional interest in the stock. Mizuho's raised price target further reinforces the bullish sentiment, outweighing the underperform rating maintained by Jefferies."
       ]
     },
     {
       "ticker": "CIEN",
       "name": "Ciena Corporation",
       "sector": "Networking",
-      "marketCap": 44.0,
-      "price": 311.04,
-      "change": 5.73,
+      "marketCap": 48.86,
+      "price": 345.41,
+      "change": 8.44,
       "newsDigest": [
-        "Strong data center orders and a raised fiscal '26 revenue outlook are driving today's 5.73% stock increase, as investors focus on the company's positive earnings beat and growth prospects. Despite a recent slump, momentum indicators and technical analysis suggest the stock is well-positioned for further growth, supported by increased demand for AI-related technologies. The contrast between today's gain and recent declines, such as a 15% slump despite a Q1 beat, highlights the stock's volatility and sensitivity to investor sentiment, with some investors potentially buying into the dip and others reacting to positive outlook revisions from analysts like Morgan Stanley."
+        "Strong earnings and revenue beats in Q1, coupled with a raised fiscal '26 revenue outlook, are likely driving today's positive stock move, as investors focus on the company's growth prospects despite initial post-earnings declines.",
+        "The recent emphasis on Ciena's role in powering AI data centers and handling surging AI-driven bandwidth demands may also be contributing to the stock's momentum, as investors recognize the company's potential in this emerging space.",
+        "Increased holdings by First Trust Advisors LP and a technical and fundamental alignment for growth investors, as noted by ChartMill, may further support the stock's upward move, indicating a positive shift in investor sentiment."
       ]
     },
     {
       "ticker": "CRWV",
       "name": "CoreWeave, Inc.",
       "sector": "Cybersecurity",
-      "marketCap": 37.81,
-      "price": 71.92,
-      "change": -1.47,
+      "marketCap": 39.24,
+      "price": 74.65,
+      "change": 0.32,
       "newsDigest": [
-        "The stock's modest decline today may be attributed to ongoing investor uncertainty following a recent weak forecast, despite growing AI backlog and new cloud deals. Recent acquisition of shares by Diversify Advisory Services LLC and a raised price target by Truist may have been offset by concerns over a pending securities fraud class action and high funding seeks. Investor sentiment remains mixed, with some analysts viewing the stock as a bargain and others exercising caution due to the company's volatile stock performance. Weak forecast and funding concerns appear to be outweighing positive developments, such as the Perplexity AI cloud deal and Nvidia backing."
+        "Recent lawsuits and securities fraud class action lawsuits are likely weighing on investor sentiment, despite the stock's modest 0.32% gain today. Mixed analyst opinions, with some maintaining a hold rating and others raising price targets, may be contributing to the stock's relatively stable performance. Investment firms such as WINTON GROUP Ltd purchasing new holdings in the company could be providing a counterbalance to the negative news, supporting the stock's price. Weak forecast and infrastructure delays are still a concern, but the growing AI backlog may be mitigating the impact on the stock's price."
       ]
     },
     {
       "ticker": "AEM",
       "name": "Agnico Eagle Mines Limited",
       "sector": "Gold",
-      "marketCap": 110.1,
-      "price": 220.06,
-      "change": -0.43,
+      "marketCap": 114.44,
+      "price": 228.74,
+      "change": 1.78,
       "newsDigest": [
-        "Investor sentiment remains mixed, with some institutions lessening their positions in the stock, while others, such as LGT Fund Management Co Ltd., are increasing their holdings. The recent investment in Maple Gold Mines Ltd. may indicate a strategic expansion of Agnico Eagle's operations, potentially driving long-term growth. Upgrades from analysts, like Erste Group, and the stock's momentum ranking may be contributing to its attractiveness to investors, despite today's slight decline. Institutional activity and analyst upgrades are likely offsetting each other, resulting in the stock's relatively stable price movement."
+        "Institutional investors are actively adjusting their positions in the stock, with some increasing their holdings and others trimming their stakes, potentially indicating a mixed outlook among major investors. The recent influx of articles questioning the stock's valuation suggests that investors are cautious about the stock's premium pricing, which may be limiting its upside potential. Today's modest gain of 1.78% may be attributed to the overall positive sentiment in the gold sector rather than any specific company-related news."
       ]
     },
     {
       "ticker": "MRNA",
       "name": "Moderna, Inc.",
       "sector": "Biotech",
-      "marketCap": 21.16,
-      "price": 53.57,
-      "change": 2.0,
+      "marketCap": 21.62,
+      "price": 54.74,
+      "change": -1.79,
       "newsDigest": []
     },
     {
       "ticker": "ASTS",
       "name": "AST SpaceMobile, Inc.",
       "sector": "Space",
-      "marketCap": 33.56,
-      "price": 88.3,
-      "change": -1.32,
+      "marketCap": 34.05,
+      "price": 89.12,
+      "change": -0.71,
       "newsDigest": [
-        "The stock's modest decline today may be attributed to a neutral rating from BofA, potentially tempering investor enthusiasm after a strong revenue beat in the recent earnings call. Despite a 181% rise in the past year, the current dip could be a minor correction as investors reassess the company's plan to compete with SpaceX's Starlink. Recent buying activity from institutions like DLD Asset Management LP suggests ongoing confidence in the company's space network ambitions. Revenue expansion of 1,500% has likely been priced into the stock, leaving today's move as a minor adjustment rather than a significant revaluation."
+        "Investors are weighing the company's transition to a commercial-stage against its modest revenue growth, as evidenced by the $70.9M in 2025 revenue, which may be contributing to the stock's slight decline today. Recent earnings reports and previews have set high expectations, and the stock's failure to meet these expectations may be causing the dip. Institutional investments, such as WINTON GROUP Ltd's $4.27 million position, suggest that some investors remain bullish on the company's long-term potential, particularly in its pursuit to compete with SpaceX's Starlink. The stock's 181% rise over the past year may have also led to a natural correction, as investors reassess the company's valuation and growth prospects."
       ]
     },
     {
       "ticker": "NVDA",
       "name": "NVIDIA Corporation",
       "sector": "Semicon",
-      "marketCap": 4360.92,
-      "price": 179.43,
-      "change": 0.87,
+      "marketCap": 4512.22,
+      "price": 185.65,
+      "change": 1.64,
       "newsDigest": [
-        "Positive sentiment from a billionaire investor doubling their stake and a price target increase from Deutsche Bank are likely contributing to the stock's modest gain today. The recent announcement of financial results for the fourth quarter and fiscal 2026 may also be influencing investor decisions, although the specific impact is unclear. Increased buying activity from investment firms, such as Stevens Capital Management LP, suggests growing institutional interest in the stock. Halting China-bound H200 output may be a minor concern, but its effect on the stock's price is currently negligible."
+        "Today's modest gain of 1.64% may be attributed to the reiteration of a Buy rating by BofA ahead of the upcoming GTC event, which suggests continued confidence in the company's growth prospects. The recent announcement of NVIDIA's financial results for the fourth quarter and fiscal 2026, as well as its significant investments in Lumentum and Coherent, may also be contributing to the stock's positive momentum. Investment firms' buying and selling activities, such as Vestmark Advisory Solutions' purchase of 39,918 shares, indicate a general optimism about the company's future performance. Overall, the stock's movement today appears to be driven by a combination of positive analyst sentiment and ongoing investment in the company's growth initiatives."
       ]
     },
     {
       "ticker": "AAPL",
       "name": "Apple Inc.",
       "sector": "Tech",
-      "marketCap": 3771.78,
-      "price": 256.62,
-      "change": -0.33,
-      "newsDigest": [
-        "Institutional investment activity is driving the narrative around Apple, with various firms adjusting their stakes in the company, potentially influencing market sentiment. Despite the minor decline in stock price, the overall tone of the news suggests a neutral to slightly positive outlook, with some investors increasing their holdings while others decrease theirs. The lack of significant news or dramatic price movement indicates that today's decline is likely a minor market fluctuation rather than a response to any major catalyst."
-      ]
+      "marketCap": 3847.46,
+      "price": 261.77,
+      "change": 0.73,
+      "newsDigest": []
     },
     {
       "ticker": "MSFT",
       "name": "Microsoft Corporation",
       "sector": "Tech",
-      "marketCap": 3011.15,
-      "price": 405.14,
-      "change": -0.93,
+      "marketCap": 3017.55,
+      "price": 406.0,
+      "change": -0.83,
       "newsDigest": [
-        "Investor interest in the stock remains high, as evidenced by heavy searches and recent purchases by institutional investors, which may be supporting the stock price despite today's slight decline. Recent funding for OpenAI, in which Microsoft has a significant stake, is likely providing a positive catalyst for the stock, offsetting potential negative sentiment from minor share sales by some investors. The company's core strengths and strategic wins, particularly in AI adoption, are positioning it for long-term revenue growth, which may be limiting the stock's downside movement today."
+        "Institutional investors are increasing their positions in the stock, indicating a vote of confidence in the company's long-term prospects, particularly with regards to its AI adoption and revenue growth potential. Recent funding for OpenAI is providing a boost to the stock, as it is seen as a strategic move to drive future growth and maintain Microsoft's position as a leader in the tech industry. Despite some investors selling their shares, the overall sentiment remains positive, with many analysts viewing the current market price as an attractive entry point. The stock's modest decline today may be attributed to broader market trends rather than any company-specific negative news."
       ]
     },
     {
       "ticker": "AMZN",
       "name": "Amazon.com, Inc.",
       "sector": "E-Commerce",
-      "marketCap": 2249.66,
-      "price": 209.56,
-      "change": -1.67,
+      "marketCap": 2306.61,
+      "price": 214.87,
+      "change": 0.65,
       "newsDigest": [
-        "Analysts' moderate buy rating suggests a neutral outlook, potentially contributing to the stock's slight decline today. Institutional investment activity, including purchases by Stevens Capital Management LP and increases by Hillsdale Investment Management Inc., may be offset by sales like Tredje AP fonden's reduction in position, leading to a relatively stable stock price. The lack of significant news or dramatic price movement indicates that today's decline may be largely driven by broader market trends rather than company-specific events."
+        "Institutional investment activity is mixed, with some firms increasing their positions in the stock while others reduce their holdings, potentially contributing to the modest price movement. The announcement of AWS' AI-enabled platform for healthcare administrative tasks may be supporting the stock, as it highlights the company's continued innovation and expansion into new areas. Positive analyst coverage, including a maintained buy rating from BofA, is also likely providing a boost to investor sentiment and contributing to the stock's slight gain. Overall, the stock's 0.65% increase suggests a generally positive tone, driven by a combination of favorable news and ongoing secular growth trends."
       ]
     },
     {
       "ticker": "GOOGL",
       "name": "Alphabet Inc.",
       "sector": "Tech",
-      "marketCap": 3638.17,
-      "price": 300.75,
-      "change": 0.83,
+      "marketCap": 3731.2,
+      "price": 308.44,
+      "change": 0.68,
       "newsDigest": [
-        "Institutional investors are displaying mixed sentiments towards the stock, with some reducing their stakes while others are increasing their holdings, potentially indicating a neutral outlook. Despite the mixed signals, the overall sentiment from notable investors like Bill Ackman remains bullish, which could be contributing to the stock's modest gain. The recent announcement of the CEO's pay deal, which includes performance-based incentives, may also be positively influencing investor confidence in the company's leadership and future prospects."
+        "Institutional investors continue to show confidence in the company, with multiple firms increasing their stake in the stock, potentially contributing to the positive move. The recent news and analyst coverage suggest a bullish sentiment, with some predicting significant growth in the company's stock price over the next five years. Despite a lack of major catalysts, the overall positive tone in the headlines may be supporting the stock's slight increase today."
       ]
     },
     {
       "ticker": "META",
       "name": "Meta Platforms, Inc.",
       "sector": "Tech",
-      "marketCap": 1604.06,
-      "price": 634.13,
-      "change": -1.66,
+      "marketCap": 1663.46,
+      "price": 657.61,
+      "change": 1.58,
       "newsDigest": [
-        "Today's modest decline may be attributed to mixed investor sentiment, as some institutional holders reduce their stock positions while others express optimism about the company's prospects. Insider selling activity, including the CFO's recent $35.3 million stock sale, could be contributing to the negative sentiment. The reduction in stock awards for most employees may also be weighing on investor confidence, potentially impacting morale and retention. Regulatory and policy changes continue to pose a risk to the stock's performance, although their immediate impact appears limited."
+        "Today's modest gain of 1.58% may be a continuation of the positive momentum sparked by Meta's stronger-than-expected revenue forecast, which led to a 10% jump in the stock price earlier. The reduction in stock awards for most employees by 5% could be a cost-cutting measure, potentially boosting investor confidence in the company's ability to manage expenses. Recent investments and acquisitions, such as the purchase of AI agent social network Moltbook, may also be contributing to the stock's upward trend, as they signal Meta's commitment to innovation and growth."
       ]
     },
     {
       "ticker": "TSLA",
       "name": "Tesla, Inc.",
       "sector": "Auto",
-      "marketCap": 1459.81,
-      "price": 389.03,
-      "change": -1.94,
+      "marketCap": 1511.45,
+      "price": 402.79,
+      "change": 1.03,
       "newsDigest": [
-        "Institutional investors are exhibiting mixed sentiment towards the stock, with some decreasing their positions and others increasing or maintaining their holdings, potentially contributing to the modest decline. The upgrade to a 'Buy' rating by Bank of America may be offset by the selling activity from certain institutional investors, resulting in a relatively small negative move. Overall trading activity and news flow suggest a lack of significant catalysts driving the stock's price movement today."
+        "Today's modest gain of 1.03% may be attributed to the positive sentiment from Bank of America's upgrade to a Buy rating, which could be offsetting the negative impact of a 37% decline in UK car sales. Increased competition from Chinese companies is likely a contributing factor to the decline in UK sales, but the overall market seems to be focusing on the bullish analyst outlook. The stock's movement is also being influenced by the performance of its biggest battery maker, which recently crushed estimates, thereby boosting investor confidence in Tesla's supply chain. Mixed signals from institutional investors, with some decreasing their stock positions while others increase theirs, are likely contributing to the stock's relatively stable price movement."
       ]
     },
     {
       "ticker": "AMD",
       "name": "Advanced Micro Devices, Inc.",
       "sector": "Semicon",
-      "marketCap": 320.23,
-      "price": 196.41,
-      "change": 2.06,
-      "newsDigest": [
-        "Institutional investment activity is neutral, with some firms lowering their stakes while others maintain significant positions, indicating a mixed sentiment among investors. Recent analyst price target adjustments, such as UBS' lowering of the target, may be influencing the stock's price, but the overall impact is muted. The stock's modest gain today suggests that investors are cautiously optimistic about the company's growth prospects, despite some recent volatility. Technical setups and growth potential are being closely watched by investors, which could be driving the slight increase in the stock's price."
-      ]
+      "marketCap": 334.28,
+      "price": 205.03,
+      "change": 1.16,
+      "newsDigest": []
     },
     {
       "ticker": "PLTR",
       "name": "Palantir Technologies Inc.",
       "sector": "Software",
-      "marketCap": 366.7,
-      "price": 153.32,
-      "change": -2.44,
+      "marketCap": 361.62,
+      "price": 151.2,
+      "change": -3.34,
       "newsDigest": [
-        "Geopolitical tensions, particularly the Middle East crisis, are driving investor optimism about Palantir's contract pipeline and growth prospects. Despite today's decline, the stock has seen a significant rebound in recent weeks, with some analysts eyeing a $200 price target. Recent buying activity from investment firms, such as Vestcor Inc, suggests institutional confidence in the company's long-term potential. Analysts' positive reactions to the stock's dip in February and subsequent rallies indicate a bullish sentiment towards Palantir's future performance."
+        "Today's decline may be attributed to institutional selling, as evidenced by Van ECK Associates Corp and Pinnacle Associates Ltd selling a combined total of over 78,852 shares. The stock's recent surge, driven by increased demand for war technology, may have prompted some investors to take profits, contributing to the current downward move. Despite this, analysts remain bullish on the company's long-term prospects, citing strong shareholder returns and potential for further growth. Overall market sentiment and lack of significant negative news suggest that the 3.34% decline is a minor correction rather than a trend reversal."
       ]
     },
     {
       "ticker": "COIN",
       "name": "Coinbase Global, Inc. - 3",
       "sector": "Crypto",
-      "marketCap": 52.77,
-      "price": 195.69,
-      "change": -0.77,
+      "marketCap": 53.9,
+      "price": 199.87,
+      "change": 0.04,
       "newsDigest": [
-        "Institutional investors are exhibiting mixed sentiment towards the stock, with some lowering their holdings while others increase their stakes, potentially contributing to the stock's muted performance. The expansion into stocks and the company's significant trading volume may be overshadowed by broader market concerns, leading to a slight decline in the stock price. Despite the company's efforts to become an 'everything exchange', the stock's movement today suggests that investors are not yet convinced of its potential to drive growth. Mixed media coverage, including comparisons to other exchange stocks and discussions of Wall Street's bullish or bearish stance, may also be influencing investor decisions and contributing to the stock's lackluster performance."
+        "Mixed signals from institutional investors, with some increasing their positions while others lower their holdings, may be contributing to the stock's muted 0.04% move today. Recent analyst actions, including JPMorgan's price target cut, could be weighing on investor sentiment and limiting upside. The lack of a clear catalyst, despite some positive news on trading volumes and platform usage, suggests that the stock is currently driven more by broader market trends than company-specific developments."
       ]
     },
     {
       "ticker": "OKLO",
       "name": "Oklo Inc.",
       "sector": "Nuclear",
-      "marketCap": 9.25,
-      "price": 59.22,
-      "change": 1.66,
-      "newsDigest": []
+      "marketCap": 9.86,
+      "price": 63.08,
+      "change": 2.1,
+      "newsDigest": [
+        "Today's modest gain of 2.10% may be attributed to the recent announcement of a joint venture with Centrus Energy for nuclear fuel services in Ohio, which could alleviate fuel constraints and boost investor confidence. Analysts' conflicting sentiments and a recent price target cut could be limiting the stock's upside, despite positive headlines and increased institutional investment. The upcoming event on March 17, marked by investors, may also be contributing to the stock's slight increase as investors anticipate potential catalysts. Institutional buying, as seen with Van ECK Associates Corp's purchase of shares, is likely supporting the stock's current price level."
+      ]
     },
     {
       "ticker": "MARA",
       "name": "MARA Holdings, Inc.",
       "sector": "Bitcoin Mining",
-      "marketCap": 3.19,
-      "price": 8.38,
-      "change": 4.68,
-      "newsDigest": []
+      "marketCap": 3.31,
+      "price": 8.71,
+      "change": 0.64,
+      "newsDigest": [
+        "The stock's modest gain today may be attributed to the recent strategic partnerships and initiatives, such as the Starwood deal, which could boost its AI infrastructure and energy efficiency. Reduced EBITDA outlook and lowered target price by Clear Street are likely capping the stock's upside, preventing a more significant rally. Increased institutional investment, as seen with WINTON GROUP Ltd's acquisition of 254,276 shares, may be providing some support to the stock's price. Rising short interest despite a low P/E ratio suggests that investors remain cautious about the company's prospects, limiting the stock's potential for a larger gain."
+      ]
     },
     {
       "ticker": "NET",
       "name": "Cloudflare, Inc.",
       "sector": "Cybersecurity",
-      "marketCap": 69.69,
-      "price": 197.98,
-      "change": 1.43,
+      "marketCap": 73.45,
+      "price": 208.66,
+      "change": 3.57,
       "newsDigest": [
-        "Positive analyst sentiment and increased institutional investment are likely driving the stock's upward momentum, as evidenced by Citi's raised price target and purchases by firms like LGT Group Foundation and Orion Portfolio Solutions LLC. Increased bullish commentary from notable figures like Jim Cramer is also contributing to the stock's positive trend, with many citing the company's resilience compared to its peers. Recent headlines highlighting the stock's potential for significant upside, including a 185% upside case, are further fueling investor optimism and demand."
+        "Positive sentiment from Jim Cramer and a potential upside case of 185% are contributing to the stock's gain, as investors become more optimistic about Cloudflare's prospects. Institutional trading activity, including both sales and increases in position, may be causing some volatility, but the overall trend remains bullish. The cybersecurity sector's resilience and Cloudflare's relative outperformance compared to its rivals are also supporting the stock's price movement."
       ]
     },
     {
       "ticker": "SNOW",
       "name": "Snowflake Inc.",
       "sector": "Data",
-      "marketCap": 61.46,
-      "price": 179.59,
-      "change": -0.49,
+      "marketCap": 60.13,
+      "price": 175.71,
+      "change": -3.9,
       "newsDigest": [
-        "Mixed signals from analysts and investors are contributing to the stock's muted move, with some firms reducing price targets while others purchase new shares. Earnings expectations remain a key driver, with the potential to beat estimates and propel the stock higher. Lawsuit announcements and shareholder alerts are likely having a neutral to slightly negative impact on investor sentiment. Institutional activity, including purchases by Guardian Partners Inc. and Black Swift Group LLC, is helping to offset selling pressure from firms like Diversify Advisory Services LLC."
+        "Today's decline may be attributed to Goldman Sachs' reduction of the price target, potentially resetting investor expectations and prompting a sell-off. Mixed analyst sentiments, with some upgrading their ratings while others reduce price targets, are likely contributing to the stock's volatility. The ongoing securities fraud lawsuit and reduction of stake by LGT Group Foundation may also be weighing on investor confidence, exacerbating the downward move."
       ]
     },
     {
       "ticker": "GLXY",
       "name": "Galaxy Digital Inc.",
       "sector": "Crypto",
-      "marketCap": 8.0,
-      "price": 20.48,
-      "change": -0.36,
+      "marketCap": 8.64,
+      "price": 22.13,
+      "change": 2.95,
       "newsDigest": [
-        "The stock's minimal decline today may be a result of profit-taking after recent surges, potentially driven by the delisting from the TSX and the rise of Bitcoin prices. Recent financial results and increased investment from firms like Rovida Investment Management Ltd may have also contributed to the stock's stability, offsetting any potential negative impacts from the delisting. Volatility in the crypto sector is likely a contributing factor to the stock's movement, although the lack of significant news today suggests that the decline is not a result of any major fundamental changes."
+        "The stock's modest gain today may be attributed to the ongoing momentum in Bitcoin prices, which have been surging and positively impacting crypto-related stocks. Recent delisting from the TSX in favor of the Nasdaq listing has likely been priced in, given the initial 17.7% climb after the announcement. Increased investor interest, as evidenced by Rovida Investment Management Ltd's lifted stock holdings, may also be contributing to the stock's upward movement."
       ]
     },
     {
       "ticker": "AGI",
       "name": "Alamos Gold Inc.",
       "sector": "Gold",
-      "marketCap": 20.7,
-      "price": 49.12,
-      "change": -1.54,
+      "marketCap": 21.66,
+      "price": 51.39,
+      "change": 0.45,
       "newsDigest": [
-        "Recent analyst upgrades and positive commentary from financial institutions, such as BofA's price target increase, are likely offset by institutional selling activity, resulting in a modest decline of 1.54% today. Despite the drop, the stock's long-term outlook remains strong, driven by its record earnings and a 60% dividend hike, which have contributed to a significant surge in its price over the past year. The current valuation, however, may be a concern, as some investors assess the stock's worth after recent share price swings, potentially leading to a correction in the stock's price. Overall, the stock's movement today appears to be a minor adjustment rather than a significant reversal of its upward trend."
+        "Institutional buying activity is supporting the stock, as evidenced by recent share acquisitions by Van ECK Associates Corp and Rathbones Group PLC. The increase in price target by BofA to $57, maintaining a buy rating, is also contributing to the positive sentiment. Recent record earnings and a 60% dividend hike have boosted investor confidence, leading to a surge in stock price over the past few days. Positive analyst coverage, including a Seeking Alpha article highlighting the company's discounted valuation, is further fueling the stock's upward momentum."
       ]
     }
   ]
