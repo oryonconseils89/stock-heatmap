@@ -30,9 +30,14 @@ GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GROQ_MODEL = "llama-3.3-70b-versatile"
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-DELAY_BETWEEN_CALLS = 2
+# Délai entre chaque appel Groq — 5 secondes pour rester sous le
+# rate limit en tokens par minute (les prompts avec contenu d'articles
+# consomment ~2000 tokens chacun, le free tier Groq limite le TPM)
+DELAY_BETWEEN_CALLS = 5
+
 ARTICLE_FETCH_TIMEOUT = 8  # secondes max pour récupérer un article
 MAX_ARTICLES = 3           # on veut les 3 articles les plus frais
+MAX_ARTICLE_CHARS = 800    # max caractères de contenu par article
 
 # ── Étape 1 : Lire la watchlist ─────────────────────────────────
 
@@ -105,21 +110,15 @@ def extract_article_text(url):
             clean = strip_html(p)
             if len(clean) > 80:
                 good_paragraphs.append(clean)
-            if len(good_paragraphs) >= 3:
+            if len(good_paragraphs) >= 2:
                 break
 
-        return " ".join(good_paragraphs)[:1500]  # Max 1500 chars par article
+        return " ".join(good_paragraphs)[:MAX_ARTICLE_CHARS]
 
     except Exception:
         return ""
 
 # ── Étape 3 : Récupérer les 3 articles les plus frais ──────────
-#
-# Pour chaque titre, on interroge Google News RSS.
-# On prend les 3 premiers articles et on tente de récupérer
-# le contenu réel de chaque article (titre + extrait RSS + texte).
-# C'est cette matière riche qui permet au LLM de produire
-# une analyse de qualité, pas juste des paraphrases de titres.
 
 def fetch_articles(ticker, company_name):
     """Récupère les 3 articles les plus frais avec leur contenu."""
@@ -143,7 +142,7 @@ def fetch_articles(ticker, company_name):
             # Assembler le contenu disponible
             content_parts = [f"HEADLINE: {title}"]
             if rss_summary and len(rss_summary) > 50:
-                content_parts.append(f"EXCERPT: {rss_summary}")
+                content_parts.append(f"EXCERPT: {rss_summary[:300]}")
             if article_text and len(article_text) > 100:
                 content_parts.append(f"ARTICLE: {article_text}")
 
@@ -160,9 +159,6 @@ def fetch_articles(ticker, company_name):
         return []
 
 # ── Étape 4 : Smart News Summary via Groq ──────────────────────
-#
-# Le prompt demande 2 mini-paragraphes d'analyse experte.
-# Pas du copy-paste de news. Un effort analytique : WHY, SO WHAT.
 
 def generate_summary(ticker, company_name, sector, moat, change_pct, articles, attempt=1):
     """Appelle Groq pour produire le Smart News Summary."""
@@ -227,6 +223,13 @@ Return ONLY a JSON array with exactly 2 strings (one per paragraph). Example:
             timeout=30,
         )
 
+        if response.status_code == 429:
+            print(f"    ⚠ Rate limit atteint pour {ticker} — pause 15s...")
+            time.sleep(15)
+            if attempt < 2:
+                return generate_summary(ticker, company_name, sector, moat, change_pct, articles, attempt=2)
+            return []
+
         if response.status_code != 200:
             print(f"    ⚠ Groq erreur HTTP {response.status_code} pour {ticker}")
             return []
@@ -257,10 +260,10 @@ Return ONLY a JSON array with exactly 2 strings (one per paragraph). Example:
         except Exception:
             pass
 
-        # ── Retry : second appel avec prompt simplifié ──
+        # ── Retry : second appel ──
         if attempt < 2:
             print(f"    ↻ Retry pour {ticker}...")
-            time.sleep(1)
+            time.sleep(5)
             return generate_summary(ticker, company_name, sector, moat, change_pct, articles, attempt=2)
 
         print(f"    ✗ Échec définitif pour {ticker}")
@@ -284,7 +287,6 @@ for stock in stocks:
     print(f"    {len(articles)} articles trouvés ({articles_with_body} avec contenu)")
 
     # Calculer la confiance (basée sur le nombre d'articles récupérés)
-    # 3 articles = confident, 2 = decent, 1 ou 0 = weak
     if len(articles) >= 3:
         confidence = "confident"
     elif len(articles) >= 2:
