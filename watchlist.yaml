@@ -1,94 +1,125 @@
 # ── Ma Watchlist ──
-# Pour ajouter un titre : copie une ligne existante et change le ticker et le secteur.
+# Pour ajouter un titre : copie une ligne existante et change le ticker, le secteur et le moat.
 # Pour en retirer : supprime la ligne.
 # Le ticker doit correspondre exactement au symbole Yahoo Finance.
+# Moat : wide, narrow, ou none (cadre Morningstar).
 
 - ticker: SCCO
   sector: Mining
+  moat: narrow
 
 - ticker: AU
   sector: Gold
+  moat: narrow
 
 - ticker: CCJ
   sector: Uranium
+  moat: narrow
 
 - ticker: COHR
   sector: Photonics
+  moat: none
 
 - ticker: FIX
   sector: Construction
+  moat: narrow
 
 - ticker: GLW
   sector: Materials
+  moat: wide
 
 - ticker: LITE
   sector: Photonics
+  moat: none
 
 - ticker: MT
   sector: Steel
+  moat: none
 
 - ticker: BE
   sector: Energy
+  moat: none
 
 - ticker: CIEN
   sector: Networking
+  moat: narrow
 
 - ticker: CRWV
-  sector: Cybersecurity
+  sector: AI Cloud
+  moat: none
 
 - ticker: AEM
   sector: Gold
+  moat: narrow
 
 - ticker: MRNA
   sector: Biotech
+  moat: none
 
 - ticker: ASTS
   sector: Space
+  moat: none
 
 - ticker: NVDA
   sector: Semicon
+  moat: wide
 
 - ticker: AAPL
   sector: Tech
+  moat: wide
 
 - ticker: MSFT
   sector: Tech
+  moat: wide
 
 - ticker: AMZN
   sector: E-Commerce
+  moat: wide
 
 - ticker: GOOGL
   sector: Tech
+  moat: wide
 
 - ticker: META
   sector: Tech
+  moat: wide
 
 - ticker: TSLA
   sector: Auto
+  moat: narrow
 
 - ticker: AMD
   sector: Semicon
+  moat: narrow
 
 - ticker: PLTR
   sector: Software
+  moat: narrow
 
 - ticker: COIN
   sector: Crypto
+  moat: none
 
 - ticker: OKLO
   sector: Nuclear
+  moat: none
 
 - ticker: MARA
   sector: Bitcoin Mining
+  moat: none
 
 - ticker: NET
   sector: Cybersecurity
+  moat: wide
 
 - ticker: SNOW
   sector: Data
+  moat: none
 
 - ticker: GLXY
   sector: Crypto
+  moat: none
 
 - ticker: AGI
   sector: Gold
+  moat: narrow
