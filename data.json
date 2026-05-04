@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-01 15:39 UTC",
+  "generated_at": "2026-05-04 16:25 UTC",
   "count": 30,
   "stocks": [
     {
@@ -7,13 +7,10 @@
       "name": "Southern Copper Corporation",
       "sector": "Mining",
       "moat": "narrow",
-      "marketCap": 140.43,
-      "price": 170.0,
-      "change": -0.98,
-      "newsDigest": [
-        "Today's 0.98% decline in SCCO is likely driven by the company's Q1 2026 earnings report, as indicated by the Quiver Quantitative article, which suggests a negative market reaction to the results. The 8-K filing reported by Stock Titan may also be a contributing factor, although the exact details of the material event are unclear. Jennison Associates' increased stock holdings, as reported by MarketBeat, do not appear to be a significant catalyst for today's move.",
-        "Given SCCO's narrow economic moat, this decline may signal a temporary dislocation rather than a structural shift, as the company's competitive position remains vulnerable to industry fluctuations. The earnings report and material event may have introduced near-term uncertainty, but the stock's long-term prospects are likely unchanged. Investors should monitor the company's future guidance and industry trends to assess whether this decline presents a buying opportunity."
-      ],
+      "marketCap": 137.86,
+      "price": 166.89,
+      "change": -2.51,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -22,10 +19,13 @@
       "name": "AngloGold Ashanti PLC",
       "sector": "Gold",
       "moat": "narrow",
-      "marketCap": 47.09,
-      "price": 93.24,
-      "change": -0.52,
-      "newsDigest": [],
+      "marketCap": 45.81,
+      "price": 90.72,
+      "change": -2.2,
+      "newsDigest": [
+        "Today's 2.20% decline in AngloGold Ashanti's stock price appears to be driven by broader market sentiment rather than any company-specific news, as the recent articles on the company's Nevada project and Goldman Sachs' pick are generally positive. The lack of significant news catalysts suggests that the move may be attributed to sector rotation or macroeconomic factors. The narrow economic moat of the company makes it more susceptible to industry-wide trends and sentiment.",
+        "The decline in AngloGold Ashanti's stock price may be a temporary dislocation, given the positive news on the company's Nevada project, which supports a 9-year mine life and 500,000oz annual production. The company's narrow moat makes it vulnerable to competition, but the recent developments suggest a potential for long-term growth. Investors should consider whether this decline presents a buying opportunity, given the company's fundamentals and industry position."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -34,12 +34,12 @@
       "name": "Cameco Corporation",
       "sector": "Uranium",
       "moat": "narrow",
-      "marketCap": 52.07,
-      "price": 119.55,
-      "change": -2.84,
+      "marketCap": 51.67,
+      "price": 118.63,
+      "change": -1.63,
       "newsDigest": [
-        "Today's 2.84% decline in Cameco Corporation's stock price appears to be driven by a lack of significant news, with recent articles focusing on Vanguard's holdings and upcoming Q1 earnings, neither of which seem to be a direct catalyst for the move. The absence of substantial news suggests that the decline may be attributed to broader market or sector trends. The move is relatively modest, indicating no major shift in investor sentiment.",
-        "The narrow economic moat of Cameco Corporation suggests that the company's competitive position is vulnerable to industry fluctuations, making it essential to distinguish between temporary dislocations and structural shifts. Given the lack of significant news driving today's move, it is likely noise rather than a signal of a fundamental change in the company's prospects. Investors should focus on the upcoming Q1 earnings report for a more substantial indicator of the company's performance."
+        "Today's 1.63% decline in CCJ is not clearly driven by any specific news catalyst, as the recent articles lack concrete information on earnings, guidance, or analyst actions that could justify the move. The increase in stock holdings by Triasima Portfolio Management inc. could be a positive signal, but its impact on the stock price is unclear. The lack of significant news suggests that today's move may be attributed to sector rotation or general market sentiment.",
+        "Given CCJ's narrow economic moat, this decline could be a temporary dislocation rather than a structural shift, and investors should consider whether this presents a buying opportunity. The company's competitive position suggests that it may be more susceptible to market fluctuations, but without clear catalysts, it's difficult to determine the significance of this move. Investors should continue to monitor the stock for more substantial news or changes in market sentiment."
       ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -49,10 +49,13 @@
       "name": "Coherent Corp.",
       "sector": "Photonics",
       "moat": "none",
-      "marketCap": 62.61,
-      "price": 333.96,
-      "change": 4.46,
-      "newsDigest": [],
+      "marketCap": 61.06,
+      "price": 325.7,
+      "change": -1.15,
+      "newsDigest": [
+        "Today's 1.15% decline in COHR stock is not driven by any significant news catalysts, as the recent articles provide no substantial insights or updates on the company's performance, with most being mere stock price quotes or charts. The lack of meaningful news coverage suggests that the move may be attributed to broader market or sector trends rather than company-specific events. The move is relatively small and may not be indicative of a larger trend.",
+        "Given COHR's lack of economic moat, the stock's price action may be more susceptible to market volatility and sector rotation, making it challenging to discern signal from noise. This decline could be a temporary dislocation, but without a strong competitive position, it may also be a sign of a structural shift in investor sentiment. The absence of significant news catalysts makes it difficult to determine the underlying cause of the move."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -61,13 +64,10 @@
       "name": "Comfort Systems USA, Inc.",
       "sector": "Construction",
       "moat": "narrow",
-      "marketCap": 64.67,
-      "price": 1836.98,
-      "change": -0.18,
-      "newsDigest": [
-        "Today's minor move in FIX stock is largely driven by insider activity, with a director selling 1,500 shares in the open market, potentially contributing to the slight decline. Additionally, North Star Investment Management Corp's reduction in stock holdings may have also played a role. The lack of significant news or earnings catalysts suggests that today's move is more noise than signal. ",
-        "Given FIX's narrow economic moat, the recent insider selling and institutional trimming may indicate a temporary dislocation in the stock's price, rather than a structural shift in the company's competitive position. The article questioning FIX's status as the best data center engineering and construction stock may also be contributing to the uncertainty. Overall, this move appears to be a minor blip on the radar for FIX investors."
-      ],
+      "marketCap": 65.79,
+      "price": 1869.02,
+      "change": 0.11,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -76,9 +76,9 @@
       "name": "Corning Incorporated",
       "sector": "Materials",
       "moat": "wide",
-      "marketCap": 137.65,
-      "price": 160.24,
-      "change": -2.44,
+      "marketCap": 136.79,
+      "price": 159.23,
+      "change": 0.61,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -88,10 +88,13 @@
       "name": "Lumentum Holdings Inc.",
       "sector": "Photonics",
       "moat": "none",
-      "marketCap": 69.65,
-      "price": 975.45,
-      "change": 8.11,
-      "newsDigest": [],
+      "marketCap": 69.43,
+      "price": 972.4,
+      "change": 2.37,
+      "newsDigest": [
+        "Today's 2.37% move in Lumentum Holdings Inc. (LITE) appears to be driven by mild buying interest, as evidenced by Estate Counselors LLC's purchase of 11,500 shares, although the overall news coverage is relatively thin and lacks a clear catalyst. The recent articles questioning whether LITE is a good stock to buy now may be contributing to a slight increase in investor attention. However, the move is relatively modest and may not be indicative of a significant shift in sentiment. ",
+        "Given Lumentum's lack of economic moat, this move is likely noise rather than signal, and investors should be cautious not to overinterpret the stock's short-term price action. The company's competitive position remains unchanged, and without a clear catalyst or meaningful development, this move is unlikely to mark a structural shift in the stock's trajectory. As such, holders or watchers of LITE should focus on the company's fundamentals and industry trends rather than reacting to today's price move."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -100,13 +103,10 @@
       "name": "Arcelor Mittal NY Registry Shar",
       "sector": "Steel",
       "moat": "none",
-      "marketCap": 43.78,
-      "price": 57.52,
-      "change": 0.54,
-      "newsDigest": [
-        "Today's 0.54% move in MT is likely a residual reaction to the company's recent Q4 2025 earnings beat, where EPS exceeded expectations by 53%, despite a mild revenue decline. The lack of a significant price response suggests the market had already priced in the positive earnings surprise. The news coverage is repetitive and lacks new insights, contributing to the muted price action.",
-        "The move is largely noise, as the company's lack of economic moat makes it vulnerable to market fluctuations and sector rotation. The recent earnings beat is a temporary positive, but the stock's long-term prospects remain tied to the volatile steel market and trade policies, such as the U.S. steel tariffs, which may boost domestic producers but lack a direct impact on MT's competitive position."
-      ],
+      "marketCap": 41.95,
+      "price": 55.12,
+      "change": -3.04,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -115,13 +115,10 @@
       "name": "Bloom Energy Corporation",
       "sector": "Energy",
       "moat": "none",
-      "marketCap": 81.5,
-      "price": 286.51,
-      "change": 1.11,
-      "newsDigest": [
-        "Today's 1.11% move in Bloom Energy's stock is driven by recent positive news coverage highlighting the company's potential to solve AI's power problem, as well as its strong performance in April, with the stock being the best performing industrial stock in the month. The earnings report mentioned in Barron's article also likely contributed to the stock's upward momentum. The overall sentiment from these articles suggests a growing interest in the company's technology and its applications in the AI space. ",
-        "Given the company's lack of economic moat, this move may be a temporary dislocation driven by hype around AI and power solutions, rather than a structural shift in the company's competitive position. However, the consistent positive news coverage and strong stock performance in April suggest that there may be some signal amidst the noise, and investors should continue to monitor the stock's progress. The company's ability to capitalize on the AI power trend will be crucial in determining its long-term success."
-      ],
+      "marketCap": 80.04,
+      "price": 281.38,
+      "change": -3.14,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -130,13 +127,10 @@
       "name": "Ciena Corporation",
       "sector": "Networking",
       "moat": "narrow",
-      "marketCap": 75.9,
-      "price": 536.81,
-      "change": 1.75,
-      "newsDigest": [
-        "Today's 1.75% move in CIEN appears to be driven by positive sentiment from recent news coverage, including an article highlighting the company's potential as an unstoppable technology stock, although no specific catalysts such as earnings or guidance updates have been reported. The increase in stock holdings by Mitsubishi UFJ Trust & Banking Corp may have also contributed to the uptick. However, the move is relatively modest, suggesting that the news may not be significantly impactful. ",
-        "Given CIEN's narrow economic moat, the current price action may be more noise than signal, as the company's competitive position is not particularly strong. The GF Score of 75/100 suggesting overvaluation also warrants caution, indicating that the stock's recent gains may not be sustainable. As such, holders or watchers of the stock should be cautious and not overreact to short-term price movements."
-      ],
+      "marketCap": 75.82,
+      "price": 536.24,
+      "change": 0.18,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -145,13 +139,10 @@
       "name": "CoreWeave, Inc.",
       "sector": "AI Cloud",
       "moat": "none",
-      "marketCap": 63.65,
-      "price": 120.5,
-      "change": 7.97,
-      "newsDigest": [
-        "Today's 7.97% move in CRWV is primarily driven by Citi's decision to upgrade its price target, as reported by Seeking Alpha, which has positively impacted investor sentiment and propelled the stock higher. The lack of substantial news from other sources, such as CNN and Yahoo Finance, suggests that the analyst action is the primary catalyst for the move. This reaction underscores the stock's sensitivity to external validation given its lack of economic moat.",
-        "The move is likely signal rather than noise, as the analyst upgrade reflects a reassessment of CoreWeave's growth prospects, potentially tied to its collaboration with Meta as mentioned in the Yahoo Finance article. Without a strong economic moat, the stock remains vulnerable to competition and external factors, but the current momentum could sustain if the company continues to demonstrate growth and strategic partnerships. This development warrants continued monitoring to assess whether the stock's upward trajectory is sustainable."
-      ],
+      "marketCap": 66.03,
+      "price": 125.0,
+      "change": 5.03,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -160,9 +151,9 @@
       "name": "Agnico Eagle Mines Limited",
       "sector": "Gold",
       "moat": "narrow",
-      "marketCap": 92.03,
-      "price": 183.7,
-      "change": -2.4,
+      "marketCap": 90.75,
+      "price": 181.14,
+      "change": -1.32,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -172,9 +163,9 @@
       "name": "Moderna, Inc.",
       "sector": "Biotech",
       "moat": "none",
-      "marketCap": 18.13,
-      "price": 45.73,
-      "change": -0.47,
+      "marketCap": 18.8,
+      "price": 47.41,
+      "change": 4.5,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -184,9 +175,9 @@
       "name": "AST SpaceMobile, Inc.",
       "sector": "Space",
       "moat": "none",
-      "marketCap": 28.14,
-      "price": 72.52,
-      "change": -1.87,
+      "marketCap": 26.7,
+      "price": 68.81,
+      "change": -2.94,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -196,13 +187,10 @@
       "name": "NVIDIA Corporation",
       "sector": "Semicon",
       "moat": "wide",
-      "marketCap": 4838.63,
-      "price": 199.08,
-      "change": -0.25,
-      "newsDigest": [
-        "Today's minor move in NVDA is largely devoid of significant catalysts, with the news coverage consisting of inconsequential buying activity and general bullish commentary, which does not appear to be driving the stock's price action. The lack of substantial news suggests that the move is likely due to broader market or sector trends rather than company-specific events. The -0.25% move indicates a relatively stable day for the stock.",
-        "Given NVDA's wide economic moat, today's move is likely noise rather than a signal of a structural shift in the company's competitive position. The absence of meaningful news and the stock's minor move suggest that investors are not reacting to any significant changes in the company's fundamentals. This stability is consistent with the company's history of maintaining its industry leadership position."
-      ],
+      "marketCap": 4770.1,
+      "price": 196.26,
+      "change": -1.1,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -211,12 +199,12 @@
       "name": "Apple Inc.",
       "sector": "Tech",
       "moat": "wide",
-      "marketCap": 4161.15,
-      "price": 283.44,
-      "change": 4.45,
+      "marketCap": 4047.99,
+      "price": 275.98,
+      "change": -1.52,
       "newsDigest": [
-        "Today's 4.45% move in Apple stock is driven by the company's strong Q2 earnings report, which topped estimates on the back of robust iPhone and China sales, as reported by Yahoo Finance. This earnings beat is the primary catalyst for the stock's upward move. The other news articles, including the reduction in stock holdings by Massachusetts Financial Services Co. and the benign article from Benzinga, appear to be non-factors in today's price action.",
-        "The significance of this move lies in its affirmation of Apple's wide economic moat, as the company continues to demonstrate its ability to deliver strong sales and earnings growth. This earnings report is a signal, rather than noise, and suggests that the company's competitive position remains intact. As such, this move is likely a structural shift rather than a temporary dislocation."
+        "Today's 1.52% decline in Apple's stock is likely driven by a lack of positive catalysts, as the recent news coverage appears thin and irrelevant to the stock's move, with no significant earnings or guidance updates. The reduction in stock position by Private Wealth Management Group LLC may have contributed to the decline, but its impact is uncertain. The overall market and sector rotation may have played a larger role in the stock's move. ",
+        "Given Apple's wide economic moat, this decline may be a temporary dislocation rather than a structural shift, and investors holding or watching the stock should consider whether this presents a buying opportunity. The Seeking Alpha article suggesting waiting for a drop may indicate that some investors are expecting further declines, but Apple's competitive position remains strong. This move may be noise rather than signal, and investors should focus on the company's fundamentals rather than short-term price fluctuations."
       ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -226,13 +214,10 @@
       "name": "Microsoft Corporation",
       "sector": "Tech",
       "moat": "wide",
-      "marketCap": 3083.58,
-      "price": 415.11,
-      "change": 1.8,
-      "newsDigest": [
-        "Today's 1.80% move in MSFT appears to be driven by a rebound from recent sell-off, with articles suggesting the decline was unwarranted, and potentially presenting a buying opportunity, particularly given the company's strong position in the AI space. The recent earnings report and subsequent dip may have created a buying opportunity, as indicated by one article. News of Luma Capital S.A. SPF buying new shares may also be contributing to the positive sentiment. ",
-        "The move is likely a signal of a temporary dislocation, rather than a structural shift, given Microsoft's wide economic moat and strong competitive position, suggesting that investors holding or watching the stock should consider this a buying opportunity rather than a cause for concern."
-      ],
+      "marketCap": 3088.45,
+      "price": 415.76,
+      "change": 0.38,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -241,10 +226,13 @@
       "name": "Amazon.com, Inc.",
       "sector": "E-Commerce",
       "moat": "wide",
-      "marketCap": 2900.96,
-      "price": 269.75,
-      "change": 1.77,
-      "newsDigest": [],
+      "marketCap": 2913.0,
+      "price": 270.87,
+      "change": 0.91,
+      "newsDigest": [
+        "Today's 0.91% move in AMZN appears to be driven by general market sentiment, as there is no significant news or catalysts specifically affecting the stock, with the recent news coverage lacking substantial information to justify a large price movement. The lack of concrete news suggests that the move may be attributed to broader market trends or sector rotation. The move is relatively small, indicating no major shift in investor sentiment. ",
+        "Given AMZN's wide economic moat, this minor move is likely noise rather than a signal of a structural shift in the company's competitive position, and investors holding or watching the stock should consider this move as a temporary dislocation rather than a fundamental change in the company's outlook."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -253,10 +241,13 @@
       "name": "Alphabet Inc.",
       "sector": "Tech",
       "moat": "wide",
-      "marketCap": 4675.47,
-      "price": 385.91,
-      "change": 0.29,
-      "newsDigest": [],
+      "marketCap": 4627.98,
+      "price": 381.99,
+      "change": -0.96,
+      "newsDigest": [
+        "Today's 0.96% decline in GOOGL appears to be driven by a lack of significant news or catalysts, with the provided articles offering no substantial insight into the company's fundamentals or outlook. The move may be attributed to broader market or sector trends, but the specific cause remains unclear. The absence of meaningful news suggests that the decline may be a minor, short-term fluctuation.",
+        "Given Alphabet's wide economic moat, this minor decline is likely noise rather than a signal of a structural shift in the company's competitive position. The purchase of 4,749 shares by ZEGA Investments LLC is a relatively small transaction and does not appear to be a significant driver of the stock's price action. The company's strong fundamentals and competitive advantages remain intact, suggesting that this decline may be a buying opportunity."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -265,10 +256,13 @@
       "name": "Meta Platforms, Inc.",
       "sector": "Tech",
       "moat": "wide",
-      "marketCap": 1557.65,
-      "price": 613.63,
-      "change": 0.28,
-      "newsDigest": [],
+      "marketCap": 1550.48,
+      "price": 610.8,
+      "change": 0.34,
+      "newsDigest": [
+        "Today's modest 0.34% gain in Meta Platforms, Inc. (META) appears to be driven by general market sentiment and sector rotation, as there is no significant news catalyst directly tied to the stock's move. The recent articles on Yahoo Finance and Capital.com provide general information on the stock but do not offer any new insights that would explain the price action. Schear Investment Advisers LLC's decision to raise its stock position in META may have contributed to the positive sentiment, but its impact is likely minimal given the small move.",
+        "Given Meta's wide economic moat, this minor move is likely noise rather than a signal of a structural shift in the company's competitive position. The lack of significant news driving the price action suggests that the stock's fundamentals remain unchanged, and investors should focus on the upcoming Q1 2026 earnings report for more meaningful insights into the company's performance. This minor dislocation is an opportunity for investors to reassess their position in META without any new information altering the stock's long-term outlook."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -277,12 +271,12 @@
       "name": "Tesla, Inc.",
       "sector": "Auto",
       "moat": "narrow",
-      "marketCap": 1479.79,
-      "price": 394.01,
-      "change": 3.24,
+      "marketCap": 1458.08,
+      "price": 388.23,
+      "change": -0.66,
       "newsDigest": [
-        "Today's 3.24% move in TSLA appears to be driven by a mix of institutional investment activities, as Oppenheimer Asset Management Inc. trimmed its stock position, while Sigma Planning Corp acquired additional shares, potentially indicating a shift in investor sentiment. The news about Morgan Stanley's capex forecast for Tesla may also be contributing to the positive move. However, the overall news flow seems relatively thin and not directly tied to a specific earnings or guidance catalyst. ",
-        "Given Tesla's narrow economic moat, this move may be more of a temporary dislocation rather than a structural shift, as the company's competitive position remains vulnerable to industry disruptions and technological advancements. The investment activities of institutional players may be a signal of changing market sentiment, but it is essential to monitor the company's fundamental performance and industry trends to assess the sustainability of this move. "
+        "Today's 0.66% decline in Tesla's stock price appears to be driven by a lack of significant news or catalysts, with the recent articles focusing on minor share purchases by institutional investors, which are unlikely to have a material impact on the stock's price. The absence of substantial news suggests that the move may be attributed to broader market or sector trends. The narrow economic moat of the company makes it more susceptible to market fluctuations.",
+        "Given the company's narrow moat, this minor decline may be a temporary dislocation rather than a structural shift, and investors should consider the stock's long-term prospects rather than reacting to short-term price movements. The recent purchases by institutional investors may be seen as a positive signal, but their impact is likely to be limited. The stock's price action should be monitored in the context of the broader auto sector and market trends."
       ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -292,9 +286,9 @@
       "name": "Advanced Micro Devices, Inc.",
       "sector": "Semicon",
       "moat": "narrow",
-      "marketCap": 577.65,
-      "price": 354.3,
-      "change": -0.05,
+      "marketCap": 554.93,
+      "price": 340.36,
+      "change": -5.6,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -304,10 +298,13 @@
       "name": "Palantir Technologies Inc.",
       "sector": "Software",
       "moat": "narrow",
-      "marketCap": 345.23,
-      "price": 144.01,
-      "change": 3.53,
-      "newsDigest": [],
+      "marketCap": 350.6,
+      "price": 146.25,
+      "change": 1.52,
+      "newsDigest": [
+        "Today's 1.52% move in Palantir Technologies (PLTR) stock appears to be driven by anticipation of the company's Q1 earnings, as indicated by recent news coverage focusing on earnings forecasts and expected stock movement after the announcement. The lack of specific catalysts in the news articles suggests that the move may be driven by general market sentiment and positioning ahead of the earnings release. The move is relatively small, indicating no significant surprises or revelations in the recent news coverage.",
+        "Given Palantir's narrow economic moat, this move is likely noise rather than a signal of a structural shift in the company's competitive position. The stock's reaction to earnings will be closely watched, but without a significant change in the company's fundamentals or market trends, this move is unlikely to have a lasting impact on the stock's long-term trajectory. The portfolio's position in PLTR should be evaluated in the context of the company's overall growth prospects and sector trends."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -316,10 +313,13 @@
       "name": "Coinbase Global, Inc.",
       "sector": "Crypto",
       "moat": "none",
-      "marketCap": 50.91,
-      "price": 192.8,
-      "change": 2.68,
-      "newsDigest": [],
+      "marketCap": 53.88,
+      "price": 204.02,
+      "change": 6.68,
+      "newsDigest": [
+        "Today's 6.68% move in COIN is driven by momentum in Bitcoin ahead of the company's Q1 earnings, with investors likely anticipating a positive report given the recent surge in cryptocurrency prices. The lack of a clear economic moat for Coinbase makes it particularly sensitive to broader crypto market trends. This earnings-driven move is a key catalyst for the stock's price action.",
+        "The move is likely signal rather than noise, given the direct connection to earnings and the company's exposure to crypto market fluctuations. Without a strong competitive moat, Coinbase's stock price will remain closely tied to the performance of Bitcoin and the broader crypto sector. This means that investors should be prepared for continued volatility in the stock."
+      ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -328,9 +328,9 @@
       "name": "Oklo Inc.",
       "sector": "Nuclear",
       "moat": "none",
-      "marketCap": 12.32,
-      "price": 70.85,
-      "change": -2.28,
+      "marketCap": 12.12,
+      "price": 69.66,
+      "change": -1.05,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -340,13 +340,10 @@
       "name": "MARA Holdings, Inc.",
       "sector": "Bitcoin Mining",
       "moat": "none",
-      "marketCap": 4.58,
-      "price": 12.04,
-      "change": 0.42,
-      "newsDigest": [
-        "Today's 0.42% move in MARA Holdings, Inc. is driven by recent news of a $1.5 billion acquisition, which has been covered by multiple outlets, suggesting that the market is reacting positively to the company's expansion efforts. The acquisition news is the primary catalyst for the stock's move, although the relatively small price increase indicates a muted market response. The lack of a significant price surge may be due to the company's lack of economic moat, making it harder for investors to gauge the long-term impact of the acquisition.",
-        "The move is likely noise rather than signal, as the company's competitive position remains unchanged despite the acquisition, and the market's reaction is relatively subdued. Without a strong economic moat, MARA Holdings, Inc. remains vulnerable to industry fluctuations, and the acquisition's success is uncertain. As such, investors should exercise caution and not overreact to this news, instead focusing on the company's underlying fundamentals and industry trends."
-      ],
+      "marketCap": 4.4,
+      "price": 11.57,
+      "change": 1.0,
+      "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
     },
@@ -355,9 +352,9 @@
       "name": "Cloudflare, Inc.",
       "sector": "Cybersecurity",
       "moat": "wide",
-      "marketCap": 76.05,
-      "price": 215.22,
-      "change": 5.0,
+      "marketCap": 77.91,
+      "price": 220.47,
+      "change": 1.37,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -367,12 +364,12 @@
       "name": "Snowflake Inc.",
       "sector": "Data",
       "moat": "none",
-      "marketCap": 48.41,
-      "price": 140.03,
-      "change": 2.61,
+      "marketCap": 50.69,
+      "price": 146.63,
+      "change": 3.99,
       "newsDigest": [
-        "Today's 2.61% move in Snowflake Inc. (SNOW) appears to be driven by a mix of neutral to positive news coverage, including a Yahoo Finance article questioning the stock's value and a MarketBeat report on Keybank National Association OH trimming its stock holdings, neither of which seems significant enough to be a primary catalyst. The TIKR.com article suggesting analysts still recommend buying despite the stock losing half its value in 2026 may be contributing to the upward momentum. The lack of a clear, significant catalyst suggests the move may be largely technical or driven by sector rotation. ",
-        "Given Snowflake's lack of economic moat, the current price action may be more noise than signal, as the company's competitive position remains vulnerable to disruption. The fact that analysts still recommend buying the stock despite its significant decline in 2026 suggests they see value in its fundamentals or growth prospects. This could be a buying opportunity for those with a long-term perspective, but caution is warranted due to the company's fragile competitive position."
+        "Today's 3.99% move in Snowflake Inc. ($SNOW) appears to be driven by the announcement of its upcoming earnings call on May 27, which may have sparked investor interest and optimism about the company's future performance. The acquisition of 173,898 shares by PFA Pension Forsikringsaktieselskab may have also contributed to the positive sentiment. However, the news coverage is relatively thin and lacks significant catalysts to justify a large move. ",
+        "Given Snowflake's lack of economic moat, this move may be a temporary dislocation driven by sentiment rather than a structural shift in the company's competitive position. The upcoming earnings call will be a key event to watch, as it may provide more insight into the company's growth prospects and profitability. Investors should be cautious and focus on the company's fundamentals rather than short-term market movements."
       ],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -382,9 +379,9 @@
       "name": "Galaxy Digital Inc.",
       "sector": "Crypto",
       "moat": "none",
-      "marketCap": 11.19,
-      "price": 28.67,
-      "change": 4.48,
+      "marketCap": 11.31,
+      "price": 28.97,
+      "change": 3.06,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
@@ -394,9 +391,9 @@
       "name": "Alamos Gold Inc.",
       "sector": "Gold",
       "moat": "narrow",
-      "marketCap": 16.7,
-      "price": 39.76,
-      "change": -0.45,
+      "marketCap": 16.42,
+      "price": 39.1,
+      "change": -0.81,
       "newsDigest": [],
       "newsConfidence": "confident",
       "newsSourceCount": 3
