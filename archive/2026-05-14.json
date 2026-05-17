@@ -1,0 +1,467 @@
+{
+  "date": "2026-05-14",
+  "sessions": [
+    {
+      "session_label": "test-run",
+      "as_of": "2026-05-14T15:01:58-04:00",
+      "market_context": {
+        "spy_change_pct": 0.62,
+        "qqq_change_pct": 0.21
+      },
+      "screened_total": 10,
+      "candidates": [
+        {
+          "ticker": "QCOM",
+          "name": "QUALCOMM Incorporated",
+          "exchange": "NasdaqGS",
+          "sector": "Technology",
+          "industry": "Semiconductors",
+          "price": 200.08,
+          "change_pct": -6.14,
+          "market_cap_b": 210.9,
+          "volume_ratio": 1.44,
+          "range_52w": {
+            "low": 121.99,
+            "high": 247.9,
+            "position_pct": 62.0
+          },
+          "sector_etf": {
+            "symbol": "XLK",
+            "change_pct": 0.76
+          },
+          "peers": [
+            {
+              "ticker": "NVDA",
+              "change_pct": 4.39
+            },
+            {
+              "ticker": "TSM",
+              "change_pct": 4.48
+            },
+            {
+              "ticker": "AVGO",
+              "change_pct": 5.52
+            },
+            {
+              "ticker": "MU",
+              "change_pct": -3.44
+            },
+            {
+              "ticker": "AMD",
+              "change_pct": 0.94
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "MEDIUM",
+          "catalyst": "Renversement intraday violent : le titre était à +7.6% le matin sur un Q2 beat, des annonces favorables sur les processeurs data center et la suspension des tarifs US-Chine, avant de basculer à -6.14%.",
+          "reasoning": "Le mouvement est fortement idiosyncratique : sur la même journée, NVDA gagne 4.4%, TSM 4.5%, AVGO 5.5%, donc le secteur semi est clairement haussier et seul QCOM décroche. Aucune news négative n'a émergé sur le titre lui-même pendant l'après-midi — la lecture la plus probable est une prise de profits massive sur un nom qui venait de monter de 7.6% le matin sur de bonnes nouvelles cumulées. Le volume reste modéré à 1.44x la moyenne, ce qui plaide pour du sell-the-news plus que pour un dumping institutionnel coordonné. La confiance est seulement moyenne car un retournement intraday de 14 points en pourcentage sans news identifiable peut aussi traduire un repositionnement institutionnel discret — surveiller le comportement à l'ouverture demain avant d'engager.",
+          "news": [
+            {
+              "title": "Why Is Qualcomm (QCOM) Stock Soaring Today",
+              "source": "StockStory",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/why-qualcomm-qcom-stock-soaring-114855767.html",
+              "published_at": "2026-05-14T11:48:55+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "MFC",
+          "name": "Manulife Financial Corporation",
+          "exchange": "NYSE",
+          "sector": "Financial Services",
+          "industry": "Insurance - Life",
+          "price": 37.54,
+          "change_pct": -5.8,
+          "market_cap_b": 62.7,
+          "volume_ratio": 1.89,
+          "range_52w": {
+            "low": 29.7,
+            "high": 40.41,
+            "position_pct": 73.2
+          },
+          "sector_etf": {
+            "symbol": "XLF",
+            "change_pct": 0.47
+          },
+          "peers": [],
+          "verdict": "ENTRY",
+          "confidence": "MEDIUM",
+          "catalyst": "Manulife rate les attentes de bénéfice par action au Q1 2026, malgré une croissance des ventes (APE Sales) en glissement annuel.",
+          "reasoning": "Le marché a vendu sur le titre du miss EPS sans regarder en dessous : le core EPS, qui exclut les éléments non récurrents et qui est le vrai indicateur opérationnel pour un assureur, croît bien d'après le rapport. Le signal le plus parlant vient de National Bank, qui a relevé sa cible à 59$ post-print plutôt que de la baisser — un analyste qui voit ces résultats sans s'inquiéter, c'est le signe que le miss est cosmétique. Manulife reste une assurance vie défensive avec balance sheet investment grade, et le secteur financier (XLF) est en hausse aujourd'hui, ce qui isole MFC comme une réaction excessive et non un mouvement de cohort. Confiance moyenne car le rebond peut prendre 2-3 jours plutôt qu'intraday.",
+          "news": [
+            {
+              "title": "Manulife Financial Q1 Earnings Miss Expectations, APE Sales Rise Y/Y",
+              "source": "Zacks",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/manulife-financial-q1-earnings-miss-124100811.html",
+              "published_at": "2026-05-14T12:41:00+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "SE",
+          "name": "Sea Limited",
+          "exchange": "NYSE",
+          "sector": "Consumer Cyclical",
+          "industry": "Internet Retail",
+          "price": 65.3,
+          "change_pct": -5.55,
+          "market_cap_b": 54.1,
+          "volume_ratio": 0.93,
+          "range_52w": {
+            "low": 60.0,
+            "high": 122.0,
+            "position_pct": 9.2
+          },
+          "sector_etf": {
+            "symbol": "XLY",
+            "change_pct": -0.03
+          },
+          "peers": [
+            {
+              "ticker": "AMZN",
+              "change_pct": -1.1
+            },
+            {
+              "ticker": "BABA",
+              "change_pct": -3.22
+            },
+            {
+              "ticker": "PDD",
+              "change_pct": -4.04
+            }
+          ],
+          "verdict": "PASSE",
+          "confidence": "MEDIUM",
+          "catalyst": "Sea Limited rate les attentes de bénéfice par action au Q1 2026, malgré une croissance du chiffre d'affaires en glissement annuel.",
+          "reasoning": "Le profil du titre est inquiétant : à 9.2% de la fourchette 52 semaines, Sea cote pratiquement à son plus bas annuel, ce qui signifie qu'il a déjà subi une vente massive et soutenue depuis des mois. Quand des publications avec croissance du revenu de 46% n'arrivent pas à faire remonter un tel titre, et qu'un nouveau miss EPS l'enfonce encore, le marché signale qu'il y a un problème structurel sous-jacent (concurrence TikTok Shop sur Shopee, exposition réglementaire en Indonésie, profitabilité qui ne suit pas la croissance). Le volume reste calme à 0.93x la moyenne, ce qui ne change pas la lecture : ce n'est pas une capitulation finale mais une lente érosion. Jouer un rebond ici expose au pattern du couteau qui tombe — autant attendre un signal de stabilisation clair.",
+          "news": [
+            {
+              "title": "Sea Limited Q1 Earnings Miss Estimates, Revenues Increase Y/Y",
+              "source": "Zacks",
+              "url": "https://finance.yahoo.com/news/sea-limited-q1-earnings-miss-150500101.html",
+              "published_at": "2026-05-14T15:05:00+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "BA",
+          "name": "Boeing Company",
+          "exchange": "NYSE",
+          "sector": "Industrials",
+          "industry": "Aerospace & Defense",
+          "price": 195.4,
+          "change_pct": -4.73,
+          "market_cap_b": 180.7,
+          "volume_ratio": 2.61,
+          "range_52w": {
+            "low": 130.0,
+            "high": 230.0,
+            "position_pct": 67.6
+          },
+          "sector_etf": {
+            "symbol": "XLI",
+            "change_pct": 0.77
+          },
+          "peers": [
+            {
+              "ticker": "GE",
+              "change_pct": -1.1
+            },
+            {
+              "ticker": "RTX",
+              "change_pct": -1.4
+            },
+            {
+              "ticker": "EADSY",
+              "change_pct": -1.5
+            }
+          ],
+          "verdict": "PASSE",
+          "confidence": "MEDIUM",
+          "catalyst": "Avertissement sectoriel aérospatial : 7 000 retraits d'avions civils anticipés sur la prochaine décennie touchent GE en premier mais pèsent sur tout le complexe, Boeing inclus.",
+          "reasoning": "Le volume du jour atteint 2.6 fois la moyenne sur 30 jours, signature claire d'un flux institutionnel lourd qui sort du titre — ce n'est pas du retail nerveux. Cette pression vendeuse arrive sur un Boeing qui porte toujours un overhang structurel chronique non résolu (séquelles 737 MAX, dette élevée, problèmes de certification récurrents), et dans un contexte sectoriel où les pairs RTX, GE et EADSY baissent eux aussi malgré un secteur Industrials en hausse. Quand un titre déjà fragile structurellement se fait dumper sur volume institutionnel alors que son sous-secteur immédiat se contracte, le scénario de continuation baissière sur 24-48h est plus probable que celui du rebond technique. La news positive sur le deal Chine 200 jets ne suffit pas à inverser cette dynamique à court terme.",
+          "news": [
+            {
+              "title": "Aerospace Warning Hits GE As 7,000 Aircraft Retirements Loom",
+              "source": "GuruFocus.com",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/aerospace-warning-hits-ge-7-001541806.html",
+              "published_at": "2026-05-14T00:15:41+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "SNDK",
+          "name": "Sandisk Corporation",
+          "exchange": "NasdaqGS",
+          "sector": "Technology",
+          "industry": "Computer Hardware",
+          "price": 145.2,
+          "change_pct": -4.46,
+          "market_cap_b": 204.8,
+          "volume_ratio": 0.61,
+          "range_52w": {
+            "low": 60.0,
+            "high": 162.0,
+            "position_pct": 86.1
+          },
+          "sector_etf": {
+            "symbol": "XLK",
+            "change_pct": 0.76
+          },
+          "peers": [
+            {
+              "ticker": "WDC",
+              "change_pct": -1.0
+            },
+            {
+              "ticker": "STX",
+              "change_pct": -1.5
+            },
+            {
+              "ticker": "ANET",
+              "change_pct": 5.1
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "HIGH",
+          "catalyst": "Pullback technique après un rallye étendu, dans un contexte où la presse spécialisée commence à se demander combien de temps la hausse de Sandisk peut encore durer.",
+          "reasoning": "Trois éléments convergent vers une lecture de prise de profits ordonnée plutôt que de cassure structurelle. Premier élément : le titre est à 86% de sa fourchette 52 semaines, donc proche du plus haut annuel — la dynamique préalable était claire et a attiré les flash analytiques sur la durabilité du mouvement. Deuxième élément : le volume du jour est seulement à 0.61x la moyenne, ce qui exclut formellement un dumping institutionnel coordonné — les positions lourdes ne se vident pas sur volume bas. Troisième élément : ses pairs storage (WDC -1%, STX -1.5%) montrent un léger refroidissement aussi, ce qui place la baisse de SNDK dans une logique de respiration sectorielle, et non d'évènement propre. Le pattern textbook ici est le pullback de 3 à 5 jours qui se résout par un retour vers le niveau d'avant la baisse, c'est précisément le setup que ta stratégie cherche.",
+          "news": [
+            {
+              "title": "How Far Can the Micron and Sandisk Rally Run?",
+              "source": "Zacks",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/far-micron-sandisk-rally-run-190300116.html",
+              "published_at": "2026-05-14T19:03:00+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "PDD",
+          "name": "PDD Holdings Inc.",
+          "exchange": "NasdaqGS",
+          "sector": "Consumer Cyclical",
+          "industry": "Internet Retail",
+          "price": 88.1,
+          "change_pct": -4.04,
+          "market_cap_b": 136.0,
+          "volume_ratio": 1.07,
+          "range_52w": {
+            "low": 87.5,
+            "high": 175.0,
+            "position_pct": 0.8
+          },
+          "sector_etf": {
+            "symbol": "XLY",
+            "change_pct": -0.03
+          },
+          "peers": [
+            {
+              "ticker": "BABA",
+              "change_pct": -3.22
+            },
+            {
+              "ticker": "PROSY",
+              "change_pct": -4.2
+            }
+          ],
+          "verdict": "PASSE",
+          "confidence": "HIGH",
+          "catalyst": "Aucun catalyseur propre identifiable dans les news 48h — la baisse s'inscrit dans la faiblesse générale du cohort e-commerce chinois (BABA -3.2%, PROSY -4.2%) sur fond de tensions tarifaires Trump persistantes.",
+          "reasoning": "Le signal critique ici est la position dans la fourchette 52 semaines : 0.8%, c'est-à-dire littéralement au plancher annuel. PDD n'est pas en train de se faire dumper sur une mauvaise news isolée, il est en train de finir un mouvement de capitulation lent mais continu qui dure depuis plusieurs mois. Quand un titre fait de nouveaux planchers annuels alors que ses pairs du même cohort baissent aussi (BABA, PROSY), il n'y a aucune base technique ni fondamentale pour anticiper un rebond rapide — au contraire, ces patterns continuent souvent jusqu'à ce qu'un évènement précis (changement réglementaire, capitulation finale sur volume massif, accord macro Trump-Xi) déclenche le retournement. Volume à 1.07x ne signale pas encore cette capitulation finale. C'est exactement le profil de couteau qui tombe que ta stratégie doit éviter.",
+          "news": [
+            {
+              "title": "Pain at the Pump Is a Big Win for Budget Shopping Apps",
+              "source": "Barron's",
+              "url": "https://www.barrons.com/articles/inflation-gas-prices-shein-temu-shopping-app-downloads-5d60704a?siteid=yhoof2",
+              "published_at": "2026-05-14T10:00:00+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "B",
+          "name": "Barrick Mining Corporation",
+          "exchange": "NYSE",
+          "sector": "Basic Materials",
+          "industry": "Gold",
+          "price": 44.2,
+          "change_pct": -3.81,
+          "market_cap_b": 72.5,
+          "volume_ratio": 0.61,
+          "range_52w": {
+            "low": 18.0,
+            "high": 50.0,
+            "position_pct": 69.1
+          },
+          "sector_etf": {
+            "symbol": "XLB",
+            "change_pct": -0.58
+          },
+          "peers": [
+            {
+              "ticker": "NEM",
+              "change_pct": -2.2
+            },
+            {
+              "ticker": "AEM",
+              "change_pct": -1.7
+            },
+            {
+              "ticker": "ZIJMY",
+              "change_pct": -5.7
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "HIGH",
+          "catalyst": "Prises de profits sur un titre qui a gagné 158% sur les douze derniers mois, dans un cohort minier en repli généralisé (NEM -2.2%, AEM -1.7%, ZIJMY -5.7%).",
+          "reasoning": "Toutes les pièces du puzzle sont alignées vers une lecture de bruit sectoriel propre : le secteur minier (XLB) baisse de 0.58%, les principaux pairs gold producers reculent ensemble, et le titre lui-même a connu une hausse spectaculaire qui justifie mécaniquement des prises de profits techniques. Le volume reste très bas à 0.61x la moyenne, ce qui élimine l'hypothèse d'un dumping institutionnel — les hedge funds qui sortiraient sérieusement d'une position massive le feraient sur du volume. La couverture analystique elle-même reste constructive (Trefis estime le titre encore sous-évalué à 44$), donc aucune dégradation fondamentale n'est en cours. Le setup classique de rebond intraday ou sur 24h est précisément celui-ci.",
+          "news": [
+            {
+              "title": "Has Barrick Mining (B) Risen Too Far After 158% One Year Share Price Surge?",
+              "source": "Simply Wall St.",
+              "url": "https://finance.yahoo.com/news/barrick-mining-b-risen-too-152229279.html",
+              "published_at": "2026-05-14T15:22:29+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "INTC",
+          "name": "Intel Corporation",
+          "exchange": "NasdaqGS",
+          "sector": "Technology",
+          "industry": "Semiconductors",
+          "price": 132.5,
+          "change_pct": -3.62,
+          "market_cap_b": 582.7,
+          "volume_ratio": 1.02,
+          "range_52w": {
+            "low": 19.0,
+            "high": 145.0,
+            "position_pct": 85.2
+          },
+          "sector_etf": {
+            "symbol": "XLK",
+            "change_pct": 0.76
+          },
+          "peers": [
+            {
+              "ticker": "NVDA",
+              "change_pct": 4.39
+            },
+            {
+              "ticker": "TSM",
+              "change_pct": 4.48
+            },
+            {
+              "ticker": "AVGO",
+              "change_pct": 5.52
+            },
+            {
+              "ticker": "AMD",
+              "change_pct": 0.94
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "MEDIUM",
+          "catalyst": "Aucun catalyseur propre identifiable — Intel décroche pendant que ses pairs semis (NVDA, TSM, AVGO, AMD) surperforment fortement sur les news Chine, ce qui suggère une rotation sectorielle qui exclut Intel du trade AI/China.",
+          "reasoning": "C'est une situation à signaux mixtes qui justifie la confiance moyenne. Du côté positif : aucune news négative spécifique sur le titre, position à 85% de la fourchette 52 semaines (indiquant un terrain technique encore haut), volume strictement normal à 1.02x la moyenne (donc pas de dumping), et un secteur tech globalement haussier qui crée un effet d'aspiration latent. Du côté négatif : le caractère idiosyncratique pur (NVDA +4.4%, TSM +4.5%, AVGO +5.5%, AMD +0.9%) signale que les flux institutionnels du jour rotent activement vers les beneficiaries du trade China-AI, et Intel n'en fait visiblement pas partie. Combiné à l'historique de déception chronique d'Intel ces dernières années, ça force à dimensionner la position légèrement et à mettre un stop serré — la thèse de rebond tient mais la marge d'erreur est plus mince qu'ailleurs.",
+          "news": [
+            {
+              "title": "Dow back above 50,000, US stocks hit new records on AI rally",
+              "source": "Yahoo Finance Video",
+              "url": "https://finance.yahoo.com/video/dow-back-above-50000-us-stocks-hit-new-records-on-ai-rally-201203787.html",
+              "published_at": "2026-05-14T20:12:03+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "MU",
+          "name": "Micron Technology, Inc.",
+          "exchange": "NasdaqGS",
+          "sector": "Technology",
+          "industry": "Semiconductors",
+          "price": 270.0,
+          "change_pct": -3.44,
+          "market_cap_b": 875.1,
+          "volume_ratio": 0.96,
+          "range_52w": {
+            "low": 90.0,
+            "high": 285.0,
+            "position_pct": 94.1
+          },
+          "sector_etf": {
+            "symbol": "XLK",
+            "change_pct": 0.76
+          },
+          "peers": [
+            {
+              "ticker": "NVDA",
+              "change_pct": 4.39
+            },
+            {
+              "ticker": "AVGO",
+              "change_pct": 5.52
+            },
+            {
+              "ticker": "INTC",
+              "change_pct": -3.62
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "HIGH",
+          "catalyst": "Prises de profits sur un titre à 94% de sa fourchette 52 semaines, dans un contexte où la presse souligne explicitement la valorisation tendue après les résultats records portés par la demande mémoire AI.",
+          "reasoning": "La lecture est limpide : Micron coté à 94% de son range 52 semaines après avoir publié des résultats records sur la mémoire AI, et un article de fond du jour interroge précisément sa valorisation. C'est exactement la configuration qui déclenche mécaniquement des prises de profits institutionnelles — pas par perte de conviction sur la thèse, mais par discipline de gestion de risque sur les positions devenues lourdes. Le volume reste calme à 0.96x la moyenne, ce qui confirme que ce n'est pas un dumping coordonné mais une respiration. La thèse fondamentale (demande de mémoire pour l'infrastructure AI) reste totalement intacte, ce qui rend le rebond hautement probable une fois la pression vendeuse digérée. Setup quasi parfait pour ta stratégie.",
+          "news": [
+            {
+              "title": "A Look At Micron Technology (MU) Valuation As AI Memory Demand Drives Record Results",
+              "source": "Simply Wall St.",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/look-micron-technology-mu-valuation-221413339.html",
+              "published_at": "2026-05-14T22:14:13+00:00"
+            }
+          ]
+        },
+        {
+          "ticker": "BABA",
+          "name": "Alibaba Group Holding Limited",
+          "exchange": "NYSE",
+          "sector": "Consumer Cyclical",
+          "industry": "Internet Retail",
+          "price": 142.3,
+          "change_pct": -3.22,
+          "market_cap_b": 338.6,
+          "volume_ratio": 1.72,
+          "range_52w": {
+            "low": 75.0,
+            "high": 175.0,
+            "position_pct": 42.1
+          },
+          "sector_etf": {
+            "symbol": "XLY",
+            "change_pct": -0.03
+          },
+          "peers": [
+            {
+              "ticker": "PDD",
+              "change_pct": -4.04
+            },
+            {
+              "ticker": "PROSY",
+              "change_pct": -4.2
+            }
+          ],
+          "verdict": "ENTRY",
+          "confidence": "MEDIUM",
+          "catalyst": "Les dépenses massives de capex sur l'AI affectent les profits du Q4 d'Alibaba — résultat décevant sur le bottom-line malgré une thèse stratégique long terme intacte.",
+          "reasoning": "Le mouvement combine deux dimensions qu'il faut séparer pour bien lire la situation. La première est sectorielle : l'ensemble du cohort e-commerce chinois baisse aujourd'hui (PDD -4%, PROSY -4.2%) sous l'effet des tensions tarifaires Trump persistantes — donc une partie significative de la baisse de BABA est de la contagion, pas du jugement sur le titre lui-même. La deuxième est idiosyncratique : la pression du capex AI sur les profits de court terme est un vrai signal négatif pour les investisseurs focalisés sur les marges, mais c'est un coût stratégique nécessaire qui ne remet pas en cause la dynamique de revenus. Contrairement à PDD qui est au plancher annuel, BABA est en milieu de fourchette à 42%, ce qui laisse de la marge technique pour un rebond, et le volume élevé à 1.72x indique une vraie capitulation sur la news plutôt qu'un drift. Confiance moyenne car le scénario de continuation baissière reste possible si les tensions Chine s'aggravent dans les jours qui viennent.",
+          "news": [
+            {
+              "title": "AI Spending Hurts Alibaba's Q4 Profits. BABA Stock Is Still Rocking Higher.",
+              "source": "Barchart",
+              "url": "https://www.barchart.com/story/news/1940079/ai-spending-hurts-alibaba-s-q4-profits-baba-stock-is-still-rocking",
+              "published_at": "2026-05-14T07:00:00+00:00"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

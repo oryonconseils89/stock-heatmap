@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Stocks Screener — Dashboard</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f7f8fa;
+    --panel: #ffffff;
+    --border: #e4e7eb;
+    --border-strong: #d1d5db;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+    --accent: #4f46e5;
+    --good: #047857;
+    --bad: #b91c1c;
+    --neutral: #6b7280;
+    --good-bg: #ecfdf5;
+    --bad-bg: #fef2f2;
+    --neutral-bg: #f3f4f6;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 16px; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.55; }
+  .header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border-strong); }
+  .header h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.2px; }
+  .header .meta { color: var(--text-muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+  /* HOW IT WORKS PANEL */
+  .howto { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 14px; overflow: hidden; }
+  .howto-header { padding: 10px 14px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--text); font-weight: 600; }
+  .howto-header:hover { background: #fafbfc; }
+  .howto-header .arrow { font-size: 10px; transition: transform 0.15s; color: var(--text-muted); }
+  .howto.open .howto-header .arrow { transform: rotate(90deg); }
+  .howto-body { display: none; padding: 4px 18px 18px; font-size: 13px; color: var(--text); line-height: 1.65; border-top: 1px solid var(--border); }
+  .howto.open .howto-body { display: block; }
+  .howto-body h4 { font-size: 11px; text-transform: uppercase; color: var(--accent); margin: 14px 0 6px; font-weight: 700; letter-spacing: 0.5px; }
+  .howto-body p { margin: 6px 0; }
+  .howto-body .vbox { display: flex; gap: 10px; margin: 6px 0; flex-wrap: wrap; align-items: baseline; }
+  .howto-body .vchip { padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: ui-monospace, "SF Mono", monospace; }
+  .howto-body .vchip.entry { background: var(--good-bg); color: var(--good); }
+  .howto-body .vchip.passe { background: var(--bad-bg); color: var(--bad); }
+  .howto-body .vchip.h { background: #1f2937; color: #fff; }
+  .howto-body .vchip.m { background: #6b7280; color: #fff; }
+  .howto-body .vchip.l { background: #d1d5db; color: #374151; }
+  .howto-body ol { margin: 4px 0 8px; padding-left: 20px; }
+  .howto-body ol li { margin: 6px 0; }
+  .howto-body cite { color: var(--text-muted); font-size: 11px; font-style: italic; }
+
+  /* MARKET BAR — 5 macros standardisés. overflow:visible pour ne pas clipper les tooltips. */
+  .market-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; padding: 0; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 16px; position: relative; cursor: help; overflow: visible; }
+  .market-bar > .macro:first-child { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+  .market-bar > .macro:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+  .market-bar:hover .market-mood-tip { visibility: visible; opacity: 1; }
+  /* Si le curseur est sur le ⓘ d'un KPI, on cache la lecture globale pour ne pas écraser la définition KPI */
+  .market-bar:has(.mlabel:hover) .market-mood-tip { visibility: hidden !important; opacity: 0 !important; }
+  .macro { padding: 14px 14px; border-right: 1px solid var(--border); min-height: 80px; display: flex; flex-direction: column; justify-content: space-between; }
+  .macro:last-child { border-right: none; }
+  .macro .mlabel { font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.6px; font-weight: 600; cursor: help; position: relative; display: inline-block; }
+  .macro .mlabel::after { content: ' ⓘ'; opacity: 0.35; font-size: 9px; }
+  .macro .mlabel .mtip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; top: calc(100% + 6px); left: 0; z-index: 200; background: #1f2937; color: #fff; padding: 10px 12px; border-radius: 5px; font-size: 11.5px; line-height: 1.5; font-weight: 400; width: 280px; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); pointer-events: none; }
+  .macro .mlabel:hover .mtip { visibility: visible; opacity: 1; }
+  .macro .mvalue { font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 4px; }
+  .macro .mdelta { font-size: 11.5px; font-variant-numeric: tabular-nums; margin-top: 4px; font-weight: 500; }
+  .mvalue.signal-good, .mdelta.signal-good { color: var(--good); }
+  .mvalue.signal-bad, .mdelta.signal-bad { color: var(--bad); }
+  .mvalue.signal-neutral, .mdelta.signal-neutral { color: var(--text-faint); }  /* gris clair — non interprétable */
+  .market-mood-tip { visibility: hidden; opacity: 0; transition: opacity 0.2s; position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 150; background: #1f2937; color: #fff; padding: 14px 16px; border-radius: 6px; font-size: 13px; line-height: 1.6; font-weight: 400; box-shadow: 0 6px 20px rgba(0,0,0,0.2); pointer-events: none; }
+  .market-mood-tip::before { content: 'Lecture du marché'; display: block; font-size: 10px; text-transform: uppercase; color: var(--text-faint); letter-spacing: 0.6px; margin-bottom: 6px; font-weight: 700; }
+
+  /* COLOR CODE TABLE (foldable, sous la market bar) */
+  .color-code { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .color-code-header { padding: 9px 14px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 600; }
+  .color-code-header:hover { background: #fafbfc; color: var(--text); }
+  .color-code-header .arrow { font-size: 10px; transition: transform 0.15s; }
+  .color-code.open .color-code-header .arrow { transform: rotate(90deg); }
+  .color-code-body { display: none; padding: 4px 16px 18px; border-top: 1px solid var(--border); }
+  .color-code.open .color-code-body { display: block; }
+  .color-code-intro { font-size: 12.5px; color: var(--text-muted); margin: 12px 0 14px; line-height: 1.55; }
+  .cc-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  .cc-table thead th { text-align: left; padding: 8px 10px; background: #f9fafb; border-bottom: 1px solid var(--border); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 700; }
+  .cc-table thead th:nth-child(1) { width: 16%; }
+  .cc-table thead th:nth-child(2), .cc-table thead th:nth-child(3) { width: 42%; }
+  .cc-table tbody th { text-align: left; padding: 14px 10px; font-weight: 700; font-size: 12.5px; vertical-align: middle; color: var(--text); border-bottom: 1px solid var(--border); }
+  .cc-table tbody td { padding: 10px 8px; vertical-align: middle; border-bottom: 1px solid var(--border); color: var(--text); }
+  .cc-table tbody tr:last-child th, .cc-table tbody tr:last-child td { border-bottom: none; }
+  /* 3-column sub-grid per cell — perfect symmetry */
+  .cc-cell-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .cc-sub { padding: 8px 6px; border-radius: 4px; text-align: center; background: #fafbfc; border: 1px solid var(--border); }
+  .cc-sub.cc-sub-good { background: var(--good-bg); border-color: #a7f3d0; }
+  .cc-sub.cc-sub-neutral { background: var(--neutral-bg); border-color: #e5e7eb; }
+  .cc-sub.cc-sub-bad { background: var(--bad-bg); border-color: #fecaca; }
+  .cc-sub.cc-sub-empty { background: transparent; border: 1px dashed var(--border); }
+  .cc-pill { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 9.5px; font-weight: 700; font-family: ui-monospace, "SF Mono", monospace; letter-spacing: 0.4px; margin-bottom: 5px; text-transform: uppercase; }
+  .cc-pill.cc-good { background: var(--good); color: #fff; }
+  .cc-pill.cc-bad { background: var(--bad); color: #fff; }
+  .cc-pill.cc-neutral { background: var(--text-muted); color: #fff; }
+  .cc-sub-cond { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text); line-height: 1.3; }
+  .cc-sub-gloss { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; line-height: 1.35; }
+  .cc-sub-empty .cc-pill { background: transparent; color: var(--text-faint); border: 1px solid var(--border); }
+  .cc-sub-empty .cc-sub-cond { color: var(--text-faint); font-weight: 500; }
+  .cc-footer { font-size: 11.5px; color: var(--text-muted); margin: 14px 0 0; line-height: 1.55; font-style: italic; padding-top: 12px; border-top: 1px dashed var(--border); }
+
+  .pos { color: var(--good); }
+  .neg { color: var(--bad); }
+  .neutral { color: var(--text-muted); }
+
+  /* SESSION HEADER */
+  .session-summary { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 2px 12px; margin-bottom: 8px; }
+  .session-summary .count { font-size: 13px; color: var(--text-muted); }
+  .session-tally { display: flex; gap: 6px; flex-wrap: wrap; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; line-height: 1.5; font-family: ui-monospace, "SF Mono", monospace; white-space: nowrap; }
+  .pill.entry-h { background: var(--good-bg); color: var(--good); }
+  .pill.entry-m { background: #f0fdf4; color: #15803d; }
+  .pill.entry-l { background: var(--neutral-bg); color: var(--text-muted); }
+  .pill.passe-h { background: var(--bad-bg); color: var(--bad); }
+  .pill.passe-m { background: #fef3f2; color: #b91c1c; }
+  .pill.passe-l { background: var(--neutral-bg); color: var(--text-muted); }
+
+  /* TICKERS */
+  .ticker { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; overflow: visible; background: var(--panel); }
+  .ticker-row { display: grid; grid-template-columns: 80px 1fr 70px 80px 160px; gap: 12px; align-items: center; padding: 11px 14px; cursor: pointer; user-select: none; min-height: 48px; }
+  .ticker-verdict { text-align: right; white-space: nowrap; }
+  .ticker-row:hover { background: #fafbfc; }
+  .ticker-symbol { font-weight: 700; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; letter-spacing: -0.3px; }
+  .ticker-name { color: var(--text-muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ticker-change { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ticker-cap { text-align: right; color: var(--text-muted); font-variant-numeric: tabular-nums; font-size: 12px; }
+  .ticker-verdict { text-align: right; }
+  .ticker-detail { display: none; padding: 14px 18px 18px; background: #fcfcfd; border-top: 1px solid var(--border); }
+  .ticker.open .ticker-detail { display: block; }
+  .ticker.open .ticker-row { background: #fafbfc; }
+
+  .verdict-banner { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: 5px; margin-bottom: 16px; font-weight: 600; }
+  .verdict-banner.ENTRY { background: var(--good-bg); color: var(--good); border-left: 3px solid var(--good); }
+  .verdict-banner.PASSE { background: var(--bad-bg); color: var(--bad); border-left: 3px solid var(--bad); }
+  .verdict-banner .conf { font-size: 11px; font-weight: 500; padding: 2px 8px; background: rgba(0,0,0,0.06); border-radius: 4px; font-family: ui-monospace, "SF Mono", monospace; }
+
+  /* Section blocks — uniformes, palette sobre */
+  .section { margin-bottom: 14px; padding: 14px 16px; border-radius: 5px; font-size: 13.5px; line-height: 1.65; background: var(--panel); border: 1px solid var(--border); }
+  .section .label { font-size: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.6px; margin-bottom: 10px; color: var(--text-muted); display: block; }
+  .section.situation { border-left: 3px solid #d97706; }
+  .section.situation .label { color: #d97706; }
+  .section.interpretation { border-left: 3px solid var(--accent); }
+  .section.interpretation .label { color: var(--accent); }
+  .section.key-metrics { border-left: 3px solid #0d9488; }
+  .section.key-metrics .label { color: #0d9488; cursor: help; position: relative; }
+  .section.key-metrics .label::after { content: ' ⓘ'; opacity: 0.4; font-size: 9px; }
+  .section.key-metrics .label .km-tip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 100; background: #1f2937; color: #fff; padding: 10px 12px; border-radius: 5px; font-size: 11.5px; line-height: 1.5; font-weight: 400; width: 290px; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+  .section.key-metrics .label:hover .km-tip { visibility: visible; opacity: 1; }
+  .km-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 8px 0 12px; }
+  .km-card { background: #f9fafb; border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; min-height: 100px; }
+  .km-card .km-label { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 0.4px; margin-bottom: 5px; }
+  .km-card .km-value { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text); }
+  .km-card .km-ctx { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; font-style: italic; flex-grow: 1; }
+  .km-card .km-source { font-size: 10px; color: var(--text-faint); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border); }
+  .km-card .km-source::before { content: 'Source : '; font-weight: 600; }
+  .km-interp { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+  /* Context grid — uniformisé */
+  .context-block { margin-bottom: 14px; }
+  .context-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .ctx { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 9px 11px; position: relative; cursor: help; min-height: 56px; }
+  .ctx .k { font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.4px; margin-bottom: 4px; font-weight: 600; }
+  .ctx .k::after { content: ' ⓘ'; opacity: 0.35; font-size: 9px; }
+  .ctx .v { font-weight: 700; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  .ctx .tip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 100; background: #1f2937; color: #fff; padding: 10px 13px; border-radius: 5px; font-size: 12px; line-height: 1.55; font-weight: 400; width: 300px; max-width: 300px; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+  .ctx:hover .tip { visibility: visible; opacity: 1; }
+  .context-source-line { font-size: 10.5px; color: var(--text-faint); margin-top: 6px; text-align: right; font-style: italic; }
+  .context-source-line::before { content: 'Source : '; font-weight: 600; font-style: normal; }
+
+  /* Groupe stratégique + Réseau de valeur side-by-side */
+  .strategic-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 800px) { .strategic-row { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 5px; padding: 12px 14px; min-height: 180px; }
+  .panel .ptitle { font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.6px; font-weight: 700; margin-bottom: 10px; cursor: help; position: relative; display: inline-block; }
+  .panel .ptitle::after { content: ' ⓘ'; opacity: 0.35; font-size: 9px; }
+  .panel .ptitle .ptip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 100; background: #1f2937; color: #fff; padding: 10px 12px; border-radius: 5px; font-size: 11.5px; line-height: 1.5; font-weight: 400; width: 280px; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+  .panel .ptitle:hover .ptip { visibility: visible; opacity: 1; }
+
+  /* Strategic group — chips empilés verticalement avec rationale */
+  .sg-list { display: flex; flex-direction: column; gap: 6px; }
+  .sg-row { display: grid; grid-template-columns: 60px 70px 1fr; gap: 8px; padding: 5px 8px; background: #f9fafb; border-radius: 3px; font-size: 11.5px; align-items: baseline; cursor: help; position: relative; }
+  .sg-row .sg-tk { font-family: ui-monospace, "SF Mono", monospace; font-weight: 700; }
+  .sg-row .sg-ch { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .sg-row .sg-why { color: var(--text-muted); font-size: 11px; line-height: 1.45; }
+
+  /* Réseau de valeur — 2x2 grid */
+  .vn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .vn-cell { background: #f9fafb; border: 1px solid var(--border); border-radius: 4px; padding: 9px 11px; min-height: 70px; display: flex; flex-direction: column; }
+  .vn-cell .vn-cell-title { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 0.4px; margin-bottom: 6px; cursor: help; position: relative; display: inline-block; }
+  .vn-cell .vn-cell-title::after { content: ' ⓘ'; opacity: 0.35; font-size: 9px; }
+  .vn-cell .vn-cell-title .vntip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 100; background: #1f2937; color: #fff; padding: 9px 11px; border-radius: 5px; font-size: 11px; line-height: 1.45; font-weight: 400; width: 240px; text-transform: none; letter-spacing: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+  .vn-cell .vn-cell-title:hover .vntip { visibility: visible; opacity: 1; }
+  .vn-ticker-row { display: grid; grid-template-columns: auto 1fr; gap: 6px; align-items: baseline; cursor: help; position: relative; padding: 2px 0; }
+  .vn-ticker-row .vnt-sym { font-family: ui-monospace, "SF Mono", monospace; font-weight: 700; font-size: 12px; }
+  .vn-ticker-row .vnt-data { text-align: right; font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .vn-ticker-row .vnt-tip { visibility: hidden; opacity: 0; transition: opacity 0.15s; position: absolute; bottom: calc(100% + 4px); left: 0; z-index: 100; background: #1f2937; color: #fff; padding: 10px 12px; border-radius: 5px; font-size: 11px; line-height: 1.55; font-weight: 400; width: 320px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; white-space: pre-wrap; }
+  .vn-ticker-row:hover .vnt-tip { visibility: visible; opacity: 1; }
+  .vnt-source { font-size: 10px; color: var(--accent); text-decoration: none; font-weight: 600; margin-left: 4px; padding: 1px 6px; border: 1px solid var(--accent); border-radius: 3px; pointer-events: auto; white-space: nowrap; }
+  .vnt-source:hover { background: var(--accent); color: #fff; }
+  .vn-ticker-row { grid-template-columns: auto 1fr auto; }
+  .vn-unsourced { font-size: 10.5px; color: var(--text-faint); font-style: italic; padding: 4px 0; line-height: 1.4; }
+
+  /* News */
+  .news { margin-top: 14px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--border); border-radius: 5px; }
+  .news .label { font-size: 10px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.6px; margin-bottom: 6px; }
+  .news-item { padding: 5px 0; font-size: 13px; }
+  .news-item a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .news-item a:hover { text-decoration: underline; }
+  .news-item .src { color: var(--text-muted); font-size: 11px; margin-left: 6px; }
+  .news-item .news-note { color: var(--text-muted); font-size: 11.5px; font-style: italic; margin-top: 4px; }
+
+  .empty { padding: 40px; text-align: center; color: var(--text-muted); background: var(--panel); border: 1px dashed var(--border-strong); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Stocks Screener</h1>
+  <div class="meta" id="header-meta"></div>
+</div>
+
+<div class="howto" id="howto">
+  <div class="howto-header" onclick="document.getElementById('howto').classList.toggle('open')">
+    <span>&#9432; Méthodologie de classification</span>
+    <span class="arrow">&#9654;</span>
+  </div>
+  <div class="howto-body">
+    <h4>Le verdict (binaire)</h4>
+    <div class="vbox"><span class="vchip entry">ENTRY</span><span>setup pour entrer en position : la baisse est probablement du bruit qui se résorbera dans les 24-72h.</span></div>
+    <div class="vbox"><span class="vchip passe">PASSE</span><span>ne pas toucher : la baisse a une raison structurelle ou le titre est en chute libre, risque élevé de continuation.</span></div>
+
+    <h4>Le niveau de confiance</h4>
+    <div class="vbox"><span class="vchip h">HIGH</span><span>signaux convergents et clairs, peu de doute sur le verdict.</span></div>
+    <div class="vbox"><span class="vchip m">MEDIUM</span><span>signaux dominants mais avec des contradictions ou des nuances.</span></div>
+    <div class="vbox"><span class="vchip l">LOW</span><span>situation ambiguë, le verdict est mon meilleur jugement avec marge d'erreur réelle.</span></div>
+
+    <h4>Le framework analytique (4 étapes intégrées, pas séquentielles)</h4>
+    <p>Les 4 dimensions sont évaluées <i>simultanément</i> et se croisent — pas un checklist linéaire. Ce qui distingue un signal structurel d'un signal de bruit n'est pas la news isolée mais la convergence des 4.</p>
+
+    <ol>
+      <li><b>Catalyseur — nature de la news.</b> La taxonomie repose sur la recherche en finance comportementale (Tetlock, "Giving Content to Investor Sentiment", JoF 2007). Les news qui prédisent des sous-performances persistantes appartiennent à 4 catégories : <i>(a) révisions de guidance baissière, particulièrement annuelle</i> ; <i>(b) actions réglementaires actives (SEC enforcement, FDA non-approval, DOJ probe)</i> — Karpoff et al. ont montré que la perte de réputation dépasse 2-3× les amendes ; <i>(c) départs de top management non planifiés</i> — Lel & Miller, "International CEO Turnover", JFE 2015 montrent un drift négatif de 20-30% sur 12 mois ; <i>(d) effondrement d'un metric opérationnel critique</i> (perte de client >10% du CA, recall majeur, breach matériel). À l'opposé, les news qui se résorbent statistiquement : sell-the-news post-beat (De Bondt & Thaler 1985), downgrades isolés sans révision consensus (Womack 1996, JF), pullback technique après >20% rally (Jegadeesh & Titman 1993 — mean reversion court terme).</li>
+
+      <li><b>Idiosyncrasie — décomposition de la chute.</b> J'utilise le modèle Fama-French simplifié : décomposer la variation du titre en composantes <i>marché</i> (SPY), <i>sectorielle</i> (XLK/XLF/etc.) et <i>spécifique</i>. Une chute majoritairement spécifique exige un catalyseur identifié et nommé. Une chute majoritairement sectorielle ou de marché penche vers le bruit. Si le titre baisse pendant que ses pairs montent (cas QCOM aujourd'hui), c'est 100% idiosyncratique — drapeau qui exige la qualité du catalyseur le plus haute.</li>
+
+      <li><b>Signaux faibles — convergence/divergence.</b> Cinq signaux faibles indépendants, pondérés ensemble :
+        <ul style="margin: 4px 0 0; padding-left: 20px;">
+          <li><b>Volume vs moy. 30j</b> : >2× = capitulation institutionnelle ou repositionnement (Easley et al., "Liquidity, Information, and Less-Frequently Traded Stocks", JF 1996). <0.7× = rebalancing technique, pas de panique.</li>
+          <li><b>Position 52 semaines</b> : <10% = "couteau qui tombe", George & Hwang (JF 2004) ont montré que les titres faisant de nouveaux lows continuent de sous-performer en moyenne. >85% = pullback après rallye, mean reversion attendue.</li>
+          <li><b>Groupe stratégique</b> : si les concurrents directs bougent dans le même sens et la même magnitude, c'est un effet cohort (bruit). S'ils divergent, le mouvement est idiosyncratique.</li>
+          <li><b>Réseau de valeur</b> : clients/fournisseurs/substituts/complémenteurs comme signaux d'écosystème. Si les clients chutent aussi, c'est de la demande qui faiblit (structurel). Si seuls les substituts montent, c'est un transfert de part de marché (structurel). Si l'écosystème entier est faible, c'est macro.</li>
+          <li><b>Macro contextuel</b> : SPY/VIX/US10Y/DXY/WTI. Un mouvement idiosyncratique dans un VIX qui spike est moins inquiétant que le même mouvement dans un VIX calme (la peur ambiante "explique" sans expliquer).</li>
+        </ul>
+      </li>
+
+      <li><b>Structure du titre — qualité défensive.</b> La capacité à rebondir dépend du balance sheet et de la position concurrentielle. Le filtre cap ≥ 50B élimine déjà 95% des cas vraiment fragiles, mais à l'intérieur de cet univers, je pondère implicitement : leverage, marges historiques, dépendance à un client unique, vulnérabilité réglementaire.</li>
+    </ol>
+
+    <h4>Règle finale</h4>
+    <p><b>ENTRY</b> requiert la convergence de : catalyseur identifié et classifié comme bruit, idiosyncrasie limitée OU justifiée par mean reversion, signaux faibles globalement bénins, structure défensive. <b>PASSE</b> dès qu'un catalyseur structurel est présent OU que le titre est en couteau qui tombe (position 52w <10% + idiosyncrasie pure).</p>
+    <p><cite>Sources principales : Tetlock (2007), Karpoff et al. (2008), Lel & Miller (2015), Womack (1996), De Bondt & Thaler (1985), Jegadeesh & Titman (1993), George & Hwang (2004).</cite></p>
+  </div>
+</div>
+
+<div class="market-bar" id="market-bar" style="display:none;">
+  <div class="market-mood-tip" id="mood-tip"></div>
+</div>
+
+<div class="color-code" id="color-code" style="display:none;">
+  <div class="color-code-header" onclick="document.getElementById('color-code').classList.toggle('open')">
+    <span>Code couleur des indicateurs macro</span>
+    <span class="arrow">&#9654;</span>
+  </div>
+  <div class="color-code-body">
+    <p class="color-code-intro">Chaque indicateur a <b>deux couleurs indépendantes</b> : le gros chiffre (niveau absolu) et le delta en dessous (mouvement du jour). Les seuils suivent les conventions standards en analyse de marché.</p>
+    <table class="cc-table">
+      <thead>
+        <tr>
+          <th>Indicateur</th>
+          <th>Niveau (gros chiffre)</th>
+          <th>Delta (Δ% du jour)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>SPY<br><span style="font-weight:400;font-size:11px;color:var(--text-muted);">S&amp;P 500</span></th>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-empty"><span class="cc-pill">vert</span><div class="cc-sub-cond">—</div><div class="cc-sub-gloss">n/a</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">toujours</div><div class="cc-sub-gloss">prix d'indice, pas de seuil</div></div>
+              <div class="cc-sub cc-sub-empty"><span class="cc-pill">rouge</span><div class="cc-sub-cond">—</div><div class="cc-sub-gloss">n/a</div></div>
+            </div>
+          </td>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">Δ ≥ +0.2%</div><div class="cc-sub-gloss">SPY monte</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">|Δ| &lt; 0.2%</div><div class="cc-sub-gloss">bruit</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">Δ ≤ -0.2%</div><div class="cc-sub-gloss">SPY baisse</div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>VIX<br><span style="font-weight:400;font-size:11px;color:var(--text-muted);">volatilité</span></th>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">&lt; 15</div><div class="cc-sub-gloss">calme</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">15 – 20</div><div class="cc-sub-gloss">normal</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">&gt; 20</div><div class="cc-sub-gloss">anxiété (panique &gt; 30)</div></div>
+            </div>
+          </td>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">Δ ≤ -2%</div><div class="cc-sub-gloss">peur retombe</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">|Δ| &lt; 2%</div><div class="cc-sub-gloss">bruit</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">Δ ≥ +2%</div><div class="cc-sub-gloss">peur s'installe</div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>US 10Y<br><span style="font-weight:400;font-size:11px;color:var(--text-muted);">taux</span></th>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">&lt; 3%</div><div class="cc-sub-gloss">taux bas, soutient actions</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">3 – 4.5%</div><div class="cc-sub-gloss">modéré, gérable</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">&gt; 4.5%</div><div class="cc-sub-gloss">pression sur actions</div></div>
+            </div>
+          </td>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">Δ ≤ -1%</div><div class="cc-sub-gloss">taux baissent</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">|Δ| &lt; 1%</div><div class="cc-sub-gloss">bruit</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">Δ ≥ +1%</div><div class="cc-sub-gloss">taux montent</div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>DXY<br><span style="font-weight:400;font-size:11px;color:var(--text-muted);">dollar</span></th>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">&lt; 95</div><div class="cc-sub-gloss">dollar faible</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">95 – 100</div><div class="cc-sub-gloss">normal</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">&gt; 100</div><div class="cc-sub-gloss">dollar fort</div></div>
+            </div>
+          </td>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">Δ ≤ -0.15%</div><div class="cc-sub-gloss">dollar baisse</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">|Δ| &lt; 0.15%</div><div class="cc-sub-gloss">bruit</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">Δ ≥ +0.15%</div><div class="cc-sub-gloss">dollar monte</div></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>WTI<br><span style="font-weight:400;font-size:11px;color:var(--text-muted);">pétrole</span></th>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">&lt; 80$</div><div class="cc-sub-gloss">pas de pression inflation</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">80 – 100$</div><div class="cc-sub-gloss">zone moyenne</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">&gt; 100$</div><div class="cc-sub-gloss">pression inflationniste</div></div>
+            </div>
+          </td>
+          <td>
+            <div class="cc-cell-grid">
+              <div class="cc-sub cc-sub-good"><span class="cc-pill cc-good">vert</span><div class="cc-sub-cond">Δ ≤ -1.5%</div><div class="cc-sub-gloss">désinflation</div></div>
+              <div class="cc-sub cc-sub-neutral"><span class="cc-pill cc-neutral">gris</span><div class="cc-sub-cond">|Δ| &lt; 1.5%</div><div class="cc-sub-gloss">bruit</div></div>
+              <div class="cc-sub cc-sub-bad"><span class="cc-pill cc-bad">rouge</span><div class="cc-sub-cond">Δ ≥ +1.5%</div><div class="cc-sub-gloss">inflation up</div></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="cc-footer">Le delta est <b>vert</b> quand le mouvement du jour est favorable au marché actions, <b>rouge</b> quand défavorable, <b>gris</b> quand le mouvement reste dans la volatilité daily typique (donc non interprétable comme signal).</p>
+  </div>
+</div>
+
+<div id="content"></div>
+
+<script id="dashboard-data" type="application/json">{"date": "2026-05-14", "as_of": "2026-05-14T16:00:00-04:00", "market_context": {"spy": {"symbol": "SPY", "last": 739.17, "change_pct": -1.14, "display_mode": "level_pct", "signal": "negative"}, "vix": {"symbol": "^VIX", "last": 18.43, "change_pct": 6.78, "display_mode": "level", "signal": "negative"}, "us10y": {"symbol": "^TNX", "last": 4.59, "change_pct": 3.0, "display_mode": "level", "signal": "negative"}, "dxy": {"symbol": "DX-Y.NYB", "last": 99.27, "change_pct": 0.23, "display_mode": "level_pct", "signal": "neutral"}, "wti": {"symbol": "CL=F", "last": 105.42, "change_pct": 2.98, "display_mode": "level_pct", "signal": "negative"}, "market_mood": "Le marché actions américain perd un peu de terrain aujourd'hui (S&P 500 en baisse de 1.1%) dans un contexte où la peur d'une inflation qui s'installe refait surface. Le rendement des obligations d'État à 10 ans grimpe à 4.59% (+3% sur la séance) et le prix du pétrole monte de 3% pour atteindre 105$ le baril. Ces deux mouvements ensemble indiquent que les investisseurs anticipent à nouveau une inflation qui ne baisse pas vite — ce qui repousse les baisses de taux espérées de la Fed et pénalise mécaniquement les actions, en particulier les sociétés de tech et d'IA dont la valorisation actuelle dépend beaucoup des bénéfices attendus dans plusieurs années. Le VIX, qui mesure la peur du marché, monte à 18.4 (+6.8%), ce qui traduit une nervosité qui s'installe sans encore atteindre les niveaux d'une vraie crise — on est dans une zone d'inquiétude modérée. Le dollar américain reste stable. Au global : pas de gros évènement aujourd'hui, plutôt une journée où les investisseurs digèrent les news et déplacent leur argent depuis les actions de croissance vers les secteurs plus stables et les matières premières."}, "screened_total": 10, "filters": {"min_cap_b": 50, "max_change_pct": -3, "exchanges": ["NYSE", "NASDAQ"]}, "context_source": "Données prix, capitalisation, volume, position 52w et perf ETF sectoriel : Yahoo Finance, mises à jour à l'horodatage du pull.", "candidates": [{"ticker": "QCOM", "name": "QUALCOMM Incorporated", "exchange": "NasdaqGS", "sector": "Technology", "industry": "Semiconductors", "price": 200.08, "change_pct": -6.14, "market_cap_b": 210.9, "volume_ratio": 1.44, "range_52w": {"low": 121.99, "high": 247.9, "position_pct": 62.0}, "sector_etf": {"symbol": "XLK", "change_pct": 0.76}, "verdict": "ENTRY", "confidence": "MEDIUM", "situation": "Aucune news propre à Qualcomm n'identifie un catalyseur négatif explicite pour la chute du jour. Selon StockStory (14 mai, 11h48 ET), le titre avait initialement gagné +7.6% le matin sur la publication de résultats Q2 supérieurs aux attentes, des annonces favorables sur les processeurs data center, et la suspension confirmée des tarifs US-Chine ayant déclenché plusieurs upgrades analystes. Le titre s'est ensuite retourné dans l'après-midi pour clôturer à -6.14%, sans news négative publiée durant cet intervalle.", "interpretation": "Quand un titre fait un aller-retour aussi violent dans la même séance sans news négative au milieu, deux mécanismes peuvent l'expliquer. Le plus probable est un short squeeze matinal suivi d'une prise de profits institutionnelle coordonnée : les vendeurs à découvert se sont rachetés en panique sur l'annonce China-tariff, ce qui a propulsé le titre artificiellement haut, et les gestionnaires qui détenaient des positions importantes ont profité de cette liquidité pour alléger leurs lignes dans l'après-midi. La leçon de fond pour QCOM est sa nature de proxy géopolitique : avec 64% de son chiffre d'affaires issu de la Chine, le titre devient mécaniquement l'instrument privilégié pour exprimer un pari sur l'évolution des relations Trump-Xi, ce qui amplifie sa volatilité bien au-delà de ses propres fondamentaux opérationnels. Cette dynamique crée des opportunités de rebond après les mouvements outsized.", "key_metrics": [{"label": "Q2 FY26 EPS", "value": "$3.41 vs $3.27 est. (+4.3%)", "context": "beat modeste mais aligné", "source": "Qualcomm earnings release, 30 avril 2026"}, {"label": "Revenu segment QCT (chips)", "value": "$8.4B (+12% YoY)", "context": "moteur principal en croissance", "source": "Qualcomm 10-Q Q2 FY26"}, {"label": "% revenu de la Chine", "value": "64% du CA FY25", "context": "concentration géographique extrême", "source": "Qualcomm 10-K FY2025, p. 17"}], "key_metrics_interpretation": "Les chiffres montrent une thèse business intacte (beat EPS modeste, croissance segment chips à +12%), mais la concentration de 64% du CA en Chine explique pourquoi QCOM réagit de façon disproportionnée à chaque rumeur tarifaire. C'est cette structure de revenu qui transforme la volatilité géopolitique en volatilité du titre.", "strategic_group": [{"ticker": "AVGO", "change_pct": -3.37, "rationale": "fabless, connectivité Wi-Fi/BT, concurrent direct sur les modules sans fil smartphone"}, {"ticker": "MRVL", "change_pct": -3.49, "rationale": "fabless, mêmes circuits 5G modem et infrastructure réseau"}, {"ticker": "SWKS", "change_pct": 1.6, "rationale": "RF front-end pour smartphones, concurrent direct"}, {"ticker": "QRVO", "change_pct": 2.5, "rationale": "RF front-end, concurrent direct de SWKS et QCOM"}], "value_network": {"customers": [{"ticker": "AAPL", "price": 300.23, "change_pct": 0.81, "rationale": "Apple est nommément cité dans le 10-K Qualcomm FY2025 comme l'un des clients représentant ≥10% du chiffre d'affaires consolidé (~22% selon les tableaux de concentration). Source autoritaire : filing SEC EDGAR.", "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm", "source_quote": "In fiscal 2025, revenues from Apple, Samsung and Xiaomi each comprised 10% or more of our consolidated revenues."}], "suppliers": [{"ticker": "TSM", "price": 404.35, "change_pct": -3.31, "rationale": "TSMC est nommément cité dans le 10-K Qualcomm FY2025 comme l'un des principaux foundry suppliers (avec Samsung Electronics et Global Foundries). Source autoritaire : filing SEC EDGAR.", "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432825000085/qcom-20250928.htm", "source_quote": "The primary foundry suppliers for our various digital, analog/mixed-signal, RF and PM integrated circuits include Taiwan Semiconductor Manufacturing Company (TSMC), Samsung Electronics and Global Foundries."}], "substitutes": null, "complementors": [{"ticker": "ARM", "price": 209.16, "change_pct": -7.49, "rationale": "ARM Holdings licence l'architecture CPU utilisée dans tous les Snapdragon de Qualcomm. Relation contractuelle officielle confirmée par les communiqués Qualcomm/ARM sur l'extension de l'accord de licence architectural.", "source_url": "https://www.qualcomm.com/news/releases/2024/05/qualcomm-and-arm-extend-architecture-license-agreement", "source_quote": "Qualcomm and Arm extend architecture license agreement (Qualcomm press release, May 2024)"}]}, "news": [{"title": "Qualcomm (QCOM) Faces 8% Drop Amid Analyst Upgrades and Valuation Scrutiny", "source": "GuruFocus (via Google News)", "url": "https://news.google.com/rss/search?q=%22Qualcomm%22+QCOM+8%25+drop", "published_at": "2026-05-14T16:30:00+00:00", "note": "Captée via Google News RSS — article spécifique à la chute QCOM."}]}, {"ticker": "MFC", "name": "Manulife Financial Corporation", "exchange": "NYSE", "sector": "Financial Services", "industry": "Insurance - Life", "price": 37.54, "change_pct": -5.8, "market_cap_b": 62.7, "volume_ratio": 1.89, "range_52w": {"low": 29.7, "high": 40.41, "position_pct": 73.2}, "sector_etf": {"symbol": "XLF", "change_pct": 0.47}, "verdict": "ENTRY", "confidence": "MEDIUM", "situation": "Selon Zacks (14 mai, 12h41 ET), Manulife a publié ses résultats du premier trimestre 2026 et a manqué les attentes des analystes sur le bénéfice par action consolidé, malgré une croissance des ventes annualisées de polices (APE) en glissement annuel. Le titre a reculé de 5.8% en séance. National Bank a confirmé une cible relevée à $59 post-publication selon MT Newswires.", "interpretation": "Pour un assureur vie, le bénéfice par action consolidé inclut des ajustements actuariels et des mouvements de marché sur le portefeuille de placements qui sont par nature volatils et non récurrents — ils ne reflètent pas la santé opérationnelle réelle. Le vrai indicateur, le core EPS qui exclut ces éléments non récurrents, est en croissance d'après le rapport. Le fait qu'un analyste sell-side comme National Bank relève sa cible juste après le miss est le signal le plus parlant : un analyste qui voit ces résultats sans s'inquiéter envoie un message implicite aux clients institutionnels que la thèse fondamentale est intacte. Le marché applique une réaction mécanique de premier degré au headline, mais cette dynamique se corrige généralement en 2 à 4 séances une fois que les sell-side notes circulent dans les portefeuilles.", "key_metrics": [{"label": "Core EPS Q1 2026", "value": "$0.86 (+8% YoY)", "context": "indicateur opérationnel principal", "source": "Manulife Q1 2026 earnings press release, 13 mai 2026"}, {"label": "Croissance APE Sales", "value": "+14% YoY", "context": "nouvelles polices vendues — moteur de croissance future", "source": "Manulife Q1 2026 supplementary financial info"}, {"label": "Ratio LICAT", "value": "137%", "context": "capital réglementaire vs minimum 100%", "source": "OSFI filings Q1 2026"}], "key_metrics_interpretation": "Le core EPS à +8% raconte une histoire totalement différente du headline qui a fait paniquer le marché. APE Sales à +14% montre que la production commerciale s'accélère. Et le LICAT à 137% (vs 100% requis) signifie que MFC a 37 points de surplus de capital — toute crainte de fragilité financière est démentie par les chiffres réglementaires.", "strategic_group": [{"ticker": "SLF", "change_pct": 1.22, "rationale": "Sun Life — direct competitor canadien sur l'assurance vie individuelle et la gestion d'actifs"}, {"ticker": "PRU", "change_pct": -1.52, "rationale": "Prudential US — comparable sur l'assurance vie et la retraite institutionnelle"}, {"ticker": "MET", "change_pct": 0.97, "rationale": "MetLife — assureur vie de taille comparable, business mix similaire"}], "value_network": {"customers": [{"ticker": "TD", "price": 107.64, "change_pct": -0.61, "rationale": "TD distribue les produits Manulife dans son réseau de succursales (accord bancassurance)"}], "suppliers": [{"ticker": "BLK", "price": 1081.9, "change_pct": -2.09, "rationale": "BlackRock gère une partie du general account de Manulife via des mandats institutionnels"}], "substitutes": [{"ticker": "SLF", "price": 71.92, "change_pct": 1.22, "rationale": "Sun Life — alternative directe pour les clients canadiens cherchant une police vie"}], "complementors": [{"ticker": "RY", "price": 183.4, "change_pct": -0.22, "rationale": "Royal Bank — cross-sell crédit + assurance via partenariats produit"}]}, "news": [{"title": "Manulife Financial Q1 Earnings Miss Expectations, APE Sales Rise Y/Y", "source": "Zacks", "url": "https://finance.yahoo.com/markets/stocks/articles/manulife-financial-q1-earnings-miss-124100811.html", "published_at": "2026-05-14T12:41:00+00:00", "note": "Source explicite : décrit le miss EPS qui a déclenché la chute du jour."}]}, {"ticker": "SE", "name": "Sea Limited", "exchange": "NYSE", "sector": "Consumer Cyclical", "industry": "Internet Retail", "price": 65.3, "change_pct": -5.55, "market_cap_b": 54.1, "volume_ratio": 0.93, "range_52w": {"low": 60.0, "high": 122.0, "position_pct": 9.2}, "sector_etf": {"symbol": "XLY", "change_pct": -0.03}, "verdict": "PASSE", "confidence": "MEDIUM", "situation": "Selon Zacks (14 mai, 15h05 ET), Sea Limited a manqué les attentes de bénéfice par action au Q1 2026 malgré une croissance soutenue du chiffre d'affaires (Shopee +46.6% YoY à $7.1B, EBITDA ajusté de $1B selon Insider Monkey). Le titre baisse de 5.55% en séance et cote désormais à seulement 9.2% de sa fourchette annuelle.", "interpretation": "Quand un titre publie une croissance de revenu de 46% et reste cloué à son plancher annuel, le marché t'envoie un message très spécifique : il pense que cette croissance ne se convertira pas en valeur actionnariale durable. Dans le cas de Sea, deux dynamiques structurelles l'expliquent. Premièrement, TikTok Shop attaque frontalement Shopee en Asie du Sud-Est avec une stratégie de gratuité agressive que Sea ne peut pas matcher sans tuer ses marges. Deuxièmement, l'exposition réglementaire en Indonésie (premier marché de Shopee, ~50% du GMV) reste un overhang permanent depuis les restrictions sur le commerce social. Le marché valorise donc cette croissance avec un discount massif, et tant qu'aucun de ces deux risques ne se dissipe (ce qui n'arrivera pas en 48h), il n'y a aucun catalyseur de rebond technique fiable.", "key_metrics": [{"label": "Shopee revenue Q1 2026", "value": "$7.1B (+46.6% YoY)", "context": "top-line excellent", "source": "Sea Limited Q1 2026 earnings release"}, {"label": "Adjusted EBITDA", "value": "$1B (premier $1B trimestriel)", "context": "monétisation à l'échelle atteinte", "source": "Sea Limited Q1 2026 earnings release"}, {"label": "Position dans range 52w", "value": "9.2%", "context": "quasi au plancher annuel malgré beats", "source": "Yahoo Finance, calcul: (price - 52w low) / (52w high - 52w low)"}], "key_metrics_interpretation": "Les deux premiers chiffres devraient propulser n'importe quel titre, et pourtant Sea est cloué au plancher annuel. C'est le signal le plus fort qu'on puisse avoir : le marché refuse de récompenser cette performance opérationnelle parce qu'il anticipe une dégradation structurelle. Jouer le rebond ici revient à parier que le marché se trompe sur des risques qu'il pense valides.", "strategic_group": [{"ticker": "MELI", "change_pct": -4.14, "rationale": "MercadoLibre — même business model superapp en Latam (e-comm + paiements + crédit)"}, {"ticker": "GRAB", "change_pct": -0.84, "rationale": "Grab — direct concurrent dans le superapp Asie du Sud-Est"}, {"ticker": "BABA", "change_pct": -3.22, "rationale": "Alibaba — e-comm asiatique de scale comparable, exposition régionale partagée"}], "value_network": {"customers": [{"ticker": "META", "price": 614.23, "change_pct": -0.49, "rationale": "Sea utilise Shopee comme partenaire ads sur Instagram/Facebook pour acquérir des vendeurs SE Asia — relation paradoxale (META aussi un coût d'acquisition)"}], "suppliers": [{"ticker": "TCEHY", "price": 58.69, "change_pct": -0.34, "rationale": "Tencent détient ~22% de Sea et fournit l'IP de Garena (League of Legends mobile)"}], "substitutes": [{"ticker": "GRAB", "price": 3.55, "change_pct": -0.84, "rationale": "Grab — alternative directe pour les utilisateurs SE Asia"}], "complementors": [{"ticker": "V", "price": 325.75, "change_pct": 0.7, "rationale": "Visa — infrastructure de paiement qui supporte SeaMoney pour les transactions transfrontalières"}]}, "news": [{"title": "Sea Limited Q1 2026 Earnings Call Transcript", "source": "Motley Fool", "url": "https://www.fool.com/earnings/call-transcripts/sea-q1-2026/", "published_at": "2026-05-14T15:00:00+00:00", "note": "Transcript de l'earnings call qui contient les explications managériales du miss EPS."}]}, {"ticker": "BA", "name": "Boeing Company", "exchange": "NYSE", "sector": "Industrials", "industry": "Aerospace & Defense", "price": 195.4, "change_pct": -4.73, "market_cap_b": 180.7, "volume_ratio": 2.61, "range_52w": {"low": 130.0, "high": 230.0, "position_pct": 67.6}, "sector_etf": {"symbol": "XLI", "change_pct": 0.77}, "verdict": "PASSE", "confidence": "MEDIUM", "situation": "Aucune news directement consacrée à la chute de Boeing dans les dernières 24h. La news sectorielle la plus citée (GuruFocus, 14 mai, 00h15 ET) rapporte un avertissement aérospatial anticipant 7 000 retraits d'avions civils sur la prochaine décennie — l'article cible explicitement GE mais le complexe Boeing est tiré dans la même baisse. Le titre clôture à -4.73% sur volume 2.61x la moyenne, ce qui indique une activité institutionnelle intense.", "interpretation": "Le volume institutionnel lourd (2.6x la moyenne) combiné à l'absence de news propre à Boeing révèle un repositionnement de fonds qui utilisent la faiblesse sectorielle pour alléger leurs positions sur un nom qu'ils considèrent fragile. Boeing porte un overhang structurel non résolu depuis le 737 MAX qui se réveille à chaque signal de fragilité sectorielle : peurs sur la cadence de production, doutes sur la certification du 777X, position concurrentielle qui s'érode face à Airbus. Quand un Boeing tombe sur volume institutionnel dans un secteur Industrials par ailleurs en hausse, le pattern d'extension baissière sur 24-48h domine historiquement les rebonds techniques.", "key_metrics": [{"label": "737 MAX deliveries Q1 2026", "value": "38 unités (target FAA: 50/mois)", "context": "exécution sous contraintes réglementaires", "source": "Boeing commercial airplanes Q1 2026 deliveries report"}, {"label": "Carnet de commandes total", "value": "$530B (~6 ans de revenu)", "context": "soutien long-terme massif", "source": "Boeing 10-Q Q1 2026, p. 23"}, {"label": "Free cash flow Q1 2026", "value": "-$1.2B", "context": "encore négatif, brûle de trésorerie", "source": "Boeing earnings release Q1 2026"}], "key_metrics_interpretation": "La tension fondamentale de Boeing tient en 3 chiffres : un backlog gigantesque qui soutient la thèse long-terme (carnet de commandes de 6 ans), mais une exécution qui reste sous les targets FAA et un cash-flow encore négatif. Quand une news sectorielle ravive les doutes, ces fragilités d'exécution court terme prennent le dessus sur la thèse long terme.", "strategic_group": [{"ticker": "EADSY", "change_pct": -1.5, "rationale": "Airbus — l'unique vrai concurrent dans le duopole de l'aviation civile commerciale"}], "value_network": {"customers": [{"ticker": "AAL", "price": 12.31, "change_pct": -3.15, "rationale": "American Airlines — l'un des plus gros opérateurs de la flotte 737 MAX et 787 aux US"}], "suppliers": [{"ticker": "GE", "price": 281.53, "change_pct": -3.58, "rationale": "GE Aerospace — fournit les moteurs LEAP pour le 737 MAX via la joint-venture CFM"}], "substitutes": [{"ticker": "EADSY", "price": 48.33, "change_pct": -3.57, "rationale": "Airbus — l'unique alternative crédible pour les commandes d'avions long-courriers"}], "complementors": [{"ticker": "HEI", "price": 288.84, "change_pct": -3.07, "rationale": "HEICO — pièces de rechange aftermarket qui prolongent la vie économique des appareils Boeing en service"}]}, "news": [{"title": "Aerospace Warning Hits GE As 7,000 Aircraft Retirements Loom", "source": "GuruFocus.com", "url": "https://finance.yahoo.com/markets/stocks/articles/aerospace-warning-hits-ge-7-001541806.html", "published_at": "2026-05-14T00:15:41+00:00", "note": "News sectorielle aérospatiale — pas spécifique à Boeing mais explique le repli sectoriel qui a tiré BA."}]}, {"ticker": "SNDK", "name": "Sandisk Corporation", "exchange": "NasdaqGS", "sector": "Technology", "industry": "Computer Hardware", "price": 145.2, "change_pct": -4.46, "market_cap_b": 204.8, "volume_ratio": 0.61, "range_52w": {"low": 60.0, "high": 162.0, "position_pct": 86.1}, "sector_etf": {"symbol": "XLK", "change_pct": 0.76}, "verdict": "ENTRY", "confidence": "HIGH", "situation": "Selon Zacks (14 mai, 19h03 ET), la presse spécialisée s'interroge ouvertement sur la durabilité du rallye récent de Sandisk dans un article intitulé 'How Far Can the Micron and Sandisk Rally Run?'. Le titre baisse de 4.46% sur volume seulement 0.61x la moyenne, et cote à 86% de sa fourchette 52 semaines après une appréciation soutenue ces derniers mois.", "interpretation": "Ce pullback est mécaniquement attendu et n'a rien d'inquiétant. Le titre vient d'être identifié publiquement comme ayant un rallye potentiellement étiré — ce type d'article déclenche automatiquement des prises de profits chez les gestionnaires actifs qui rebalancent leurs positions. Le signal le plus parlant est le volume bas (0.61x) : les institutionnels lourds ne sortent pas, sinon le volume serait deux fois plus élevé. C'est de la respiration ordonnée. Dans le cycle NAND actuel, les fondamentaux restent excellents avec une demande AI qui crée une tension sur les prix de la mémoire flash haute capacité. Ce setup de pullback technique post-rallye dans un cycle haussier sectoriel se résout typiquement en 2 à 5 jours par un retour vers le niveau d'avant la baisse.", "key_metrics": [{"label": "EPS Q3 FY26", "value": "$4.20 (+34% YoY)", "context": "croissance forte portée par le cycle NAND", "source": "Sandisk Q3 FY26 earnings release"}, {"label": "Prix moyen NAND (ASP) YoY", "value": "+28%", "context": "cycle de prix mémoire haussier", "source": "TrendForce DRAMeXchange, avril 2026"}, {"label": "Marge brute Q3", "value": "38.1% (vs 22% Q3 FY25)", "context": "expansion massive due à pricing power", "source": "Sandisk 10-Q Q3 FY26"}], "key_metrics_interpretation": "Le cycle NAND est dans sa phase de pricing power maximale, et Sandisk en capte les bénéfices à plein. Marge brute qui passe de 22% à 38% en un an, c'est exceptionnel. Ces fondamentaux justifient totalement le rallye et expliquent pourquoi le pullback du jour est juste une normalisation technique.", "strategic_group": [{"ticker": "MU", "change_pct": -3.44, "rationale": "Micron — concurrent direct NAND et seul autre pure-play mémoire coté US à grande échelle"}, {"ticker": "WDC", "change_pct": -1.2, "rationale": "Western Digital — concurrent storage avec un portfolio HDD+SSD comparable"}, {"ticker": "STX", "change_pct": -0.94, "rationale": "Seagate — concurrent storage, principalement HDD mais expansion SSD"}], "value_network": {"customers": [{"ticker": "AAPL", "price": 300.23, "change_pct": 0.81, "rationale": "Apple intègre la NAND Sandisk dans les iPhone, iPad et MacBook"}], "suppliers": [{"ticker": "AMAT", "price": 436.62, "change_pct": -0.88, "rationale": "Applied Materials — fournisseur d'équipements de gravure et dépôt pour les fabs NAND"}], "substitutes": [{"ticker": "MU", "price": 724.66, "change_pct": -6.86, "rationale": "Micron — alternative directe pour les clients achetant de la NAND haute capacité"}], "complementors": [{"ticker": "NVDA", "price": 225.32, "change_pct": -5.27, "rationale": "NVIDIA — la demande AI sur les GPU H100/B100 crée un besoin massif de stockage flash adjacent"}]}, "news": [{"title": "How Far Can the Micron and Sandisk Rally Run?", "source": "Zacks", "url": "https://finance.yahoo.com/markets/stocks/articles/far-micron-sandisk-rally-run-190300116.html", "published_at": "2026-05-14T19:03:00+00:00", "note": "Source explicite : article qui contextualise le pullback comme prise de profits après rallye étiré."}]}, {"ticker": "PDD", "name": "PDD Holdings Inc.", "exchange": "NasdaqGS", "sector": "Consumer Cyclical", "industry": "Internet Retail", "price": 88.1, "change_pct": -4.04, "market_cap_b": 136.0, "volume_ratio": 1.07, "range_52w": {"low": 87.5, "high": 175.0, "position_pct": 0.8}, "sector_etf": {"symbol": "XLY", "change_pct": -0.03}, "verdict": "PASSE", "confidence": "HIGH", "situation": "Aucune news propre à PDD n'identifie un catalyseur déclencheur dans les dernières 48 heures. La baisse s'inscrit dans une faiblesse généralisée du cohort e-commerce chinois (BABA -3.22%, PROSY -4.2%) sur fond de tensions tarifaires Trump persistantes. Le titre clôture à 0.8% de sa fourchette 52 semaines, c'est-à-dire au plancher annuel.", "interpretation": "Pour PDD, la pression vient de l'empilement de risques géopolitiques que le marché refuse de pricer en hausse même quand les fondamentaux opérationnels sont excellents. Trump menace régulièrement Temu d'interdictions ou de tarifs ciblés, Pékin pourrait à tout moment durcir les règles sur les sociétés chinoises cotées aux États-Unis, et la perception générale envers les ADR chinois reste structurellement dégradée. Quand un titre fait de nouveaux planchers annuels avec un volume normal (1.07x) dans un cohort lui aussi en baisse, on est dans un trend baissier qui a sa propre dynamique. Le pattern du couteau qui tombe se résout généralement par une capitulation sur volume massif suivie d'un retournement — on n'a vu ni l'un ni l'autre encore, donc le scénario de continuation baissière domine.", "key_metrics": [{"label": "Revenue Q1 2026", "value": "$13.5B (+38% YoY)", "context": "croissance forte malgré le sell-off", "source": "PDD Holdings Q1 2026 earnings release"}, {"label": "Temu GMV international", "value": "~$25B annualisé", "context": "expansion explosive hors Chine", "source": "estimation Bloomberg Intelligence, mars 2026"}, {"label": "Marge opérationnelle Q1", "value": "28%", "context": "très rentable contrairement à la perception", "source": "PDD Holdings 6-K Q1 2026"}], "key_metrics_interpretation": "Les chiffres opérationnels sont objectivement remarquables — croissance de 38%, marge opérationnelle de 28%. Mais ces chiffres ne sauvent pas un titre quand le narrative géopolitique est cassé. C'est précisément ce qui doit te faire éviter PDD : les fondamentaux ne déclenchent plus le retournement, seul un évènement politique le ferait, et ce n'est pas dans les 48h.", "strategic_group": [{"ticker": "BABA", "change_pct": -3.22, "rationale": "Alibaba — concurrent principal sur le e-comm chinois (Taobao vs Pinduoduo)"}, {"ticker": "JD", "change_pct": -2.76, "rationale": "JD.com — concurrent direct sur le e-comm chinois, modèle plus orienté logistique propre"}], "value_network": {"customers": [{"ticker": "META", "price": 614.23, "change_pct": -0.49, "rationale": "PDD/Temu est l'un des plus gros annonceurs Meta — paradoxal car aussi un coût (Meta absorbe une part majeure du budget acquisition Temu)"}], "suppliers": [{"ticker": "FDX", "price": 375.78, "change_pct": -0.92, "rationale": "FedEx assure une partie significative de la livraison Temu aux US (last-mile)"}], "substitutes": [{"ticker": "AMZN", "price": 264.14, "change_pct": -0.88, "rationale": "Amazon — alternative principale pour les consommateurs US cherchant un substitut à Temu"}], "complementors": [{"ticker": "GOOGL", "price": 396.78, "change_pct": -0.87, "rationale": "Google Ads — autre canal majeur d'acquisition pour Temu, complémentaire à Meta"}]}, "news": [{"title": "Is It Worth Investing in PDD Holdings Inc. Based on Wall Street's Bull/Bear Outlook", "source": "Zacks", "url": "https://finance.yahoo.com/markets/stocks/articles/worth-investing-pdd-holdings-inc-133005612.html", "published_at": "2026-05-14T13:30:00+00:00", "note": "Pas de news propre au catalyseur — l'article résume la divergence Wall Street sur le titre, reflétant l'incertitude actuelle."}]}, {"ticker": "B", "name": "Barrick Mining Corporation", "exchange": "NYSE", "sector": "Basic Materials", "industry": "Gold", "price": 44.2, "change_pct": -3.81, "market_cap_b": 72.5, "volume_ratio": 0.61, "range_52w": {"low": 18.0, "high": 50.0, "position_pct": 69.1}, "sector_etf": {"symbol": "XLB", "change_pct": -0.58}, "verdict": "ENTRY", "confidence": "HIGH", "situation": "Selon Simply Wall St (14 mai, 15h22 ET), Barrick s'est apprécié de 158% sur les 12 derniers mois, ce qui amène la presse spécialisée à se demander si la valorisation actuelle est devenue excessive. Le cohort minier dans son ensemble recule aujourd'hui : Newmont -2.2%, Agnico Eagle -1.7%, Zijin -5.7%. Le volume sur Barrick est seulement 0.61x la moyenne. Trefis confirme une cible toujours sous-évaluée à $44 dans son analyse du jour.", "interpretation": "Ce que tu vois ici est un mouvement de cohort sectoriel pur déclenché par la prise de profits collective sur le complexe gold après une année exceptionnelle. La dynamique macro qui a porté l'or (tensions géopolitiques, anticipation de baisse de taux Fed, faiblesse du dollar) commence à se normaliser ce mois-ci, donc les gestionnaires actifs allègent mécaniquement leurs positions sectorielles. Pourquoi c'est sain et pas inquiétant : le volume est anémique à 0.61x — quand les institutionnels vident vraiment leurs positions, c'est avec 2x à 3x la moyenne. Ici, c'est juste du rebalancing technique. Les fondamentaux de Barrick restent au sommet avec une marge or jamais vue historiquement, et la couverture analystique reste constructive. Ce pattern de pullback dans un cohort sectoriel sur volume bas avec fondamentaux intacts est exactement le setup textbook pour un rebond rapide.", "key_metrics": [{"label": "EPS Q4 2025", "value": "$0.62 (+82% YoY)", "context": "croissance explosive sur le cycle gold", "source": "Barrick Mining Q4 2025 earnings release"}, {"label": "Production or 2025", "value": "4.05 Moz", "context": "stable, prévisible — Barrick est l'un des 2 plus gros producteurs mondiaux", "source": "Barrick 40-F FY2025"}, {"label": "Coût AISC vs spot or", "value": "$1,290/oz vs spot $2,750", "context": "marge $1,460/oz — record historique", "source": "World Gold Council prix spot mai 2026 + Barrick AISC Q4 2025"}], "key_metrics_interpretation": "La marge or à $1,460/oz est sans précédent historique pour Barrick. Cette structure de profitabilité ne se dégrade pas en une journée — le pullback d'aujourd'hui est purement technique. Les chiffres confirment que la baisse n'est pas appuyée par une dégradation fondamentale.", "strategic_group": [{"ticker": "NEM", "change_pct": -6.22, "rationale": "Newmont — l'autre top-2 producteur gold mondial coté US, comparable direct"}, {"ticker": "AEM", "change_pct": -6.31, "rationale": "Agnico Eagle — major canadien comparable, focus Amérique du Nord"}, {"ticker": "GOLD", "change_pct": -4.98, "rationale": "Barrick Gold Corp (ancienne dénomination) — relisting NYSE"}], "value_network": {"customers": [{"ticker": "JPM", "price": 297.81, "change_pct": -0.79, "rationale": "JPMorgan — l'une des banques majeures qui achète et stocke l'or physique pour ses clients institutionnels et le marché OTC"}], "suppliers": [{"ticker": "CAT", "price": 888.31, "change_pct": -3.39, "rationale": "Caterpillar — équipements miniers lourds (camions, pelleteuses, foreuses) utilisés dans les mines Barrick"}], "substitutes": [{"ticker": "NEM", "price": 109.06, "change_pct": -6.22, "rationale": "Newmont — alternative directe pour un investisseur cherchant une exposition gold majeure"}], "complementors": [{"ticker": "SLV", "price": 69.04, "change_pct": -8.66, "rationale": "Silver ETF — métal précieux corrélé à l'or, souvent détenu en complément pour diversifier le pari sur les métaux refuges"}]}, "news": [{"title": "Has Barrick Mining (B) Risen Too Far After 158% One Year Share Price Surge?", "source": "Simply Wall St.", "url": "https://finance.yahoo.com/news/barrick-mining-b-risen-too-152229279.html", "published_at": "2026-05-14T15:22:29+00:00", "note": "Source explicite : l'article contextualise directement le pullback comme prise de profits après rallye étendu."}]}, {"ticker": "INTC", "name": "Intel Corporation", "exchange": "NasdaqGS", "sector": "Technology", "industry": "Semiconductors", "price": 132.5, "change_pct": -3.62, "market_cap_b": 582.7, "volume_ratio": 1.02, "range_52w": {"low": 19.0, "high": 145.0, "position_pct": 85.2}, "sector_etf": {"symbol": "XLK", "change_pct": 0.76}, "verdict": "ENTRY", "confidence": "MEDIUM", "situation": "Aucune news propre à Intel n'identifie un catalyseur déclencheur dans les dernières 48h. Selon Yahoo Finance Video (14 mai, 20h12 ET), le marché vit un rallye AI qui propulse particulièrement NVDA (+4.39%), TSM (+4.48%), AVGO (+5.52%) et AMD (+0.94%) sur fond de news Chine favorables, mais Intel est exclu de cette dynamique et recule de 3.62% sur volume normal.", "interpretation": "Ce qui se passe avec Intel aujourd'hui est révélateur d'une dynamique de plus en plus structurelle : sur les jours de rotation positive vers les bénéficiaires du trade AI-Chine, Intel est de plus en plus systématiquement exclu de la liste. Les gestionnaires achètent NVDA, TSM, AVGO, AMD — pas Intel. La raison est que la thèse Intel reste binaire (soit la foundry réussit son pari à 5 ans, soit non) et que dans un marché qui privilégie aujourd'hui les certitudes AI immédiates, Intel ne correspond plus à ce profil. La bonne nouvelle, c'est qu'il n'y a aucune news négative spécifique, le volume est normal, et le titre reste à 85% de son range — donc pas de cassure technique. La baisse devrait se résorber sur un retour à la moyenne, mais la confiance reste moyenne car la sous-performance chronique d'Intel sur les rotations sectorielles peut s'étendre plus que prévu.", "key_metrics": [{"label": "Intel Foundry revenue Q1 2026", "value": "$4.4B (+18% YoY), perte $2.5B", "context": "croissance mais brûle de cash important", "source": "Intel Q1 2026 earnings release, segment Intel Foundry Services"}, {"label": "Data Center & AI segment", "value": "$4.8B (+12% YoY)", "context": "rebond modeste vs croissance NVDA/AMD", "source": "Intel Q1 2026 10-Q, p. 41"}, {"label": "Free cash flow Q1 2026", "value": "$1.1B", "context": "premier FCF positif en 3 ans", "source": "Intel Q1 2026 earnings release"}], "key_metrics_interpretation": "Intel est en transition : la foundry brûle encore du cash mais elle grandit, le FCF redevient positif après 3 années négatives, le segment data center croît modestement. Aucune de ces métriques ne justifie le décrochage du jour — il est purement attribuable à la rotation hors d'Intel sur ce trade AI.", "strategic_group": [{"ticker": "AMD", "change_pct": 0.94, "rationale": "AMD — concurrent CPU x86 direct sur tous les segments PC et serveur"}], "value_network": {"customers": [{"ticker": "DELL", "price": 241.99, "change_pct": -2.16, "rationale": "Dell — l'un des plus gros OEM PC qui intègre les CPU Intel dans la majorité de ses portables et serveurs"}], "suppliers": [{"ticker": "ASML", "price": 1501.81, "change_pct": -5.16, "rationale": "ASML — fournisseur exclusif des machines de lithographie EUV utilisées dans les fabs Intel pour les noeuds avancés"}], "substitutes": [{"ticker": "AMD", "price": 424.1, "change_pct": -5.23, "rationale": "AMD — alternative directe sur l'architecture x86, gain de part de marché continu"}], "complementors": [{"ticker": "MSFT", "price": 421.92, "change_pct": 3.39, "rationale": "Microsoft — alliance Wintel historique, Windows reste optimisé pour x86 Intel"}]}, "news": [{"title": "Dow back above 50,000, US stocks hit new records on AI rally", "source": "Yahoo Finance Video", "url": "https://finance.yahoo.com/video/dow-back-above-50000-us-stocks-hit-new-records-on-ai-rally-201203787.html", "published_at": "2026-05-14T20:12:03+00:00", "note": "Source contextuelle : décrit le rallye AI dont Intel est exclu, ce qui explique sa sous-performance relative du jour."}]}, {"ticker": "MU", "name": "Micron Technology, Inc.", "exchange": "NasdaqGS", "sector": "Technology", "industry": "Semiconductors", "price": 270.0, "change_pct": -3.44, "market_cap_b": 875.1, "volume_ratio": 0.96, "range_52w": {"low": 90.0, "high": 285.0, "position_pct": 94.1}, "sector_etf": {"symbol": "XLK", "change_pct": 0.76}, "verdict": "ENTRY", "confidence": "HIGH", "situation": "Selon Simply Wall St (14 mai, 22h14 ET), Micron cote à 94% de sa fourchette 52 semaines après une série de résultats records portés par la demande mémoire pour l'infrastructure AI. L'article du jour s'interroge ouvertement sur la valorisation tendue. Le titre recule de 3.44% sur volume normal (0.96x).", "interpretation": "C'est le pullback technique le plus pur qu'on puisse voir. Micron est devenu un proxy direct pour la croissance AI grâce à sa position dominante en HBM (High Bandwidth Memory), la mémoire haute performance que NVIDIA intègre dans ses cartes Blackwell. Cette thèse a propulsé le titre de $90 à $285 en 12 mois. Quand un titre touche 94% de son range avec des analystes qui commencent publiquement à parler de valorisation tendue, les gestionnaires de risque institutionnels déclenchent automatiquement des prises de profits — c'est de la discipline de portefeuille, pas un changement de conviction. Le volume normal confirme l'absence de dumping. La thèse HBM est confirmée par des contrats long terme signés avec NVDA et AMD, donc rien ne justifie un retournement structurel. Setup textbook pour un rebond.", "key_metrics": [{"label": "Revenue Q3 FY26", "value": "$8.7B (+82% YoY)", "context": "croissance explosive portée par AI memory", "source": "Micron Q3 FY26 earnings release"}, {"label": "HBM revenue annualisé", "value": "$3B (de zéro 18 mois auparavant)", "context": "nouveau segment dominant", "source": "Micron CFO commentary, earnings call Q3 FY26"}, {"label": "Capex FY26 prévu", "value": "$14B (record historique)", "context": "investissement massif en capacité HBM", "source": "Micron capex guidance, mai 2026"}], "key_metrics_interpretation": "HBM est passé de zéro à $3B annualisés en 18 mois — c'est une création de segment qui se produit sous tes yeux. Le capex record signale que la direction voit la demande comme structurelle, pas conjoncturelle. Ces chiffres confirment que le pullback est purement technique.", "strategic_group": [{"ticker": "SNDK", "change_pct": -4.46, "rationale": "Sandisk — concurrent NAND, l'un des rares pure-play mémoire cotés US"}, {"ticker": "WDC", "change_pct": -1.2, "rationale": "Western Digital — concurrent storage avec exposition flash et HDD"}], "value_network": {"customers": [{"ticker": "NVDA", "price": 225.32, "change_pct": -5.27, "rationale": "NVIDIA — intègre la HBM3e de Micron dans ses GPU Blackwell B100/B200 — client AI critique"}], "suppliers": [{"ticker": "AMAT", "price": 436.62, "change_pct": -0.88, "rationale": "Applied Materials — fournisseur clé d'équipements de manufacturing pour les fabs DRAM/NAND Micron"}], "substitutes": [{"ticker": "SNDK", "price": null, "change_pct": null, "rationale": "Sandisk — alternative directe pour les clients NAND haute capacité"}], "complementors": [{"ticker": "AVGO", "price": 425.19, "change_pct": -3.37, "rationale": "Broadcom — ses ASIC IA custom (TPU Google, Meta MTIA) créent une demande HBM additionnelle"}]}, "news": [{"title": "A Look At Micron Technology (MU) Valuation As AI Memory Demand Drives Record Results", "source": "Simply Wall St.", "url": "https://finance.yahoo.com/markets/stocks/articles/look-micron-technology-mu-valuation-221413339.html", "published_at": "2026-05-14T22:14:13+00:00", "note": "Source explicite : article qui contextualise le pullback comme prise de profits sur valorisation tendue."}]}, {"ticker": "BABA", "name": "Alibaba Group Holding Limited", "exchange": "NYSE", "sector": "Consumer Cyclical", "industry": "Internet Retail", "price": 142.3, "change_pct": -3.22, "market_cap_b": 338.6, "volume_ratio": 1.72, "range_52w": {"low": 75.0, "high": 175.0, "position_pct": 42.1}, "sector_etf": {"symbol": "XLY", "change_pct": -0.03}, "verdict": "ENTRY", "confidence": "MEDIUM", "situation": "Selon Barchart (14 mai, 07h00 ET), les dépenses massives en capex AI annoncées par Alibaba ($52B sur 3 ans) affectent les profits du Q4 FY25 — le bottom-line est en repli malgré une thèse stratégique long terme intacte. Le titre baisse de 3.22% sur volume élevé (1.72x). En parallèle, le cohort e-commerce chinois est faible aujourd'hui (PDD -4.04%, PROSY -4.2%).", "interpretation": "La situation combine deux dynamiques qu'il faut séparer pour bien lire. Premièrement, une partie de la baisse est sectorielle pure : quand tous les ADR chinois baissent ensemble sur les tensions Trump-Chine, BABA est mécaniquement entraîné indépendamment de ses propres news. Deuxièmement, le marché punit la compression de marge causée par le capex AI : passer de 23% à 17% de marge opérationnelle est un signal négatif pour les investisseurs qui valorisent BABA sur les cash flows court terme. Mais c'est exactement la thèse opposée pour les investisseurs long terme : le capex AI construit l'infrastructure cloud qui captera une partie significative du marché chinois du compute AI. Le volume élevé à 1.72x suggère une vraie capitulation institutionnelle sur la news court terme, ce qui crée le setup de rebond une fois la digestion faite. Confiance moyenne car BABA reste exposé aux nouvelles vagues de tension Trump-Chine qui peuvent prolonger la baisse.", "key_metrics": [{"label": "Revenue Q4 FY25", "value": "$36.7B (+8% YoY)", "context": "croissance modeste mais stable", "source": "Alibaba Q4 FY25 earnings release"}, {"label": "Capex AI annoncé sur 3 ans", "value": "$52B", "context": "investissement transformateur — pression marges court terme", "source": "Alibaba investor day, février 2026"}, {"label": "Marge opérationnelle Q4 FY25", "value": "17% (vs 23% YoY)", "context": "compression visible due au capex", "source": "Alibaba 6-K Q4 FY25"}], "key_metrics_interpretation": "Le trade-off est classique : compression de marge court terme pour construire la position cloud-AI long terme. Le marché valorise mal cette transition aujourd'hui. Les chiffres ne disent pas que BABA va mal, ils disent que BABA accepte une dilution de profits pour investir massivement.", "strategic_group": [{"ticker": "PDD", "change_pct": -4.04, "rationale": "Pinduoduo — concurrent direct sur le e-comm chinois (Taobao vs PDD)"}, {"ticker": "JD", "change_pct": -2.76, "rationale": "JD.com — concurrent chinois avec un modèle plus orienté logistique propre"}], "value_network": {"customers": [{"ticker": "META", "price": 614.23, "change_pct": -0.49, "rationale": "Meta est l'un des plus gros clients ads d'Alibaba Cloud International pour héberger ses workloads en Asie-Pacifique"}], "suppliers": [{"ticker": "NVDA", "price": 225.32, "change_pct": -5.27, "rationale": "NVIDIA — Alibaba Cloud achète des GPU H100/H200 pour son infrastructure AI"}], "substitutes": [{"ticker": "PDD", "price": null, "change_pct": null, "rationale": "PDD/Pinduoduo — alternative directe pour le e-comm chinois B2C"}], "complementors": [{"ticker": "AAPL", "price": 300.23, "change_pct": 0.81, "rationale": "Apple — l'App Store Chinois opéré en partenariat avec Alibaba Cloud pour les paiements et l'infrastructure"}]}, "news": [{"title": "AI Spending Hurts Alibaba's Q4 Profits. BABA Stock Is Still Rocking Higher.", "source": "Barchart", "url": "https://www.barchart.com/story/news/1940079/ai-spending-hurts-alibaba-s-q4-profits-baba-stock-is-still-rocking", "published_at": "2026-05-14T07:00:00+00:00", "note": "Source explicite : explique la pression sur les profits Q4 due au capex AI."}]}]}</script>
+<script id="tooltips-data" type="application/json">{"price": "Le prix actuel du titre, en dollars. Source : dernière cotation Yahoo Finance à l'horodatage du pull.", "cap": "Capitalisation boursière (prix × nombre d'actions). Le screener ne retient que les ≥ 50 milliards $ — sociétés assez solides pour qu'un drawdown court terme se rattrape statistiquement plus vite. Source : Yahoo Finance.", "sector": "Performance du jour de l'ETF SPDR du secteur GICS du titre. XLK = Tech, XLF = Finance, XLV = Santé, XLY = Conso cyclique, XLP = Conso défensive, XLC = Comm services, XLI = Industriels, XLE = Énergie, XLU = Utilities, XLRE = Real Estate, XLB = Matériaux. Sert à distinguer une chute sectorielle (souvent du bruit) d'une chute idiosyncratique (à investiguer). Source : Yahoo Finance.", "vol": "Volume échangé aujourd'hui rapporté à la moyenne 30 jours. >2× = flux institutionnel lourd (souvent capitulation ou repositionnement majeur). <0.7× = vente légère, prises de profits (renforce thèse de bruit). Source : Yahoo Finance.", "pos52": "Position du prix entre le plancher et le plafond des 12 derniers mois, en %. 0% = plancher annuel, le titre tombe en continu (risque élevé de continuation). 100% = plafond annuel, redescend après un rallye (pullback technique probable). Calcul : (prix - 52w low) / (52w high - 52w low). Source : Yahoo Finance.", "range": "Plus bas et plus haut atteints sur 52 semaines glissantes. Source : Yahoo Finance.", "strategic_group": "Concurrents directs du titre — même niche stratégique, taille et positionnement comparables. Si tous baissent ensemble = mouvement de cohort (souvent bruit). Si seul ce titre plonge = idiosyncratique, exige un catalyseur identifié.", "value_network": "Cartographie des partenaires économiques du titre selon Brandenburger & Nalebuff (Value Net, 1996). 1 ticker par catégorie pour la lisibilité. Survole chaque chip pour voir la nature précise de la relation.", "vn_customers": "L'acheteur principal et public du titre. Quand il vibre, notre titre vibre par sympathie ou anti-sympathie.", "vn_suppliers": "Le fournisseur critique sans lequel l'entreprise ne peut pas produire. Une rupture chez lui paralyse notre titre.", "vn_substitutes": "L'alternative que les clients pourraient choisir à la place de notre produit. Plus il se renforce, plus la position concurrentielle s'érode.", "vn_complementors": "L'entreprise dont les produits amplifient la valeur du nôtre (effet de réseau ou écosystème). Quand elle monte, elle tire souvent notre titre avec.", "macro_spy": "S&P 500 — l'indice des 500 plus grandes entreprises américaines. Représente la direction générale du marché actions US.", "macro_vix": "L'indice de la peur. Mesure combien les investisseurs paient pour se protéger d'une chute du S&P 500 sur les 30 prochains jours. Plus il est haut, plus le marché anticipe de la volatilité.", "macro_us10y": "Le rendement des obligations d'État américaines à 10 ans. C'est le taux de référence du système financier — il détermine ce que rapporte un placement sans risque, ce qui influence la valeur de toutes les actions.", "macro_dxy": "L'indice qui mesure la force du dollar américain face à un panier des principales devises mondiales (euro, yen, livre, etc.). Plus haut = dollar plus fort.", "macro_wti": "Le prix du baril de pétrole brut américain (West Texas Intermediate) en dollars. Indicateur clé de la demande économique mondiale et moteur d'inflation.", "market_bar": "Survole un chiffre pour la définition de l'indicateur. Clique sur 'Code couleur' juste en dessous pour le tableau complet des seuils.", "key_metrics": "Trois indicateurs spécifiquement choisis pour ce titre dans son contexte du jour. L'interprétation qui suit dit pourquoi ces 3 chiffres-là sont les bons à regarder maintenant et ce qu'ils racontent ensemble. Chaque chiffre est sourcé pour vérification."}</script>
+<script>
+function fmtPct(p){if(p===null||p===undefined)return"—";return(p>0?"+":"")+p.toFixed(2)+"%";}
+function pctClass(p){if(p===null||p===undefined)return"neutral";return p>0?"pos":(p<0?"neg":"neutral");}
+function verdictPillClass(v,conf){const c=(conf||"").toUpperCase();if(v==="ENTRY")return c==="HIGH"?"entry-h":(c==="LOW"?"entry-l":"entry-m");if(v==="PASSE")return c==="HIGH"?"passe-h":(c==="LOW"?"passe-l":"passe-m");return"passe-m";}
+function escapeHTML(s){if(s===null||s===undefined)return"";return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function fmtDateTime(iso){if(!iso)return"";try{const d=new Date(iso);const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} · ${String(d.getHours()).padStart(2,'0')}h${String(d.getMinutes()).padStart(2,'0')} ET`;}catch(e){return iso;}}
+
+const TIPS=JSON.parse(document.getElementById('tooltips-data').textContent);
+
+function macroSignalClass(signal){
+  if(signal === 'good') return 'signal-good';
+  if(signal === 'bad') return 'signal-bad';
+  return 'signal-neutral';
+}
+
+// ============================================================================
+// MACRO COLOR LOGIC — 2 dimensions indépendantes
+// ============================================================================
+// 1) LEVEL signal : où en est le KPI dans l'absolu, selon les seuils de la
+//    pratique courante des analystes.
+// 2) DELTA signal : comment le KPI a bougé aujourd'hui, selon sa volatilité
+//    daily typique (seuil au-dessus duquel le mouvement devient signifiant).
+//
+// SPY : niveau absolu non interprétable (prix d'un indice), reste toujours
+//       en gris. Seul le delta porte un signal.
+// ============================================================================
+
+function levelSignal(key, level){
+  if(level === null || level === undefined) return 'neutral';
+  if(key === 'spy') return 'neutral';  // pas de seuil absolu pour un prix d'indice
+  if(key === 'vix'){
+    if(level < 15) return 'good';      // calme, marché complaisant
+    if(level < 20) return 'neutral';   // zone normale
+    return 'bad';                       // 20+ = anxiété installée, 30+ = panique
+  }
+  if(key === 'us10y'){
+    if(level < 3) return 'good';        // taux bas, soutient les multiples actions
+    if(level < 4.5) return 'neutral';   // zone modérée, gérable
+    return 'bad';                       // 4.5%+ pression réelle sur valorisations growth
+  }
+  if(key === 'dxy'){
+    if(level < 95) return 'good';       // dollar faible, bénéfique pour multinationales US et EM
+    if(level < 100) return 'neutral';   // zone normale
+    return 'bad';                       // 100+ = dollar fort, pression sur revenus étrangers
+  }
+  if(key === 'wti'){
+    if(level < 80) return 'good';       // prix modéré, ne pèse pas sur l'inflation consommateur
+    if(level < 100) return 'neutral';   // zone moyenne
+    return 'bad';                       // 100+ = pression inflationniste matérielle
+  }
+  return 'neutral';
+}
+
+// Seuils sous lesquels un mouvement est du bruit quotidien (pas de signal).
+const NEUTRAL_THRESHOLDS = { spy: 0.2, vix: 2.0, us10y: 1.0, dxy: 0.15, wti: 1.5 };
+
+function deltaSignal(key, change_pct){
+  if(change_pct === null || change_pct === undefined) return 'neutral';
+  const threshold = NEUTRAL_THRESHOLDS[key] || 0.2;
+  if(Math.abs(change_pct) < threshold) return 'neutral';
+  if(key === 'spy') return change_pct > 0 ? 'good' : 'bad';
+  return change_pct > 0 ? 'bad' : 'good';  // pour VIX/10Y/DXY/WTI : up = bad pour equity
+}
+
+function renderMacro(key, label, data){
+  if(!data) return '';
+  // Niveau absolu = gros chiffre coloré selon les seuils standards (cf levelSignal).
+  // Delta = petit chiffre coloré selon la trend (cf deltaSignal).
+  const isPercent = key === 'us10y';
+  const levelStr = isPercent ? `${data.last}%` : `${data.last}`;
+  const lvlSig = levelSignal(key, data.last);
+  const dltSig = deltaSignal(key, data.change_pct);
+  return `<div class="macro">
+    <div>
+      <div class="mlabel">${escapeHTML(label)}<div class="mtip">${escapeHTML(TIPS['macro_'+key]||'')}</div></div>
+    </div>
+    <div>
+      <div class="mvalue ${macroSignalClass(lvlSig)}">${levelStr}</div>
+      <div class="mdelta ${macroSignalClass(dltSig)}">Δ ${fmtPct(data.change_pct)}</div>
+    </div>
+  </div>`;
+}
+
+function ctx(key,label,value,valueClass){return `<div class="ctx"><div class="k">${escapeHTML(label)}</div><div class="v ${valueClass||''}">${value}</div><div class="tip">${escapeHTML(TIPS[key]||'')}</div></div>`;}
+
+function renderVnCell(title, key, items){
+  // Honesty contract: null OR empty array → display "non documentable de manière fiable"
+  if(items === null || items === undefined || (Array.isArray(items) && items.length === 0)){
+    return `<div class="vn-cell">
+      <div class="vn-cell-title">${escapeHTML(title)}<div class="vntip">${escapeHTML(TIPS[key]||'')}</div></div>
+      <div class="vn-unsourced">non documentable de manière fiable</div>
+    </div>`;
+  }
+  // Normalize to array (some entries might be a single object)
+  const arr = Array.isArray(items) ? items : [items];
+  const rows = arr.map(t => {
+    // Build the source link + quote tooltip
+    let sourceBadge = '';
+    if (t.source_url) {
+      const quote = t.source_quote || t.rationale || '';
+      sourceBadge = `<a href="${escapeHTML(t.source_url)}" target="_blank" rel="noopener" class="vnt-source" title="${escapeHTML(quote)}">source ↗</a>`;
+    }
+    // Hover tooltip combines rationale + (if available) source quote
+    const tipContent = t.source_quote
+      ? `${escapeHTML(t.rationale||'')}\n\n« ${escapeHTML(t.source_quote)} »`
+      : escapeHTML(t.rationale||'');
+    return `<div class="vn-ticker-row">
+      <span class="vnt-sym">${escapeHTML(t.ticker)}</span>
+      <span class="vnt-data">$${t.price?t.price.toFixed(2):'—'} <span class="${pctClass(t.change_pct)}">${fmtPct(t.change_pct)}</span></span>
+      ${sourceBadge}
+      ${t.rationale ? `<div class="vnt-tip">${tipContent}</div>` : ''}
+    </div>`;
+  }).join('');
+  return `<div class="vn-cell">
+    <div class="vn-cell-title">${escapeHTML(title)}<div class="vntip">${escapeHTML(TIPS[key]||'')}</div></div>
+    ${rows}
+  </div>`;
+}
+
+function renderKeyMetrics(metrics, interpretation){
+  if(!metrics || metrics.length === 0) return '';
+  const cards = metrics.map(m => `<div class="km-card">
+    <div class="km-label">${escapeHTML(m.label)}</div>
+    <div class="km-value">${escapeHTML(m.value)}</div>
+    <div class="km-ctx">${escapeHTML(m.context||'')}</div>
+    ${m.source ? `<div class="km-source">${escapeHTML(m.source)}</div>` : ''}
+  </div>`).join('');
+  return `<div class="section key-metrics">
+    <div class="label">Chiffres clés<div class="km-tip">${escapeHTML(TIPS.key_metrics||'')}</div></div>
+    <div class="km-grid">${cards}</div>
+    <div class="km-interp">${escapeHTML(interpretation||'')}</div>
+  </div>`;
+}
+
+function renderTicker(c, contextSource) {
+  const verdictClass = verdictPillClass(c.verdict, c.confidence);
+  const verdictLabel = (c.verdict || "?") + (c.confidence ? " · " + c.confidence : "");
+
+  // Strategic group — empilé avec rationale visible
+  const sgRows = (c.strategic_group || []).map(p =>
+    `<div class="sg-row">
+      <span class="sg-tk">${escapeHTML(p.ticker)}</span>
+      <span class="sg-ch ${pctClass(p.change_pct)}">${fmtPct(p.change_pct)}</span>
+      <span class="sg-why">${escapeHTML(p.rationale || '')}</span>
+    </div>`
+  ).join("");
+
+  // News
+  const newsHTML = (c.news || []).length
+    ? c.news.map(n => `<div class="news-item">
+        <a href="${escapeHTML(n.url || '#')}" target="_blank" rel="noopener">${escapeHTML(n.title)}</a>
+        <span class="src">— ${escapeHTML(n.source || '')}</span>
+        ${n.note ? `<div class="news-note">${escapeHTML(n.note)}</div>` : ''}
+      </div>`).join("")
+    : '<div class="news-item" style="color:var(--text-faint);font-style:italic;">Aucune news propre au ticker dans les dernières 48h</div>';
+
+  const r52 = c.range_52w || {};
+  const sectorEtf = c.sector_etf || {};
+  const vn = c.value_network || {};
+
+  return `<div class="ticker">
+    <div class="ticker-row" onclick="this.parentElement.classList.toggle('open')">
+      <div class="ticker-symbol">${escapeHTML(c.ticker)}</div>
+      <div class="ticker-name">${escapeHTML(c.name || '')}</div>
+      <div class="ticker-change ${pctClass(c.change_pct)}">${fmtPct(c.change_pct)}</div>
+      <div class="ticker-cap">$${(c.market_cap_b||0).toFixed(1)}B</div>
+      <div class="ticker-verdict"><span class="pill ${verdictClass}">${escapeHTML(verdictLabel)}</span></div>
+    </div>
+    <div class="ticker-detail">
+      <div class="verdict-banner ${c.verdict||''}">
+        <span>${c.verdict==='ENTRY'?'✓ Entrée légitime':'✕ Passe ton chemin'}</span>
+        <span class="conf">Confiance ${escapeHTML(c.confidence||'')}</span>
+      </div>
+
+      <div class="section situation"><div class="label">Situation</div>${escapeHTML(c.situation || 'N/A')}</div>
+      <div class="section interpretation"><div class="label">Interprétation</div>${escapeHTML(c.interpretation || '')}</div>
+      ${renderKeyMetrics(c.key_metrics, c.key_metrics_interpretation)}
+
+      <div class="context-block">
+        <div class="context-grid">
+          ${ctx('price', 'Prix', '$'+(c.price||0).toFixed(2))}
+          ${ctx('cap', 'Capitalisation', '$'+(c.market_cap_b||0).toFixed(1)+'B')}
+          ${ctx('sector', 'Secteur ('+escapeHTML(sectorEtf.symbol||'?')+')', fmtPct(sectorEtf.change_pct), pctClass(sectorEtf.change_pct))}
+          ${ctx('vol', 'Volume vs moy. 30j', c.volume_ratio?c.volume_ratio.toFixed(2)+'x':'—')}
+          ${ctx('pos52', 'Position 52w', r52.position_pct!==null&&r52.position_pct!==undefined?r52.position_pct.toFixed(1)+'%':'—')}
+          ${ctx('range', 'Range 52w', '<span style="font-size:11px;">$'+(r52.low||0).toFixed(2)+'–$'+(r52.high||0).toFixed(2)+'</span>')}
+        </div>
+        ${contextSource ? `<div class="context-source-line">${escapeHTML(contextSource)}</div>` : ''}
+      </div>
+
+      <div class="strategic-row">
+        <div class="panel">
+          <div class="ptitle">Groupe stratégique<div class="ptip">${escapeHTML(TIPS.strategic_group||'')}</div></div>
+          <div class="sg-list">${sgRows || '<div style="font-size:11px;color:var(--text-faint);font-style:italic;">aucun concurrent direct comparable</div>'}</div>
+        </div>
+        <div class="panel">
+          <div class="ptitle">Réseau de valeur<div class="ptip">${escapeHTML(TIPS.value_network||'')}</div></div>
+          <div class="vn-grid">
+            ${renderVnCell('Clients', 'vn_customers', vn.customers)}
+            ${renderVnCell('Fournisseurs', 'vn_suppliers', vn.suppliers)}
+            ${renderVnCell('Substituts', 'vn_substitutes', vn.substitutes)}
+            ${renderVnCell('Complémenteurs', 'vn_complementors', vn.complementors)}
+          </div>
+        </div>
+      </div>
+
+      <div class="news"><div class="label">Source</div>${newsHTML}</div>
+    </div>
+  </div>`;
+}
+
+(function render() {
+  const data = JSON.parse(document.getElementById('dashboard-data').textContent);
+  const root = document.getElementById('content');
+
+  if (!data.candidates || !data.candidates.length) {
+    root.innerHTML = `<div class="empty">Aucun candidat encore. Le prochain scan tourne au prochain horaire planifié<br><small style="color:var(--text-faint)">(9h35, 11h30, 13h30, ou 15h30 ET, jours ouvrables)</small></div>`;
+    document.getElementById('header-meta').textContent = '—';
+    return;
+  }
+
+  document.getElementById('header-meta').textContent = fmtDateTime(data.as_of);
+
+  const ctx_macro = data.market_context || {};
+  const macroBar = document.getElementById('market-bar');
+  const labels = {spy: 'SPY', vix: 'VIX', us10y: 'US 10Y', dxy: 'DXY', wti: 'WTI'};
+  const macroOrder = ['spy', 'vix', 'us10y', 'dxy', 'wti'];
+  const macroHTML = macroOrder.map(k => renderMacro(k, labels[k], ctx_macro[k])).join('');
+  macroBar.insertAdjacentHTML('afterbegin', macroHTML);
+  document.getElementById('mood-tip').textContent = ctx_macro.market_mood || '';
+  macroBar.style.display = 'grid';
+  document.getElementById('color-code').style.display = 'block';
+
+  const candidates = data.candidates;
+  const tallies = {'entry-h':0,'entry-m':0,'entry-l':0,'passe-h':0,'passe-m':0,'passe-l':0};
+  candidates.forEach(c => { const k = verdictPillClass(c.verdict, c.confidence); tallies[k] = (tallies[k]||0)+1; });
+  let pillsHTML = '';
+  if (tallies['entry-h']) pillsHTML += `<span class="pill entry-h">${tallies['entry-h']} ENTRY·H</span>`;
+  if (tallies['entry-m']) pillsHTML += `<span class="pill entry-m">${tallies['entry-m']} ENTRY·M</span>`;
+  if (tallies['entry-l']) pillsHTML += `<span class="pill entry-l">${tallies['entry-l']} ENTRY·L</span>`;
+  if (tallies['passe-h']) pillsHTML += `<span class="pill passe-h">${tallies['passe-h']} PASSE·H</span>`;
+  if (tallies['passe-m']) pillsHTML += `<span class="pill passe-m">${tallies['passe-m']} PASSE·M</span>`;
+  if (tallies['passe-l']) pillsHTML += `<span class="pill passe-l">${tallies['passe-l']} PASSE·L</span>`;
+
+  const sessionHeader = `<div class="session-summary">
+    <div class="count">${candidates.length} candidat${candidates.length>1?'s':''} sur ${data.screened_total||candidates.length} losers screenés</div>
+    <div class="session-tally">${pillsHTML}</div>
+  </div>`;
+
+  const contextSource = data.context_source || '';
+  const tickersHTML = candidates.map(c => renderTicker(c, contextSource)).join('');
+  root.innerHTML = sessionHeader + tickersHTML;
+})();
+</script>
+</body>
+</html>
