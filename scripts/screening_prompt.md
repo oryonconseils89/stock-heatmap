@@ -86,21 +86,67 @@ Applique le framework (idiosyncrasie / catalyseur / nature structurel-bruit / si
 
 Règle news : sélectionne UNE seule news qui explique la chute. Pas de tangentiel. Si rien ne colle, `news: []` + explicite dans situation.
 
-### 6.3 — Génération value_network (si pas en cache) — discipline SOURCE OBLIGATOIRE
+### 6.3 — Génération value_network (si pas en cache) — DISCIPLINE INTELLIGENTE
 
-Pour les **clients/fournisseurs**, lance :
+Ton objectif : remplir les 4 catégories (clients / fournisseurs / substituts / complémenteurs) avec des tickers **factuellement défendables**. Tu disposes de deux sources d'information à combiner intelligemment selon ce qui marche.
+
+**Source 1 — SEC EDGAR (préférée quand dispo)** :
 ```
 python3 "$WORKSPACE/scripts/sec_lookup.py" {ticker} --json > /tmp/sec_{ticker}.json
 ```
-Retourne `customer_disclosures` et `supplier_disclosures` (cap 2 par catégorie). Tu identifies le ticker mentionné (Apple → AAPL, TSMC → TSM) et tu attaches la citation exacte comme `source_quote` + URL filing comme `source_url`.
+Si le 10-K nomme explicitement un client ou fournisseur (ex: "Apple accounted for 22% of revenue"), tu utilises ce ticker avec `source_quote` (la citation littérale) et `source_url` (URL du filing).
 
-Pour **substituts** : seulement si tu peux citer Gartner / IDC / banque sell-side / 10-K Risk Factors Competition. Sinon `null`.
+**Source 2 — Ta connaissance générale de l'industrie** :
+Tu connais les chaînes de valeur publiques, les partenariats largement documentés, les concurrents directs reconnus dans chaque industrie. Cette connaissance est légitime — Apple est un client de QCOM (largement publié), TSMC fabrique pour Apple/QCOM/NVDA (largement publié), PLUG Power est un concurrent direct de Bloom Energy sur les fuel cells (largement publié), Newmont est concurrent de Barrick sur l'or (largement publié). Utilise-la quand SEC ne retourne rien d'utile.
 
-Pour **complémenteurs** : seulement si tu peux citer un communiqué officiel de partnership. Sinon `null`.
+**Comment décider source par source** :
 
-**1 ticker max par catégorie**. Quality > quantity. Source ou rien.
+- **CLIENTS** : essaie SEC d'abord. Si rien (typique pour les vendeurs B2B à clientèle dispersée comme utilities, retail, fuel cells), nomme un client public largement documenté via communiqués/presse (ex: GOOGL est client public de Bloom Energy via les data centers Google). Si vraiment aucun ticker public n'est défendable (cas typique: utility B2C dont les clients sont les ménages), mets `null` — c'est ok.
+
+- **FOURNISSEURS** : essaie SEC (Risk Factors mentionne les single-source suppliers). Si rien, utilise ta connaissance des dépendances industrielles publiques (TSM/ASML pour les semis, AMAT/LRCX pour la fab, GE pour les moteurs aviation). Si vraiment rien de défendable, `null`.
+
+- **SUBSTITUTS** : c'est là que ta connaissance est la plus précieuse — utilise-la systématiquement. Tu sais que PLUG/FCEL/BLDP sont les concurrents directs de Bloom Energy ; que NEM/AEM/GFI sont concurrents de Barrick ; que PDD/JD sont concurrents de BABA. Mets toujours au moins un substitut sauf si le titre est vraiment unique en son genre (rare).
+
+- **COMPLÉMENTEURS** : entreprises dont les produits amplifient la valeur du nôtre. Ta connaissance suffit ici aussi — pour NVIDIA tu sais que MU/AVGO sont complémenteurs HBM/ASIC ; pour Apple tu sais que TSM est complémenteur fab.
+
+**RÈGLE D'OR pour les rationales** : chaque pick doit avoir un `rationale` **concret et vérifiable en 30 secondes via Google**. Pas de "concurrent semi" vague. Au lieu de ça : "PLUG Power : direct competitor on stationary fuel cell systems for commercial buildings and data centers ; both vie for hyperscaler contracts including Google and Microsoft". Quelqu'un qui lit ça peut taper "Bloom Energy vs Plug Power competitors" et confirmer.
+
+**Format JSON** :
+```json
+"value_network": {
+  "customers": {
+    "ticker": "GOOGL",
+    "rationale": "Google est client public majeur depuis 2018, plusieurs déploiements fuel cells dans data centers Google annoncés via communiqués officiels Bloom + Google Cloud.",
+    "source_url": null,
+    "source_quote": null
+  },
+  "suppliers": { ... },
+  "substitutes": { "ticker": "PLUG", "rationale": "...", "source_url": null, "source_quote": null },
+  "complementors": { ... }
+}
+```
+
+Quand SEC fournit une vraie citation, mets-la dans `source_url`/`source_quote`. Sinon laisse-les `null` mais le `rationale` doit être béton.
+
+**`null` pour une catégorie UNIQUEMENT si** tu ne peux honnêtement rien défendre. Mets PAS `null` par paresse ou par excès de prudence — tu connais ces industries, exprime-le.
 
 Puis cache : `set_cached_vn(ticker, value_network)`.
+
+### 6.4 — Strategic group (concurrents directs comparables)
+
+Le script `gather_data.py` tente de remplir automatiquement le `strategic_group` via Yahoo (peers de même industrie cap ≥10B). Pour les **niches** (Bloom Energy en fuel cells) ou les **foreign ADRs** (National Grid UK), Yahoo retourne souvent une liste vide.
+
+**Quand `strategic_group` reçu de gather_data est vide ou < 2 entrées**, complète-le toi avec ta connaissance des concurrents directs reconnus dans l'industrie. Exemples concrets :
+- Bloom Energy → PLUG (Plug Power), FCEL (FuelCell Energy), BLDP (Ballard Power) — tous fuel cell stationary
+- National Grid → SO (Southern), DUK (Duke), AEP (American Electric) — utilities régulées comparables, ou en UK SSE (foreign)
+- Wheaton Precious Metals → FNV (Franco-Nevada), RGLD (Royal Gold) — streaming/royalty gold
+- Ciena → ANET (Arista), JNPR (Juniper), CSCO (Cisco) — networking equipment
+
+Critère : un titre **dans le même métier**, **taille comparable** (idéalement cap >10B mais accepte plus petit si c'est l'écosystème), **US-listed de préférence** mais accepte un foreign si c'est le vrai concurrent (NESN en EU food, etc.).
+
+Si tu ajoutes des picks toi-même, mets-les avec un `rationale` concret (même règle que value_network — vérifiable en 30 secondes via Google).
+
+Vise **au moins 2 entrées** dans le strategic_group de chaque candidat. Si vraiment le titre est unique au monde sans concurrent crédible, OK pour `[]` mais c'est exceptionnel.
 
 ## Étape 7 — Écriture today.json (overwrite full)
 
