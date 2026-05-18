@@ -17,7 +17,7 @@ from pathlib import Path
 
 TOOLTIPS = {
     "price": "Le prix actuel du titre, en dollars. Source : dernière cotation Yahoo Finance à l'horodatage du pull.",
-    "cap": "Capitalisation boursière (prix × nombre d'actions). Le screener ne retient que les ≥ 50 milliards $ — sociétés assez solides pour qu'un drawdown court terme se rattrape statistiquement plus vite. Source : Yahoo Finance.",
+    "cap": "Capitalisation boursière (prix × nombre d'actions). Le screener ne retient que les ≥ 25 milliards $ — sociétés assez solides pour qu'un drawdown court terme se rattrape statistiquement plus vite. Source : Yahoo Finance.",
     "sector": "Performance du jour de l'ETF SPDR du secteur GICS du titre. XLK = Tech, XLF = Finance, XLV = Santé, XLY = Conso cyclique, XLP = Conso défensive, XLC = Comm services, XLI = Industriels, XLE = Énergie, XLU = Utilities, XLRE = Real Estate, XLB = Matériaux. Sert à distinguer une chute sectorielle (souvent du bruit) d'une chute idiosyncratique (à investiguer). Source : Yahoo Finance.",
     "vol": "Volume échangé aujourd'hui rapporté à la moyenne 30 jours. >2× = flux institutionnel lourd (souvent capitulation ou repositionnement majeur). <0.7× = vente légère, prises de profits (renforce thèse de bruit). Source : Yahoo Finance.",
     "pos52": "Position du prix entre le plancher et le plafond des 12 derniers mois, en %. 0% = plancher annuel, le titre tombe en continu (risque élevé de continuation). 100% = plafond annuel, redescend après un rallye (pullback technique probable). Calcul : (prix - 52w low) / (52w high - 52w low). Source : Yahoo Finance.",
@@ -298,7 +298,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         </ul>
       </li>
 
-      <li><b>Structure du titre — qualité défensive.</b> La capacité à rebondir dépend du balance sheet et de la position concurrentielle. Le filtre cap ≥ 50B élimine déjà 95% des cas vraiment fragiles, mais à l'intérieur de cet univers, je pondère implicitement : leverage, marges historiques, dépendance à un client unique, vulnérabilité réglementaire.</li>
+      <li><b>Structure du titre — qualité défensive.</b> La capacité à rebondir dépend du balance sheet et de la position concurrentielle. Le filtre cap ≥ 25B élimine déjà 90% des cas vraiment fragiles, mais à l'intérieur de cet univers, je pondère implicitement : leverage, marges historiques, dépendance à un client unique, vulnérabilité réglementaire.</li>
     </ol>
 
     <h4>Règle finale</h4>

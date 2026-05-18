@@ -33,7 +33,7 @@ SESSION_LABEL="$(date +%H:%M)"
 python3 "$WORKSPACE/scripts/gather_data.py" --session-label "$SESSION_LABEL" > /tmp/raw_session.json 2>> "$WORKSPACE/logs/$(date -u +%Y-%m-%d).log"
 ```
 
-Retourne : market_context (5 macros + tu vas écrire le market_mood), candidates[] (tous les titres qui passent cap ≥ 50B, baisse ≥ 3%, NYSE+NASDAQ, news multi-source max 4/ticker × 150 char summary).
+Retourne : market_context (5 macros + tu vas écrire le market_mood), candidates[] (top 10 baisseurs qui passent cap ≥ 25B, baisse ≥ 3%, NYSE+NASDAQ, news multi-source max 4/ticker × 150 char summary).
 
 ## Étape 4 — Delta scan (Levier 2) : réutiliser l'existant quand rien n'a bougé
 
@@ -157,7 +157,7 @@ Structure :
   "as_of": "ISO datetime",
   "market_context": {...5 macros + market_mood...},
   "screened_total": N,
-  "filters": {"min_cap_b": 50, "max_change_pct": -3, "exchanges": ["NYSE","NASDAQ"]},
+  "filters": {"min_cap_b": 25, "max_change_pct": -3, "exchanges": ["NYSE","NASDAQ"]},
   "context_source": "Données prix, capitalisation, volume, position 52w et perf ETF sectoriel : Yahoo Finance, mises à jour à l'horodatage du pull.",
   "candidates": [...]
 }

@@ -381,7 +381,7 @@ def enrich_ticker(quote: dict[str, Any]) -> dict[str, Any]:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--min-cap", type=float, default=50.0, help="Min market cap in billions USD")
+    parser.add_argument("--min-cap", type=float, default=25.0, help="Min market cap in billions USD")
     parser.add_argument("--max-change", type=float, default=-3.0, help="Max day change pct (negative)")
     parser.add_argument("--max-tickers", type=int, default=10, help="Max candidates (default 10 = focus sur les 10 pires baisses pour qualité d'analyse ; au-delà Claude bâcle)")
     parser.add_argument("--session-label", type=str, default=None, help="e.g. '09:35'")
